@@ -191,7 +191,7 @@ public class UserController {
 		int result = 0;
 		try {
 			String initPass = AppConfig.getParameter("initPass");
-			if(user.getPkid() != null&&!StringUtils.isNotBlank(user.getPassword())){
+			if(user.getPkid() != null&&!StringUtils.isNotBlank("888888")){
 				user.setPassword(new Sha1Hash(initPass).toString());
 				result = userService.update(user);
 			}
@@ -223,7 +223,7 @@ public class UserController {
 		try {
 			UmgOperator user1 = (UmgOperator) req.getSession().getAttribute("umgOperator");
 			UmgOperator user2 = userService.getByCid(user1.getCid());
-			if(user2 != null &&StringUtils.isBlank(user.getPassword())){
+			if(user2 != null &&StringUtils.isNotBlank(user.getPassword())){
 				user2.setPassword(new Sha1Hash(user.getPassword().toLowerCase()).toString());
 				userService.update(user2);
 			}
