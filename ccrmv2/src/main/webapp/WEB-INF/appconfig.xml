@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<config>
+<param key="system.version">1.0.1</param>
+
+<param key="webservice.faqservice">http://192.168.98.112:8006/FAQService.svc?wsdl</param>
+<param key="initPass">888888</param>
+
+</config>

@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.ccrm.dao.UmgBranchDao">
+
+	<resultMap id="RM_UmgBranch" type="com.ccrm.entity.UmgBranch">
+        <result property="ppkid" column="PPKID"/>
+        <result property="kindid" column="KINDID"/>
+        <result property="seqno" column="SEQNO"/>
+        <result property="cid" column="CID"/>
+        <result property="name" column="NAME"/>
+        <result property="status" column="STATUS"/>
+        <result property="cellno" column="CELLNO"/>
+        <result property="contacts" column="CONTACTS"/>
+        <result property="datenew" column="DATENEW"/>
+        <result property="dateedit" column="DATEEDIT"/>
+        <result property="memo" column="MEMO"/>
+        <result property="pkid" column="PKID"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		PPKID,KINDID,SEQNO,CID,NAME,STATUS,CELLNO,CONTACTS,DATENEW,DATEEDIT,MEMO,PKID
+	    ]]>
+	</sql>
+
+	<!--保存 -->
+	<insert id="save">
+	    <![CDATA[
+	        INSERT INTO UMG_BRANCH (
+	        	PPKID ,
+	        	KINDID ,
+	        	SEQNO ,
+	        	CID ,
+	        	NAME ,
+	        	STATUS ,
+	        	CELLNO ,
+	        	CONTACTS ,
+	        	DATENEW ,
+	        	DATEEDIT ,
+	        	MEMO ,
+	        	PKID 
+	        ) VALUES (
+	        	#{ppkid} ,
+	        	#{kindid} ,
+	        	#{seqno} ,
+	        	#{cid} ,
+	        	#{name} ,
+	        	#{status} ,
+	        	#{cellno} ,
+	        	#{contacts} ,
+	        	#{datenew} ,
+	        	#{dateedit} ,
+	        	#{memo} ,
+	        	#{pkid} 
+	        )
+	    ]]>
+	</insert>
+	
+	<!-- update 条件组合 -->
+	<sql id="update_sql">
+		<set>
+			<if test="ppkid != null">
+				PPKID = #{ppkid} ,
+			</if>
+			<if test="kindid != null">
+				KINDID = #{kindid} ,
+			</if>
+			<if test="seqno != null">
+				SEQNO = #{seqno} ,
+			</if>
+			<if test="cid != null and cid != ''">
+				CID = #{cid} ,
+			</if>
+			<if test="name != null and name != ''">
+				NAME = #{name} ,
+			</if>
+			<if test="status != null">
+				STATUS = #{status} ,
+			</if>
+			<if test="cellno != null and cellno != ''">
+				CELLNO = #{cellno} ,
+			</if>
+			<if test="contacts != null and contacts != ''">
+				CONTACTS = #{contacts} ,
+			</if>
+			<if test="memo != null and memo != ''">
+				MEMO = #{memo} 
+			</if>
+		</set>
+	</sql>
+	
+	<!-- 修改 -->
+	<update id="update">
+		UPDATE UMG_BRANCH
+		<include refid="update_sql" />
+		WHERE
+			PKID = #{pkid} 	</update>
+
+	<!-- 根据ID删除 -->
+	<delete id="delete">
+    	<![CDATA[
+        	DELETE FROM UMG_BRANCH 
+        	WHERE  PKID = #{pkid}
+    	]]>
+	</delete>
+	
+	<!-- getById -->
+	<select id="getById" resultMap="RM_UmgBranch">
+		SELECT
+		<include refid="columns" />
+		FROM UMG_BRANCH
+		WHERE  PKID = #{pkid}  
+	</select>
+
+	<!-- 获取总数 -->
+	<select id="getTotalCount" resultType="int">
+		SELECT COUNT(1)
+		FROM UMG_BRANCH
+		<where>
+			<if test="model != null">
+						<if test="model.ppkid != null">
+							AND PPKID = #{model.ppkid}
+						</if>
+						<if test="model.kindid != null">
+							AND KINDID = #{model.kindid}
+						</if>
+						<if test="model.seqno != null">
+							AND SEQNO = #{model.seqno}
+						</if>
+						<if test="model.cid != null and model.cid !=''">
+							AND CID = #{model.cid}
+						</if>
+						<if test="model.name != null and model.name !=''">
+							AND NAME = #{model.name}
+						</if>
+						<if test="model.status != null">
+							AND STATUS = #{model.status}
+						</if>
+						<if test="model.cellno != null and model.cellno !=''">
+							AND CELLNO = #{model.cellno}
+						</if>
+						<if test="model.contacts != null and model.contacts !=''">
+							AND CONTACTS = #{model.contacts}
+						</if>
+						<if test="model.memo != null and model.memo !=''">
+							AND MEMO = #{model.memo}
+						</if>
+						<if test="model.pkid != null">
+							AND PKID = #{model.pkid}
+						</if>
+			</if>
+		</where>
+	</select>  
+	
+	<!-- 机构树搜索列表  -->
+	<select id="getBranchTree" resultMap="RM_UmgBranch">
+		SELECT
+		<include refid="columns" />
+		FROM  UMG_BRANCH
+		<where>
+			kindid = '${kindid}' and status <![CDATA[<>]]> '-1' 
+		</where>
+			start with pkid = '${ppkid}' connect by prior pkid = ppkid  order siblings by pkid
+	</select>
+	<!-- 按条件组合搜索列表  -->
+	<select id="findList" resultMap="RM_UmgBranch">
+		SELECT
+		<include refid="columns" />
+		FROM  UMG_BRANCH
+		<where>
+					<if test="ppkid != null">
+						AND PPKID = #{ppkid}
+					</if>
+					<if test="kindid != null">
+						AND KINDID = #{kindid}
+					</if>
+					<if test="seqno != null">
+						AND SEQNO = #{seqno}
+					</if>
+					<if test="cid != null and cid !=''">
+						AND CID = #{cid}
+					</if>
+					<if test="name != null and name !=''">
+						AND NAME = #{name}
+					</if>
+					<if test="status != null">
+						AND STATUS = #{status}
+					</if>
+					<if test="cellno != null and cellno !=''">
+						AND CELLNO = #{cellno}
+					</if>
+					<if test="contacts != null and contacts !=''">
+						AND CONTACTS = #{contacts}
+					</if>
+					<if test="memo != null and memo !=''">
+						AND MEMO = #{memo}
+					</if>
+					<if test="pkid != null">
+						AND PKID = #{pkid}
+					</if>
+		</where>
+		<if test="sortColumns != null and sortColumns !=''">
+			ORDER BY #{sortColumns}
+		</if>
+	</select>
+
+	<!-- 分页 -->
+	<select id="findPageList" resultMap="RM_UmgBranch">
+		SELECT <include refid="columns" />
+		FROM UMG_BRANCH
+		<where>
+			<if test="model != null">
+						<if test="model.ppkid != null">
+							AND PPKID = #{model.ppkid}
+						</if>
+						<if test="model.kindid != null">
+							AND KINDID = #{model.kindid}
+						</if>
+						<if test="model.seqno != null">
+							AND SEQNO = #{model.seqno}
+						</if>
+						<if test="model.cid != null and model.cid !=''">
+							AND CID = #{model.cid}
+						</if>
+						<if test="model.name != null and model.name !=''">
+							AND NAME = #{model.name}
+						</if>
+						<if test="model.status != null">
+							AND STATUS = #{model.status}
+						</if>
+						<if test="model.cellno != null and model.cellno !=''">
+							AND CELLNO = #{model.cellno}
+						</if>
+						<if test="model.contacts != null and model.contacts !=''">
+							AND CONTACTS = #{model.contacts}
+						</if>
+						<if test="model.memo != null and model.memo !=''">
+							AND MEMO = #{model.memo}
+						</if>
+						<if test="model.pkid != null">
+							AND PKID = #{model.pkid}
+						</if>
+			</if>
+		</where>
+		limit 
+		<choose>
+			<when test="pager != null">
+				#{pager.begin},#{pager.pageSize}
+			</when>
+			<otherwise>
+				0,10
+			</otherwise>
+		</choose>
+	</select>
+
+</mapper>

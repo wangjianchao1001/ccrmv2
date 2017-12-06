@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.ccrm.dao.SysDictionaryclassDao">
+
+	<resultMap id="RM_SysDictionaryclass" type="com.ccrm.entity.SysDictionaryclass">
+        <result property="kindid" column="KINDID"/>
+        <result property="seqno" column="SEQNO"/>
+        <result property="name" column="NAME"/>
+        <result property="memo" column="MEMO"/>
+        <result property="pkid" column="PKID"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		KINDID,SEQNO,NAME,MEMO,PKID
+	    ]]>
+	</sql>
+
+	<!--保存 -->
+	<insert id="save">
+	    <![CDATA[
+	        INSERT INTO SYS_DICTIONARYCLASS (
+	        	KINDID ,
+	        	SEQNO ,
+	        	NAME ,
+	        	MEMO ,
+	        	PKID 
+	        ) VALUES (
+	        	#{kindid} ,
+	        	#{seqno} ,
+	        	#{name} ,
+	        	#{memo} ,
+	        	#{pkid} 
+	        )
+	    ]]>
+	</insert>
+	
+	<!-- update 条件组合 -->
+	<sql id="update_sql">
+		<set>
+			<if test="kindid != null">
+				KINDID = #{kindid} ,
+			</if>
+			<if test="seqno != null">
+				SEQNO = #{seqno} ,
+			</if>
+			<if test="name != null and name != ''">
+				NAME = #{name} ,
+			</if>
+			<if test="memo != null and memo != ''">
+				MEMO = #{memo} 
+			</if>
+		</set>
+	</sql>
+	
+	<!-- 修改 -->
+	<update id="update">
+		UPDATE SYS_DICTIONARYCLASS
+		<include refid="update_sql" />
+		WHERE
+			PKID = #{pkid} 	</update>
+
+	<!-- 根据ID删除 -->
+	<delete id="delete">
+    	<![CDATA[
+        	DELETE FROM SYS_DICTIONARYCLASS 
+        	WHERE  PKID = #{pkid}
+    	]]>
+	</delete>
+	
+	<!-- getById -->
+	<select id="getById" resultMap="RM_SysDictionaryclass">
+		SELECT
+		<include refid="columns" />
+		FROM SYS_DICTIONARYCLASS
+		WHERE  PKID = #{pkid}  
+	</select>
+
+	<!-- 获取总数 -->
+	<select id="getTotalCount" resultType="int">
+		SELECT COUNT(1)
+		FROM SYS_DICTIONARYCLASS
+		<where>
+			<if test="model != null">
+						<if test="model.kindid != null">
+							AND KINDID = #{model.kindid}
+						</if>
+						<if test="model.seqno != null">
+							AND SEQNO = #{model.seqno}
+						</if>
+						<if test="model.name != null and model.name !=''">
+							AND NAME = #{model.name}
+						</if>
+						<if test="model.memo != null and model.memo !=''">
+							AND MEMO = #{model.memo}
+						</if>
+						<if test="model.pkid != null">
+							AND PKID = #{model.pkid}
+						</if>
+			</if>
+		</where>
+	</select>  
+	
+	<!-- 按条件组合搜索列表  -->
+	<select id="findList" resultMap="RM_SysDictionaryclass">
+		SELECT
+		<include refid="columns" />
+		FROM  SYS_DICTIONARYCLASS
+		<where>
+					<if test="kindid != null">
+						AND KINDID = #{kindid}
+					</if>
+					<if test="seqno != null">
+						AND SEQNO = #{seqno}
+					</if>
+					<if test="name != null and name !=''">
+						AND NAME = #{name}
+					</if>
+					<if test="memo != null and memo !=''">
+						AND MEMO = #{memo}
+					</if>
+					<if test="pkid != null">
+						AND PKID = #{pkid}
+					</if>
+		</where>
+		<if test="sortColumns != null and sortColumns !=''">
+			ORDER BY #{sortColumns}
+		</if>
+	</select>
+
+	<!-- 分页 -->
+	<select id="findPageList" resultMap="RM_SysDictionaryclass">
+		SELECT <include refid="columns" />
+		FROM SYS_DICTIONARYCLASS
+		<where>
+			<if test="model != null">
+						<if test="model.kindid != null">
+							AND KINDID = #{model.kindid}
+						</if>
+						<if test="model.seqno != null">
+							AND SEQNO = #{model.seqno}
+						</if>
+						<if test="model.name != null and model.name !=''">
+							AND NAME = #{model.name}
+						</if>
+						<if test="model.memo != null and model.memo !=''">
+							AND MEMO = #{model.memo}
+						</if>
+						<if test="model.pkid != null">
+							AND PKID = #{model.pkid}
+						</if>
+			</if>
+		</where>
+		limit 
+		<choose>
+			<when test="pager != null">
+				#{pager.begin},#{pager.pageSize}
+			</when>
+			<otherwise>
+				0,10
+			</otherwise>
+		</choose>
+	</select>
+
+</mapper>

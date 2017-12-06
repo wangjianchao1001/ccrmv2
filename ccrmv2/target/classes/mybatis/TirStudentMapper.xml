@@ -1,0 +1,871 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.ccrm.dao.TirStudentDao">
+
+	<resultMap id="RM_TirStudent" type="com.ccrm.entity.TirStudent">
+        <result property="name" column="NAME"/>
+        <result property="idno" column="IDNO"/>
+        <result property="nationid" column="NATIONID"/>
+        <result property="householdid" column="HOUSEHOLDID"/>
+        <result property="cultureid" column="CULTUREID"/>
+        <result property="adress" column="ADRESS"/>
+        <result property="phoneno" column="PHONENO"/>
+        <result property="structid" column="STRUCTID"/>
+        <result property="identid" column="IDENTID"/>
+        <result property="identno" column="IDENTNO"/>
+        <result property="dateunemployed" column="DATEUNEMPLOYED"/>
+        <result property="trainaprid" column="TRAINAPRID"/>
+        <result property="completeaprid" column="COMPLETEAPRID"/>
+        <result property="scoretheory" column="SCORETHEORY"/>
+        <result property="scoreskill" column="SCORESKILL"/>
+        <result property="ispasser" column="ISPASSER"/>
+        <result property="certifyno" column="CERTIFYNO"/>
+        <result property="certifydate" column="CERTIFYDATE"/>
+        <result property="isemploy" column="ISEMPLOY"/>
+        <result property="employunit" column="EMPLOYUNIT"/>
+        <result property="employdate" column="EMPLOYDATE"/>
+        <result property="projectname" column="PROJECTNAME"/>
+        <result property="licenseno" column="LICENSENO"/>
+        <result property="employformaid" column="EMPLOYFORMAID"/>
+        <result property="unitlinkman" column="UNITLINKMAN"/>
+        <result property="unitphoneno" column="UNITPHONENO"/>
+        <result property="laborcontract" column="LABORCONTRACT"/>
+        <result property="isdifficulty" column="ISDIFFICULTY"/>
+        <result property="ishandicapped" column="ISHANDICAPPED"/>
+        <result property="employfigure" column="EMPLOYFIGURE"/>
+        <result property="isapprase" column="ISAPPRASE"/>
+        <result property="issubsidy" column="ISSUBSIDY"/>
+        <result property="image" column="IMAGE"/>
+        <result property="status" column="STATUS"/>
+        <result property="datenew" column="DATENEW"/>
+        <result property="dateedit" column="DATEEDIT"/>
+        <result property="certificatetype" column="CERTIFICATETYPE"/>
+        <result property="memo" column="MEMO"/>
+        <result property="pkid" column="PKID"/>
+        <result property="idxid" column="IDXID"/>
+        <result property="identlevel" column="IDENTLEVEL"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		NAME,IDNO,NATIONID,HOUSEHOLDID,CULTUREID,ADRESS,PHONENO,STRUCTID,IDENTID,IDENTNO,DATEUNEMPLOYED,TRAINAPRID,COMPLETEAPRID,SCORETHEORY,SCORESKILL,ISPASSER,CERTIFYNO,CERTIFYDATE,ISEMPLOY,EMPLOYUNIT,EMPLOYDATE,PROJECTNAME,LICENSENO,EMPLOYFORMAID,UNITLINKMAN,UNITPHONENO,LABORCONTRACT,ISDIFFICULTY,ISHANDICAPPED,EMPLOYFIGURE,ISAPPRASE,ISSUBSIDY,IMAGE,STATUS,DATENEW,DATEEDIT,CERTIFICATETYPE,MEMO,PKID,IDXID,IDENTLEVEL
+	    ]]>
+	</sql>
+
+	<!--保存 -->
+	<insert id="save">
+	    <![CDATA[
+	        INSERT INTO TIR_STUDENT (
+	        	NAME ,
+	        	IDNO ,
+	        	NATIONID ,
+	        	HOUSEHOLDID ,
+	        	CULTUREID ,
+	        	ADRESS ,
+	        	PHONENO ,
+	        	STRUCTID ,
+	        	IDENTID ,
+	        	IDENTNO ,
+	        	DATEUNEMPLOYED ,
+	        	TRAINAPRID ,
+	        	COMPLETEAPRID ,
+	        	SCORETHEORY ,
+	        	SCORESKILL ,
+	        	ISPASSER ,
+	        	CERTIFYNO ,
+	        	CERTIFYDATE ,
+	        	ISEMPLOY ,
+	        	EMPLOYUNIT ,
+	        	EMPLOYDATE ,
+	        	PROJECTNAME ,
+	        	LICENSENO ,
+	        	EMPLOYFORMAID ,
+	        	UNITLINKMAN ,
+	        	UNITPHONENO ,
+	        	LABORCONTRACT ,
+	        	ISDIFFICULTY ,
+	        	ISHANDICAPPED ,
+	        	EMPLOYFIGURE ,
+	        	ISAPPRASE ,
+	        	ISSUBSIDY ,
+	        	IMAGE ,
+	        	STATUS ,
+	        	DATENEW ,
+	        	DATEEDIT ,
+	        	CERTIFICATETYPE ,
+	        	MEMO ,
+	        	PKID ,
+	        	IDXID ,
+	        	IDENTLEVEL 
+	        ) VALUES (
+	        	#{name} ,
+	        	#{idno} ,
+	        	#{nationid} ,
+	        	#{householdid} ,
+	        	#{cultureid} ,
+	        	#{adress} ,
+	        	#{phoneno} ,
+	        	#{structid} ,
+	        	#{identid} ,
+	        	#{identno} ,
+	        	#{dateunemployed} ,
+	        	#{trainaprid} ,
+	        	#{completeaprid} ,
+	        	#{scoretheory} ,
+	        	#{scoreskill} ,
+	        	#{ispasser} ,
+	        	#{certifyno} ,
+	        	#{certifydate} ,
+	        	#{isemploy} ,
+	        	#{employunit} ,
+	        	#{employdate} ,
+	        	#{projectname} ,
+	        	#{licenseno} ,
+	        	#{employformaid} ,
+	        	#{unitlinkman} ,
+	        	#{unitphoneno} ,
+	        	#{laborcontract} ,
+	        	#{isdifficulty} ,
+	        	#{ishandicapped} ,
+	        	#{employfigure} ,
+	        	#{isapprase} ,
+	        	#{issubsidy} ,
+	        	#{image} ,
+	        	#{status} ,
+	        	#{datenew} ,
+	        	#{dateedit} ,
+	        	#{certificatetype} ,
+	        	#{memo} ,
+	        	#{pkid} ,
+	        	#{idxid} ,
+	        	#{identlevel} 
+	        )
+	    ]]>
+	</insert>
+	
+	<!-- update 条件组合 -->
+	<sql id="update_sql">
+		<set>
+			<if test="name != null and name != ''">
+				NAME = #{name} ,
+			</if>
+			<if test="idno != null and idno != ''">
+				IDNO = #{idno} ,
+			</if>
+			<if test="nationid != null">
+				NATIONID = #{nationid} ,
+			</if>
+			<if test="householdid != null">
+				HOUSEHOLDID = #{householdid} ,
+			</if>
+			<if test="cultureid != null">
+				CULTUREID = #{cultureid} ,
+			</if>
+			<if test="adress != null and adress != ''">
+				ADRESS = #{adress} ,
+			</if>
+			<if test="phoneno != null and phoneno != ''">
+				PHONENO = #{phoneno} ,
+			</if>
+			<if test="structid != null">
+				STRUCTID = #{structid} ,
+			</if>
+			<if test="identid != null">
+				IDENTID = #{identid} ,
+			</if>
+			<if test="identno != null and identno != ''">
+				IDENTNO = #{identno} ,
+			</if>
+			<if test="dateunemployed != null and dateunemployed != ''">
+				DATEUNEMPLOYED = #{dateunemployed} ,
+			</if>
+			<if test="trainaprid != null">
+				TRAINAPRID = #{trainaprid} ,
+			</if>
+			<if test="completeaprid != null">
+				COMPLETEAPRID = #{completeaprid} ,
+			</if>
+			<if test="scoretheory != null">
+				SCORETHEORY = #{scoretheory} ,
+			</if>
+			<if test="scoreskill != null">
+				SCORESKILL = #{scoreskill} ,
+			</if>
+			<if test="ispasser != null">
+				ISPASSER = #{ispasser} ,
+			</if>
+			<if test="certifyno != null and certifyno != ''">
+				CERTIFYNO = #{certifyno} ,
+			</if>
+			<if test="certifydate != null and certifydate != ''">
+				CERTIFYDATE = #{certifydate} ,
+			</if>
+			<if test="isemploy != null">
+				ISEMPLOY = #{isemploy} ,
+			</if>
+			<if test="employunit != null and employunit != ''">
+				EMPLOYUNIT = #{employunit} ,
+			</if>
+			<if test="employdate != null and employdate != ''">
+				EMPLOYDATE = #{employdate} ,
+			</if>
+			<if test="projectname != null and projectname != ''">
+				PROJECTNAME = #{projectname} ,
+			</if>
+			<if test="licenseno != null and licenseno != ''">
+				LICENSENO = #{licenseno} ,
+			</if>
+			<if test="employformaid != null">
+				EMPLOYFORMAID = #{employformaid} ,
+			</if>
+			<if test="unitlinkman != null and unitlinkman != ''">
+				UNITLINKMAN = #{unitlinkman} ,
+			</if>
+			<if test="unitphoneno != null and unitphoneno != ''">
+				UNITPHONENO = #{unitphoneno} ,
+			</if>
+			<if test="laborcontract != null and laborcontract != ''">
+				LABORCONTRACT = #{laborcontract} ,
+			</if>
+			<if test="isdifficulty != null">
+				ISDIFFICULTY = #{isdifficulty} ,
+			</if>
+			<if test="ishandicapped != null">
+				ISHANDICAPPED = #{ishandicapped} ,
+			</if>
+			<if test="employfigure != null">
+				EMPLOYFIGURE = #{employfigure} ,
+			</if>
+			<if test="isapprase != null">
+				ISAPPRASE = #{isapprase} ,
+			</if>
+			<if test="issubsidy != null">
+				ISSUBSIDY = #{issubsidy} ,
+			</if>
+			<if test="image != null and image != ''">
+				IMAGE = #{image} ,
+			</if>
+			<if test="status != null">
+				STATUS = #{status} ,
+			</if>
+			<if test="certificatetype != null">
+				CERTIFICATETYPE = #{certificatetype} ,
+			</if>
+			<if test="memo != null and memo != ''">
+				MEMO = #{memo} ,
+			</if>
+			<if test="idxid != null and idxid != ''">
+				IDXID = #{idxid} ,
+			</if>
+			<if test="identlevel != null">
+				IDENTLEVEL = #{identlevel} 
+			</if>
+		</set>
+	</sql>
+	
+	<!-- 修改 -->
+	<update id="update">
+		UPDATE TIR_STUDENT
+		<include refid="update_sql" />
+		WHERE
+			PKID = #{pkid} 	</update>
+	
+	<!-- 修改 -->
+	<update id="updateStudentByIdxid">
+		UPDATE TIR_STUDENT
+		set status = '-1'
+		WHERE
+			idxid = '${idxid}' 	
+	</update>
+
+	<!-- 根据ID删除 -->
+	<delete id="delete">
+    	<![CDATA[
+        	DELETE FROM TIR_STUDENT 
+        	WHERE  PKID = #{pkid}
+    	]]>
+	</delete>
+	
+	<!-- getById -->
+	<select id="getById" resultMap="RM_TirStudent">
+		SELECT
+		<include refid="columns" />
+		FROM TIR_STUDENT
+		WHERE  PKID = #{pkid}  
+	</select>
+
+	<!-- 获取总数 -->
+	<select id="getTotalCount" resultType="int">
+		SELECT COUNT(1)
+		FROM tir_student s
+	    left join tir_class c on s.idxid = c.pkid
+	    left join sys_dictionary d on c.careerid = d.pkid 
+	    left join reg_organinfo o on c.orgid = o.pkid
+		<where>
+			<if test="model != null">
+						<if test="model.name != null and model.name !=''">
+							AND s.NAME = #{model.name}
+						</if>
+						<if test="model.idno != null and model.idno !=''">
+							AND s.IDNO = #{model.idno}
+						</if>
+						<if test="model.nationid != null">
+							AND s.NATIONID = #{model.nationid}
+						</if>
+						<if test="model.householdid != null">
+							AND s.HOUSEHOLDID = #{model.householdid}
+						</if>
+						<if test="model.cultureid != null">
+							AND s.CULTUREID = #{model.cultureid}
+						</if>
+						<if test="model.adress != null and model.adress !=''">
+							AND s.ADRESS = #{model.adress}
+						</if>
+						<if test="model.phoneno != null and model.phoneno !=''">
+							AND s.PHONENO = #{model.phoneno}
+						</if>
+						<if test="model.structid != null">
+							AND s.STRUCTID = #{model.structid}
+						</if>
+						<if test="model.identid != null">
+							AND s.IDENTID = #{model.identid}
+						</if>
+						<if test="model.identno != null and model.identno !=''">
+							AND s.IDENTNO = #{model.identno}
+						</if>
+						<if test="model.dateunemployed != null and model.dateunemployed !=''">
+							AND s.DATEUNEMPLOYED = #{model.dateunemployed}
+						</if>
+						<if test="model.trainaprid != null">
+							AND s.TRAINAPRID = #{model.trainaprid}
+						</if>
+						<if test="model.completeaprid != null">
+							AND s.COMPLETEAPRID = #{model.completeaprid}
+						</if>
+						<if test="model.scoretheory != null">
+							AND s.SCORETHEORY = #{model.scoretheory}
+						</if>
+						<if test="model.scoreskill != null">
+							AND s.SCORESKILL = #{model.scoreskill}
+						</if>
+						<if test="model.ispasser != null">
+							AND s.ISPASSER = #{model.ispasser}
+						</if>
+						<if test="model.certifyno != null and model.certifyno !=''">
+							AND s.CERTIFYNO = #{model.certifyno}
+						</if>
+						<if test="model.certifydate != null and model.certifydate !=''">
+							AND s.CERTIFYDATE = #{model.certifydate}
+						</if>
+						<if test="model.isemploy != null">
+							AND s.ISEMPLOY = #{model.isemploy}
+						</if>
+						<if test="model.employunit != null and model.employunit !=''">
+							AND s.EMPLOYUNIT = #{model.employunit}
+						</if>
+						<if test="model.employdate != null and model.employdate !=''">
+							AND s.EMPLOYDATE = #{model.employdate}
+						</if>
+						<if test="model.projectname != null and model.projectname !=''">
+							AND s.PROJECTNAME = #{model.projectname}
+						</if>
+						<if test="model.licenseno != null and model.licenseno !=''">
+							AND s.LICENSENO = #{model.licenseno}
+						</if>
+						<if test="model.employformaid != null">
+							AND s.EMPLOYFORMAID = #{model.employformaid}
+						</if>
+						<if test="model.unitlinkman != null and model.unitlinkman !=''">
+							AND s.UNITLINKMAN = #{model.unitlinkman}
+						</if>
+						<if test="model.unitphoneno != null and model.unitphoneno !=''">
+							AND s.UNITPHONENO = #{model.unitphoneno}
+						</if>
+						<if test="model.laborcontract != null and model.laborcontract !=''">
+							AND s.LABORCONTRACT = #{model.laborcontract}
+						</if>
+						<if test="model.isdifficulty != null">
+							AND s.ISDIFFICULTY = #{model.isdifficulty}
+						</if>
+						<if test="model.ishandicapped != null">
+							AND s.ISHANDICAPPED = #{model.ishandicapped}
+						</if>
+						<if test="model.employfigure != null">
+							AND s.EMPLOYFIGURE = #{model.employfigure}
+						</if>
+						<if test="model.isapprase != null">
+							AND s.ISAPPRASE = #{model.isapprase}
+						</if>
+						<if test="model.issubsidy != null">
+							AND s.ISSUBSIDY = #{model.issubsidy}
+						</if>
+						<if test="model.image != null and model.image !=''">
+							AND s.IMAGE = #{model.image}
+						</if>
+						<if test="model.status != null and model.status != -1">
+							AND s.STATUS = #{model.status}
+						</if>
+						<if test="model.status != null and model.status == -1">
+							AND s.STATUS <![CDATA[<>]]> #{model.status}
+						</if>
+						<if test="model.certificatetype != null">
+							AND s.CERTIFICATETYPE = #{model.certificatetype}
+						</if>
+						<if test="model.memo != null and model.memo !=''">
+							AND s.MEMO = #{model.memo}
+						</if>
+						<if test="model.pkid != null">
+							AND s.PKID = #{model.pkid}
+						</if>
+						<if test="model.idxid != null and model.idxid !=''">
+							AND s.IDXID = #{model.idxid}
+						</if>
+						<if test="model.identlevel != null">
+							AND s.IDENTLEVEL = #{model.identlevel}
+						</if>
+						<if test="model.branchId != null">
+							AND o.branchid in (select u.pkid
+		                        from umg_branch u
+		                       where status <![CDATA[<>]]> '-1'
+		                       start with u.pkid = #{model.branchId}
+		                      connect by prior u.pkid = u.ppkid)
+						</if>
+			</if>
+		</where>
+	</select>  
+	
+	<!-- 按条件组合搜索列表  -->
+	<select id="findList" resultMap="RM_TirStudent">
+		SELECT
+		<include refid="columns" />
+		FROM  TIR_STUDENT
+		<where>
+					<if test="name != null and name !=''">
+						AND NAME = #{name}
+					</if>
+					<if test="idno != null and idno !=''">
+						AND IDNO = #{idno}
+					</if>
+					<if test="nationid != null">
+						AND NATIONID = #{nationid}
+					</if>
+					<if test="householdid != null">
+						AND HOUSEHOLDID = #{householdid}
+					</if>
+					<if test="cultureid != null">
+						AND CULTUREID = #{cultureid}
+					</if>
+					<if test="adress != null and adress !=''">
+						AND ADRESS = #{adress}
+					</if>
+					<if test="phoneno != null and phoneno !=''">
+						AND PHONENO = #{phoneno}
+					</if>
+					<if test="structid != null">
+						AND STRUCTID = #{structid}
+					</if>
+					<if test="identid != null">
+						AND IDENTID = #{identid}
+					</if>
+					<if test="identno != null and identno !=''">
+						AND IDENTNO = #{identno}
+					</if>
+					<if test="dateunemployed != null and dateunemployed !=''">
+						AND DATEUNEMPLOYED = #{dateunemployed}
+					</if>
+					<if test="trainaprid != null">
+						AND TRAINAPRID = #{trainaprid}
+					</if>
+					<if test="completeaprid != null">
+						AND COMPLETEAPRID = #{completeaprid}
+					</if>
+					<if test="scoretheory != null">
+						AND SCORETHEORY = #{scoretheory}
+					</if>
+					<if test="scoreskill != null">
+						AND SCORESKILL = #{scoreskill}
+					</if>
+					<if test="ispasser != null">
+						AND ISPASSER = #{ispasser}
+					</if>
+					<if test="certifyno != null and certifyno !=''">
+						AND CERTIFYNO = #{certifyno}
+					</if>
+					<if test="certifydate != null and certifydate !=''">
+						AND CERTIFYDATE = #{certifydate}
+					</if>
+					<if test="isemploy != null">
+						AND ISEMPLOY = #{isemploy}
+					</if>
+					<if test="employunit != null and employunit !=''">
+						AND EMPLOYUNIT = #{employunit}
+					</if>
+					<if test="employdate != null and employdate !=''">
+						AND EMPLOYDATE = #{employdate}
+					</if>
+					<if test="projectname != null and projectname !=''">
+						AND PROJECTNAME = #{projectname}
+					</if>
+					<if test="licenseno != null and licenseno !=''">
+						AND LICENSENO = #{licenseno}
+					</if>
+					<if test="employformaid != null">
+						AND EMPLOYFORMAID = #{employformaid}
+					</if>
+					<if test="unitlinkman != null and unitlinkman !=''">
+						AND UNITLINKMAN = #{unitlinkman}
+					</if>
+					<if test="unitphoneno != null and unitphoneno !=''">
+						AND UNITPHONENO = #{unitphoneno}
+					</if>
+					<if test="laborcontract != null and laborcontract !=''">
+						AND LABORCONTRACT = #{laborcontract}
+					</if>
+					<if test="isdifficulty != null">
+						AND ISDIFFICULTY = #{isdifficulty}
+					</if>
+					<if test="ishandicapped != null">
+						AND ISHANDICAPPED = #{ishandicapped}
+					</if>
+					<if test="employfigure != null">
+						AND EMPLOYFIGURE = #{employfigure}
+					</if>
+					<if test="isapprase != null">
+						AND ISAPPRASE = #{isapprase}
+					</if>
+					<if test="issubsidy != null">
+						AND ISSUBSIDY = #{issubsidy}
+					</if>
+					<if test="image != null and image !=''">
+						AND IMAGE = #{image}
+					</if>
+					<if test="status != null and status != -1">
+						AND STATUS = #{status}
+					</if>
+					<if test="status != null and status == -1">
+						AND STATUS <![CDATA[<>]]> #{status}
+					</if>
+					<if test="certificatetype != null">
+						AND CERTIFICATETYPE = #{certificatetype}
+					</if>
+					<if test="memo != null and memo !=''">
+						AND MEMO = #{memo}
+					</if>
+					<if test="pkid != null">
+						AND PKID = #{pkid}
+					</if>
+					<if test="idxid != null and idxid !=''">
+						AND IDXID = #{idxid}
+					</if>
+					<if test="identlevel != null">
+						AND IDENTLEVEL = #{identlevel}
+					</if>
+		</where>
+		<if test="sortColumns != null and sortColumns !=''">
+			ORDER BY #{sortColumns}
+		</if>
+	</select>
+
+	<!-- 按条件组合搜索列表  -->
+	<select id="findListForExport" resultMap="RM_TirStudent">
+		select o.name as organName, d.name as className, d2.name as hoseholdName, d3.name as nation, d4.name as education, d5.name as certiType, 
+			d6.name as certiLevel, d7.name as zjCertiType, d8.name as peopleType, d9.name as idEmploy, s.identno as zjCertiNo,s.* 
+		from tir_student s left join tir_class c on s.idxid = c.pkid left join sys_dictionary d on c.careerid = d.pkid left join reg_organinfo o on c.orgid = o.pkid
+			left join sys_dictionary d2 on s.householdid = d2.pkid 
+			left join sys_dictionary d3 on s.nationid = d3.pkid 
+			left join sys_dictionary d4 on s.cultureid = d4.pkid 
+			left join sys_dictionary d5 on s.certificatetype = d5.pkid 
+			left join sys_dictionary d6 on s.identlevel = d6.pkid 
+			left join sys_dictionary d7 on s.identid = d7.pkid 
+			left join sys_dictionary d8 on s.structid = d8.pkid 
+			left join sys_dictionary d9 on s.isemploy = d9.pkid
+		<where>
+					<if test="name != null and name !=''">
+						AND s.NAME = #{name}
+					</if>
+					<if test="idno != null and idno !=''">
+						AND s.IDNO = #{idno}
+					</if>
+					<if test="nationid != null">
+						AND s.NATIONID = #{nationid}
+					</if>
+					<if test="householdid != null">
+						AND s.HOUSEHOLDID = #{householdid}
+					</if>
+					<if test="cultureid != null">
+						AND s.CULTUREID = #{cultureid}
+					</if>
+					<if test="adress != null and adress !=''">
+						AND s.ADRESS = #{adress}
+					</if>
+					<if test="phoneno != null and phoneno !=''">
+						AND s.PHONENO = #{phoneno}
+					</if>
+					<if test="structid != null">
+						AND s.STRUCTID = #{structid}
+					</if>
+					<if test="identid != null">
+						AND s.IDENTID = #{identid}
+					</if>
+					<if test="identno != null and identno !=''">
+						AND s.IDENTNO = #{identno}
+					</if>
+					<if test="dateunemployed != null and dateunemployed !=''">
+						AND s.DATEUNEMPLOYED = #{dateunemployed}
+					</if>
+					<if test="trainaprid != null">
+						AND s.TRAINAPRID = #{trainaprid}
+					</if>
+					<if test="completeaprid != null">
+						AND s.COMPLETEAPRID = #{completeaprid}
+					</if>
+					<if test="scoretheory != null">
+						AND s.SCORETHEORY = #{scoretheory}
+					</if>
+					<if test="scoreskill != null">
+						AND s.SCORESKILL = #{scoreskill}
+					</if>
+					<if test="ispasser != null">
+						AND s.ISPASSER = #{ispasser}
+					</if>
+					<if test="certifyno != null and certifyno !=''">
+						AND s.CERTIFYNO = #{certifyno}
+					</if>
+					<if test="certifydate != null and certifydate !=''">
+						AND s.CERTIFYDATE = #{certifydate}
+					</if>
+					<if test="isemploy != null">
+						AND s.ISEMPLOY = #{isemploy}
+					</if>
+					<if test="employunit != null and employunit !=''">
+						AND s.EMPLOYUNIT = #{employunit}
+					</if>
+					<if test="employdate != null and employdate !=''">
+						AND s.EMPLOYDATE = #{employdate}
+					</if>
+					<if test="projectname != null and projectname !=''">
+						AND s.PROJECTNAME = #{projectname}
+					</if>
+					<if test="licenseno != null and licenseno !=''">
+						AND s.LICENSENO = #{licenseno}
+					</if>
+					<if test="employformaid != null">
+						AND s.EMPLOYFORMAID = #{employformaid}
+					</if>
+					<if test="unitlinkman != null and unitlinkman !=''">
+						AND s.UNITLINKMAN = #{unitlinkman}
+					</if>
+					<if test="unitphoneno != null and unitphoneno !=''">
+						AND s.UNITPHONENO = #{unitphoneno}
+					</if>
+					<if test="laborcontract != null and laborcontract !=''">
+						AND s.LABORCONTRACT = #{laborcontract}
+					</if>
+					<if test="isdifficulty != null">
+						AND s.ISDIFFICULTY = #{isdifficulty}
+					</if>
+					<if test="ishandicapped != null">
+						AND s.ISHANDICAPPED = #{ishandicapped}
+					</if>
+					<if test="employfigure != null">
+						AND s.EMPLOYFIGURE = #{employfigure}
+					</if>
+					<if test="isapprase != null">
+						AND s.ISAPPRASE = #{isapprase}
+					</if>
+					<if test="issubsidy != null">
+						AND s.ISSUBSIDY = #{issubsidy}
+					</if>
+					<if test="image != null and image !=''">
+						AND s.IMAGE = #{image}
+					</if>
+					<if test="status != null and status != -1">
+						AND s.STATUS = #{status}
+					</if>
+					<if test="status != null and status == -1">
+						AND s.STATUS <![CDATA[<>]]> #{status}
+					</if>
+					<if test="certificatetype != null">
+						AND s.CERTIFICATETYPE = #{certificatetype}
+					</if>
+					<if test="memo != null and memo !=''">
+						AND s.MEMO = #{memo}
+					</if>
+					<if test="pkid != null">
+						AND s.PKID = #{pkid}
+					</if>
+					<if test="idxid != null and idxid !=''">
+						AND s.IDXID = #{idxid}
+					</if>
+					<if test="identlevel != null">
+						AND s.IDENTLEVEL = #{identlevel}
+					</if>
+		</where>
+		<if test="sortColumns != null and sortColumns !=''">
+			ORDER BY #{sortColumns}
+		</if>
+	</select>
+
+	<!-- 分页 -->
+	<select id="findPageList" resultMap="RM_TirStudent">
+		select * from (
+		select t.*, rownum rn from(
+		SELECT s.*
+		FROM tir_student s
+	    left join tir_class c on s.idxid = c.pkid
+	    left join sys_dictionary d on c.careerid = d.pkid 
+	    left join reg_organinfo o on c.orgid = o.pkid
+		<where>
+			<if test="model != null">
+						<if test="model.name != null and model.name !=''">
+							AND s.NAME = #{model.name}
+						</if>
+						<if test="model.idno != null and model.idno !=''">
+							AND s.IDNO = #{model.idno}
+						</if>
+						<if test="model.nationid != null">
+							AND s.NATIONID = #{model.nationid}
+						</if>
+						<if test="model.householdid != null">
+							AND s.HOUSEHOLDID = #{model.householdid}
+						</if>
+						<if test="model.cultureid != null">
+							AND s.CULTUREID = #{model.cultureid}
+						</if>
+						<if test="model.adress != null and model.adress !=''">
+							AND s.ADRESS = #{model.adress}
+						</if>
+						<if test="model.phoneno != null and model.phoneno !=''">
+							AND s.PHONENO = #{model.phoneno}
+						</if>
+						<if test="model.structid != null">
+							AND s.STRUCTID = #{model.structid}
+						</if>
+						<if test="model.identid != null">
+							AND s.IDENTID = #{model.identid}
+						</if>
+						<if test="model.identno != null and model.identno !=''">
+							AND s.IDENTNO = #{model.identno}
+						</if>
+						<if test="model.dateunemployed != null and model.dateunemployed !=''">
+							AND s.DATEUNEMPLOYED = #{model.dateunemployed}
+						</if>
+						<if test="model.trainaprid != null">
+							AND s.TRAINAPRID = #{model.trainaprid}
+						</if>
+						<if test="model.completeaprid != null">
+							AND s.COMPLETEAPRID = #{model.completeaprid}
+						</if>
+						<if test="model.scoretheory != null">
+							AND s.SCORETHEORY = #{model.scoretheory}
+						</if>
+						<if test="model.scoreskill != null">
+							AND s.SCORESKILL = #{model.scoreskill}
+						</if>
+						<if test="model.ispasser != null">
+							AND s.ISPASSER = #{model.ispasser}
+						</if>
+						<if test="model.certifyno != null and model.certifyno !=''">
+							AND s.CERTIFYNO = #{model.certifyno}
+						</if>
+						<if test="model.certifydate != null and model.certifydate !=''">
+							AND s.CERTIFYDATE = #{model.certifydate}
+						</if>
+						<if test="model.isemploy != null">
+							AND s.ISEMPLOY = #{model.isemploy}
+						</if>
+						<if test="model.employunit != null and model.employunit !=''">
+							AND s.EMPLOYUNIT = #{model.employunit}
+						</if>
+						<if test="model.employdate != null and model.employdate !=''">
+							AND s.EMPLOYDATE = #{model.employdate}
+						</if>
+						<if test="model.projectname != null and model.projectname !=''">
+							AND s.PROJECTNAME = #{model.projectname}
+						</if>
+						<if test="model.licenseno != null and model.licenseno !=''">
+							AND s.LICENSENO = #{model.licenseno}
+						</if>
+						<if test="model.employformaid != null">
+							AND s.EMPLOYFORMAID = #{model.employformaid}
+						</if>
+						<if test="model.unitlinkman != null and model.unitlinkman !=''">
+							AND s.UNITLINKMAN = #{model.unitlinkman}
+						</if>
+						<if test="model.unitphoneno != null and model.unitphoneno !=''">
+							AND s.UNITPHONENO = #{model.unitphoneno}
+						</if>
+						<if test="model.laborcontract != null and model.laborcontract !=''">
+							AND s.LABORCONTRACT = #{model.laborcontract}
+						</if>
+						<if test="model.isdifficulty != null">
+							AND s.ISDIFFICULTY = #{model.isdifficulty}
+						</if>
+						<if test="model.ishandicapped != null">
+							AND s.ISHANDICAPPED = #{model.ishandicapped}
+						</if>
+						<if test="model.employfigure != null">
+							AND s.EMPLOYFIGURE = #{model.employfigure}
+						</if>
+						<if test="model.isapprase != null">
+							AND s.ISAPPRASE = #{model.isapprase}
+						</if>
+						<if test="model.issubsidy != null">
+							AND s.ISSUBSIDY = #{model.issubsidy}
+						</if>
+						<if test="model.image != null and model.image !=''">
+							AND s.IMAGE = #{model.image}
+						</if>
+						<if test="model.status != null and model.status != -1">
+							AND s.STATUS = #{model.status}
+						</if>
+						<if test="model.status != null and model.status == -1">
+							AND s.STATUS <![CDATA[<>]]> #{model.status}
+						</if>
+						<if test="model.certificatetype != null">
+							AND s.CERTIFICATETYPE = #{model.certificatetype}
+						</if>
+						<if test="model.memo != null and model.memo !=''">
+							AND s.MEMO = #{model.memo}
+						</if>
+						<if test="model.pkid != null">
+							AND s.PKID = #{model.pkid}
+						</if>
+						<if test="model.idxid != null and model.idxid !=''">
+							AND s.IDXID = #{model.idxid}
+						</if>
+						<if test="model.identlevel != null">
+							AND s.IDENTLEVEL = #{model.identlevel}
+						</if>
+						<if test="model.branchId != null">
+							AND o.branchid in (select u.pkid
+		                        from umg_branch u
+		                       where status <![CDATA[<>]]> '-1'
+		                       start with u.pkid = #{model.branchId}
+		                      connect by prior u.pkid = u.ppkid)
+						</if>
+			</if>
+		</where>
+		 )t)
+		where rn between
+		<choose>
+			<when test="pager != null">
+				#{pager.begin}
+			</when>
+			<otherwise>
+				 0 
+			</otherwise>
+		</choose>
+		and 
+		<choose>
+			<when test="pager != null">
+				#{pager.end}
+			</when>
+			<otherwise>
+				20
+			</otherwise>
+		</choose>
+	</select>
+
+</mapper>

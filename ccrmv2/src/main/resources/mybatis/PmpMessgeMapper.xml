@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.ccrm.dao.PmpMessgeDao">
+
+	<resultMap id="RM_PmpMessge" type="com.ccrm.entity.PmpMessge">
+        <result property="kindid" column="KINDID"/>
+        <result property="isstick" column="ISSTICK"/>
+        <result property="seqno" column="SEQNO"/>
+        <result property="title" column="TITLE"/>
+        <result property="textbody" column="TEXTBODY"/>
+        <result property="unitpost" column="UNITPOST"/>
+        <result property="datepost" column="DATEPOST"/>
+        <result property="cropperid" column="CROPPERID"/>
+        <result property="cmoperid" column="CMOPERID"/>
+        <result property="cmdate" column="CMDATE"/>
+        <result property="status" column="STATUS"/>
+        <result property="datenew" column="DATENEW"/>
+        <result property="dateedit" column="DATEEDIT"/>
+        <result property="pkid" column="PKID"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		KINDID,ISSTICK,SEQNO,TITLE,TEXTBODY,UNITPOST,DATEPOST,CROPPERID,CMOPERID,CMDATE,STATUS,DATENEW,DATEEDIT,PKID
+	    ]]>
+	</sql>
+
+	<!--保存 -->
+	<insert id="save">
+	    <![CDATA[
+	        INSERT INTO PMP_MESSGE (
+	        	KINDID ,
+	        	ISSTICK ,
+	        	SEQNO ,
+	        	TITLE ,
+	        	TEXTBODY ,
+	        	UNITPOST ,
+	        	DATEPOST ,
+	        	CROPPERID ,
+	        	CMOPERID ,
+	        	CMDATE ,
+	        	STATUS ,
+	        	DATENEW ,
+	        	DATEEDIT ,
+	        	PKID 
+	        ) VALUES (
+	        	#{kindid} ,
+	        	#{isstick} ,
+	        	#{seqno} ,
+	        	#{title} ,
+	        	#{textbody} ,
+	        	#{unitpost} ,
+	        	#{datepost} ,
+	        	#{cropperid} ,
+	        	#{cmoperid} ,
+	        	#{cmdate} ,
+	        	#{status} ,
+	        	#{datenew} ,
+	        	#{dateedit} ,
+	        	#{pkid} 
+	        )
+	    ]]>
+	</insert>
+	
+	<!-- update 条件组合 -->
+	<sql id="update_sql">
+		<set>
+			<if test="kindid != null">
+				KINDID = #{kindid} ,
+			</if>
+			<if test="isstick != null">
+				ISSTICK = #{isstick} ,
+			</if>
+			<if test="seqno != null">
+				SEQNO = #{seqno} ,
+			</if>
+			<if test="title != null and title != ''">
+				TITLE = #{title} ,
+			</if>
+			<if test="textbody != null and textbody != ''">
+				TEXTBODY = #{textbody} ,
+			</if>
+			<if test="unitpost != null and unitpost != ''">
+				UNITPOST = #{unitpost} ,
+			</if>
+			<if test="datepost != null and datepost != ''">
+				DATEPOST = #{datepost} ,
+			</if>
+			<if test="cropperid != null">
+				CROPPERID = #{cropperid} ,
+			</if>
+			<if test="cmoperid != null">
+				CMOPERID = #{cmoperid} ,
+			</if>
+			<if test="cmdate != null and cmdate != ''">
+				CMDATE = #{cmdate} ,
+			</if>
+			<if test="status != null">
+				STATUS = #{status} ,
+			</if>
+		</set>
+	</sql>
+	
+	<!-- 修改 -->
+	<update id="update">
+		UPDATE PMP_MESSGE
+		<include refid="update_sql" />
+		WHERE
+			PKID = #{pkid} 	</update>
+
+	<!-- 根据ID删除 -->
+	<delete id="delete">
+    	<![CDATA[
+        	DELETE FROM PMP_MESSGE 
+        	WHERE  PKID = #{pkid}
+    	]]>
+	</delete>
+	
+	<!-- getById -->
+	<select id="getById" resultMap="RM_PmpMessge">
+		SELECT
+		<include refid="columns" />
+		FROM PMP_MESSGE
+		WHERE  PKID = #{pkid}  
+	</select>
+
+	<!-- 获取总数 -->
+	<select id="getTotalCount" resultType="int">
+		SELECT COUNT(1)
+		FROM PMP_MESSGE
+		<where>
+			<if test="model != null">
+						<if test="model.kindid != null">
+							AND KINDID = #{model.kindid}
+						</if>
+						<if test="model.isstick != null">
+							AND ISSTICK = #{model.isstick}
+						</if>
+						<if test="model.seqno != null">
+							AND SEQNO = #{model.seqno}
+						</if>
+						<if test="model.title != null and model.title !=''">
+							AND TITLE = #{model.title}
+						</if>
+						<if test="model.textbody != null and model.textbody !=''">
+							AND TEXTBODY = #{model.textbody}
+						</if>
+						<if test="model.unitpost != null and model.unitpost !=''">
+							AND UNITPOST = #{model.unitpost}
+						</if>
+						<if test="model.datepost != null and model.datepost !=''">
+							AND DATEPOST = #{model.datepost}
+						</if>
+						<if test="model.cropperid != null">
+							AND CROPPERID = #{model.cropperid}
+						</if>
+						<if test="model.cmoperid != null">
+							AND CMOPERID = #{model.cmoperid}
+						</if>
+						<if test="model.cmdate != null and model.cmdate !=''">
+							AND CMDATE = #{model.cmdate}
+						</if>
+						<if test="model.status != null">
+							AND STATUS = #{model.status}
+						</if>
+						<if test="model.pkid != null">
+							AND PKID = #{model.pkid}
+						</if>
+			</if>
+		</where>
+	</select>  
+	
+	<!-- 按条件组合搜索列表  -->
+	<select id="findList" resultMap="RM_PmpMessge">
+		SELECT
+		<include refid="columns" />
+		FROM  PMP_MESSGE
+		<where>
+					<if test="kindid != null">
+						AND KINDID = #{kindid}
+					</if>
+					<if test="isstick != null">
+						AND ISSTICK = #{isstick}
+					</if>
+					<if test="seqno != null">
+						AND SEQNO = #{seqno}
+					</if>
+					<if test="title != null and title !=''">
+						AND TITLE = #{title}
+					</if>
+					<if test="textbody != null and textbody !=''">
+						AND TEXTBODY = #{textbody}
+					</if>
+					<if test="unitpost != null and unitpost !=''">
+						AND UNITPOST = #{unitpost}
+					</if>
+					<if test="datepost != null and datepost !=''">
+						AND DATEPOST = #{datepost}
+					</if>
+					<if test="cropperid != null">
+						AND CROPPERID = #{cropperid}
+					</if>
+					<if test="cmoperid != null">
+						AND CMOPERID = #{cmoperid}
+					</if>
+					<if test="cmdate != null and cmdate !=''">
+						AND CMDATE = #{cmdate}
+					</if>
+					<if test="status != null">
+						AND STATUS = #{status}
+					</if>
+					<if test="pkid != null">
+						AND PKID = #{pkid}
+					</if>
+		</where>
+		<if test="sortColumns != null and sortColumns !=''">
+			ORDER BY #{sortColumns}
+		</if>
+	</select>
+
+	<!-- 分页 -->
+	<select id="findPageList" resultMap="RM_PmpMessge">
+		SELECT <include refid="columns" />
+		FROM PMP_MESSGE
+		<where>
+			<if test="model != null">
+						<if test="model.kindid != null">
+							AND KINDID = #{model.kindid}
+						</if>
+						<if test="model.isstick != null">
+							AND ISSTICK = #{model.isstick}
+						</if>
+						<if test="model.seqno != null">
+							AND SEQNO = #{model.seqno}
+						</if>
+						<if test="model.title != null and model.title !=''">
+							AND TITLE = #{model.title}
+						</if>
+						<if test="model.textbody != null and model.textbody !=''">
+							AND TEXTBODY = #{model.textbody}
+						</if>
+						<if test="model.unitpost != null and model.unitpost !=''">
+							AND UNITPOST = #{model.unitpost}
+						</if>
+						<if test="model.datepost != null and model.datepost !=''">
+							AND DATEPOST = #{model.datepost}
+						</if>
+						<if test="model.cropperid != null">
+							AND CROPPERID = #{model.cropperid}
+						</if>
+						<if test="model.cmoperid != null">
+							AND CMOPERID = #{model.cmoperid}
+						</if>
+						<if test="model.cmdate != null and model.cmdate !=''">
+							AND CMDATE = #{model.cmdate}
+						</if>
+						<if test="model.status != null">
+							AND STATUS = #{model.status}
+						</if>
+						<if test="model.pkid != null">
+							AND PKID = #{model.pkid}
+						</if>
+			</if>
+		</where>
+		limit 
+		<choose>
+			<when test="pager != null">
+				#{pager.begin},#{pager.pageSize}
+			</when>
+			<otherwise>
+				0,10
+			</otherwise>
+		</choose>
+	</select>
+
+</mapper>

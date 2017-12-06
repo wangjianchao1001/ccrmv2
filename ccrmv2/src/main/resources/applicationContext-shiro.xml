@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd"
+       default-lazy-init="true">
+    
+    <description>Shiro安全配置</description>
+	
+	<!-- 安全认证过滤器 -->
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<!-- shiro的核心安全接口 -->
+		<property name="securityManager" ref="securityManager" />
+		<!-- 要求登录时的链接 -->
+		<property name="loginUrl" value="/login.html" />
+		<!-- 登录成功后要跳转的连接 -->
+		<property name="successUrl" value="/index.html" />
+		<!-- 未授权时要跳转的连接 -->
+		<property name="unauthorizedUrl" value="/error403.html" />
+		<!-- 权限配置 -->
+        <property name="filterChainDefinitionMap" ref="chainDefinitionSectionMetaSource"/>
+	</bean>
+	
+     <!--自定义filterChainDefinitionMap-->
+     <bean id="chainDefinitionSectionMetaSource" class="com.ccrm.shiro.ChainDefinitionSectionMetaSource">
+    	<property name="filterChainDefinitions">
+            <value>
+              	/static/** = anon<!-- 不需要认证 -->
+				/login = anon
+				/login.html = anon
+				/error*.html = anon
+				/index.html = authc
+            </value>
+        </property>
+    </bean> 
+       
+	<!-- 设定shiro的权限管理器 --> 
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<property name="realm" ref="authenticationRealm" />
+		<property name="cacheManager" ref="shiroCacheManager" />
+	</bean>
+	
+	<!-- 设置自定义realm -->
+	<bean id="authenticationRealm" class="com.ccrm.shiro.AuthenticationRealm" />
+	
+	<!-- 缓存设置，不配置缓存的话，每次权限检查都会进入doGetAuthorizationInfo方法 -->
+	<bean id="shiroCacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager" />
+
+	<!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+	
+</beans>

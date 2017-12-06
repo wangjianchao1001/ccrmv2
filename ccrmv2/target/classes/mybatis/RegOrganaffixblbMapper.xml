@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.ccrm.dao.RegOrganaffixblbDao">
+
+	<resultMap id="RM_RegOrganaffixblb" type="com.ccrm.entity.RegOrganaffixblb">
+        <result property="idxid" column="IDXID"/>
+        <result property="kindid" column="KINDID"/>
+        <result property="fileame" column="FILEAME"/>
+        <result property="fileexp" column="FILEEXP"/>
+        <result property="value" column="VALUE"/>
+        <result property="status" column="STATUS"/>
+        <result property="bigpictrue" column="BIGPICTRUE"/>
+        <result property="smallpictrue" column="SMALLPICTRUE"/>
+        <result property="datenew" column="DATENEW"/>
+        <result property="dateedit" column="DATEEDIT"/>
+        <result property="memo" column="MEMO"/>
+        <result property="pkid" column="PKID"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		IDXID,KINDID,FILEAME,FILEEXP,VALUE,STATUS,BIGPICTRUE,SMALLPICTRUE,DATENEW,DATEEDIT,MEMO,PKID
+	    ]]>
+	</sql>
+
+	<!--保存 -->
+	<insert id="save">
+	    <![CDATA[
+	        INSERT INTO REG_ORGANAFFIXBLB (
+	        	IDXID ,
+	        	KINDID ,
+	        	FILEAME ,
+	        	FILEEXP ,
+	        	VALUE ,
+	        	STATUS ,
+	        	BIGPICTRUE ,
+	        	SMALLPICTRUE ,
+	        	DATENEW ,
+	        	DATEEDIT ,
+	        	MEMO ,
+	        	PKID 
+	        ) VALUES (
+	        	#{idxid} ,
+	        	#{kindid} ,
+	        	#{fileame} ,
+	        	#{fileexp} ,
+	        	#{value} ,
+	        	#{status} ,
+	        	#{bigpictrue} ,
+	        	#{smallpictrue} ,
+	        	#{datenew} ,
+	        	#{dateedit} ,
+	        	#{memo} ,
+	        	#{pkid} 
+	        )
+	    ]]>
+	</insert>
+	
+	<!-- update 条件组合 -->
+	<sql id="update_sql">
+		<set>
+			<if test="idxid != null">
+				IDXID = #{idxid} ,
+			</if>
+			<if test="kindid != null">
+				KINDID = #{kindid} ,
+			</if>
+			<if test="fileame != null and fileame != ''">
+				FILEAME = #{fileame} ,
+			</if>
+			<if test="fileexp != null and fileexp != ''">
+				FILEEXP = #{fileexp} ,
+			</if>
+			<if test="value != null and value != ''">
+				VALUE = #{value} ,
+			</if>
+			<if test="status != null">
+				STATUS = #{status} ,
+			</if>
+			<if test="bigpictrue != null and bigpictrue != ''">
+				BIGPICTRUE = #{bigpictrue} ,
+			</if>
+			<if test="smallpictrue != null and smallpictrue != ''">
+				SMALLPICTRUE = #{smallpictrue} ,
+			</if>
+			<if test="datenew != null">
+				DATENEW = #{datenew} ,
+			</if>
+			<if test="dateedit != null">
+				DATEEDIT = #{dateedit} ,
+			</if>
+			<if test="memo != null and memo != ''">
+				MEMO = #{memo} 
+			</if>
+		</set>
+	</sql>
+	
+	<!-- 修改 -->
+	<update id="update">
+		UPDATE REG_ORGANAFFIXBLB
+		<include refid="update_sql" />
+		WHERE
+			PKID = #{pkid} 	</update>
+
+	<!-- 根据ID删除 -->
+	<delete id="delete">
+    	<![CDATA[
+        	DELETE FROM REG_ORGANAFFIXBLB 
+        	WHERE  PKID = #{pkid}
+    	]]>
+	</delete>
+	
+	<!-- getById -->
+	<select id="getById" resultMap="RM_RegOrganaffixblb">
+		SELECT
+		<include refid="columns" />
+		FROM REG_ORGANAFFIXBLB
+		WHERE  PKID = #{pkid}  
+	</select>
+
+	<!-- 获取总数 -->
+	<select id="getTotalCount" resultType="int">
+		SELECT COUNT(1)
+		FROM REG_ORGANAFFIXBLB
+		<where>
+			<if test="model != null">
+						<if test="model.idxid != null">
+							AND IDXID = #{model.idxid}
+						</if>
+						<if test="model.kindid != null">
+							AND KINDID = #{model.kindid}
+						</if>
+						<if test="model.fileame != null and model.fileame !=''">
+							AND FILEAME = #{model.fileame}
+						</if>
+						<if test="model.fileexp != null and model.fileexp !=''">
+							AND FILEEXP = #{model.fileexp}
+						</if>
+						<if test="model.value != null and model.value !=''">
+							AND VALUE = #{model.value}
+						</if>
+						<if test="model.status != null">
+							AND STATUS = #{model.status}
+						</if>
+						<if test="model.bigpictrue != null and model.bigpictrue !=''">
+							AND BIGPICTRUE = #{model.bigpictrue}
+						</if>
+						<if test="model.smallpictrue != null and model.smallpictrue !=''">
+							AND SMALLPICTRUE = #{model.smallpictrue}
+						</if>
+						<if test="model.datenew != null">
+							AND DATENEW = #{model.datenew}
+						</if> 
+						<if test="model.dateedit != null">
+							AND DATEEDIT = #{model.dateedit}
+						</if> 
+						<if test="model.memo != null and model.memo !=''">
+							AND MEMO = #{model.memo}
+						</if>
+						<if test="model.pkid != null">
+							AND PKID = #{model.pkid}
+						</if>
+			</if>
+		</where>
+	</select>  
+	
+	<!-- 按条件组合搜索列表  -->
+	<select id="findList" resultMap="RM_RegOrganaffixblb">
+		SELECT
+		<include refid="columns" />
+		FROM  REG_ORGANAFFIXBLB
+		<where>
+					<if test="idxid != null">
+						AND IDXID = #{idxid}
+					</if>
+					<if test="kindid != null">
+						AND KINDID = #{kindid}
+					</if>
+					<if test="fileame != null and fileame !=''">
+						AND FILEAME = #{fileame}
+					</if>
+					<if test="fileexp != null and fileexp !=''">
+						AND FILEEXP = #{fileexp}
+					</if>
+					<if test="value != null and value !=''">
+						AND VALUE = #{value}
+					</if>
+					<if test="status != null">
+						AND STATUS = #{status}
+					</if>
+					<if test="bigpictrue != null and bigpictrue !=''">
+						AND BIGPICTRUE = #{bigpictrue}
+					</if>
+					<if test="smallpictrue != null and smallpictrue !=''">
+						AND SMALLPICTRUE = #{smallpictrue}
+					</if>
+					<if test="datenew != null">
+						AND DATENEW = #{datenew}
+					</if>
+					<if test="dateedit != null">
+						AND DATEEDIT = #{dateedit}
+					</if>
+					<if test="memo != null and memo !=''">
+						AND MEMO = #{memo}
+					</if>
+					<if test="pkid != null">
+						AND PKID = #{pkid}
+					</if>
+		</where>
+		<if test="sortColumns != null and sortColumns !=''">
+			ORDER BY #{sortColumns}
+		</if>
+	</select>
+
+	<!-- 分页 -->
+	<select id="findPageList" resultMap="RM_RegOrganaffixblb">
+		SELECT <include refid="columns" />
+		FROM REG_ORGANAFFIXBLB
+		<where>
+			<if test="model != null">
+						<if test="model.idxid != null">
+							AND IDXID = #{model.idxid}
+						</if>
+						<if test="model.kindid != null">
+							AND KINDID = #{model.kindid}
+						</if>
+						<if test="model.fileame != null and model.fileame !=''">
+							AND FILEAME = #{model.fileame}
+						</if>
+						<if test="model.fileexp != null and model.fileexp !=''">
+							AND FILEEXP = #{model.fileexp}
+						</if>
+						<if test="model.value != null and model.value !=''">
+							AND VALUE = #{model.value}
+						</if>
+						<if test="model.status != null">
+							AND STATUS = #{model.status}
+						</if>
+						<if test="model.bigpictrue != null and model.bigpictrue !=''">
+							AND BIGPICTRUE = #{model.bigpictrue}
+						</if>
+						<if test="model.smallpictrue != null and model.smallpictrue !=''">
+							AND SMALLPICTRUE = #{model.smallpictrue}
+						</if>
+						<if test="model.datenew != null">
+							AND DATENEW = #{model.datenew}
+						</if>
+						<if test="model.dateedit != null">
+							AND DATEEDIT = #{model.dateedit}
+						</if>
+						<if test="model.memo != null and model.memo !=''">
+							AND MEMO = #{model.memo}
+						</if>
+						<if test="model.pkid != null">
+							AND PKID = #{model.pkid}
+						</if>
+			</if>
+		</where>
+		limit 
+		<choose>
+			<when test="pager != null">
+				#{pager.begin},#{pager.pageSize}
+			</when>
+			<otherwise>
+				0,10
+			</otherwise>
+		</choose>
+	</select>
+
+</mapper>

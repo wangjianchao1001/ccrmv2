@@ -1,0 +1,579 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.ccrm.dao.TirClassDao">
+
+	<resultMap id="RM_TirClass" type="com.ccrm.entity.TirClass">
+        <result property="orgid" column="ORGID"/>
+        <result property="kindid" column="KINDID"/>
+        <result property="careerid" column="CAREERID"/>
+        <result property="gradeid" column="GRADEID"/>
+        <result property="datebegin" column="DATEBEGIN"/>
+        <result property="dateend" column="DATEEND"/>
+        <result property="termid" column="TERMID"/>
+        <result property="linkman" column="LINKMAN"/>
+        <result property="phoneno" column="PHONENO"/>
+        <result property="teachername" column="TEACHERNAME"/>
+        <result property="times" column="TIMES"/>
+        <result property="teachaddress" column="TEACHADDRESS"/>
+        <result property="teachcontent" column="TEACHCONTENT"/>
+        <result property="timestheory" column="TIMESTHEORY"/>
+        <result property="timeswork" column="TIMESWORK"/>
+        <result property="teachmaterial" column="TEACHMATERIAL"/>
+        <result property="bdateapp" column="BDATEAPP"/>
+        <result property="bappid" column="BAPPID"/>
+        <result property="bdateapr" column="BDATEAPR"/>
+        <result property="baprman" column="BAPRMAN"/>
+        <result property="edateapp" column="EDATEAPP"/>
+        <result property="eappid" column="EAPPID"/>
+        <result property="edateapr" column="EDATEAPR"/>
+        <result property="eaprman" column="EAPRMAN"/>
+        <result property="isspec" column="ISSPEC"/>
+        <result property="email" column="EMAIL"/>
+        <result property="status" column="STATUS"/>
+        <result property="datenew" column="DATENEW"/>
+        <result property="dateedit" column="DATEEDIT"/>
+        <result property="memo" column="MEMO"/>
+        <result property="pkid" column="PKID"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		ORGID,KINDID,CAREERID,GRADEID,DATEBEGIN,DATEEND,TERMID,LINKMAN,PHONENO,TEACHERNAME,TIMES,TEACHADDRESS,TEACHCONTENT,TIMESTHEORY,TIMESWORK,TEACHMATERIAL,BDATEAPP,BAPPID,BDATEAPR,BAPRMAN,EDATEAPP,EAPPID,EDATEAPR,EAPRMAN,ISSPEC,EMAIL,STATUS,DATENEW,DATEEDIT,MEMO,PKID
+	    ]]>
+	</sql>
+
+	<!--保存 -->
+	<insert id="save">
+	    <![CDATA[
+	        INSERT INTO TIR_CLASS (
+	        	ORGID ,
+	        	KINDID ,
+	        	CAREERID ,
+	        	GRADEID ,
+	        	DATEBEGIN ,
+	        	DATEEND ,
+	        	TERMID ,
+	        	LINKMAN ,
+	        	PHONENO ,
+	        	TEACHERNAME ,
+	        	TIMES ,
+	        	TEACHADDRESS ,
+	        	TEACHCONTENT ,
+	        	TIMESTHEORY ,
+	        	TIMESWORK ,
+	        	TEACHMATERIAL ,
+	        	BDATEAPP ,
+	        	BAPPID ,
+	        	BDATEAPR ,
+	        	BAPRMAN ,
+	        	EDATEAPP ,
+	        	EAPPID ,
+	        	EDATEAPR ,
+	        	EAPRMAN ,
+	        	ISSPEC ,
+	        	EMAIL ,
+	        	STATUS ,
+	        	DATENEW ,
+	        	DATEEDIT ,
+	        	MEMO ,
+	        	PKID 
+	        ) VALUES (
+	        	#{orgid} ,
+	        	#{kindid} ,
+	        	#{careerid} ,
+	        	#{gradeid} ,
+	        	#{datebegin} ,
+	        	#{dateend} ,
+	        	#{termid} ,
+	        	#{linkman} ,
+	        	#{phoneno} ,
+	        	#{teachername} ,
+	        	#{times} ,
+	        	#{teachaddress} ,
+	        	#{teachcontent} ,
+	        	#{timestheory} ,
+	        	#{timeswork} ,
+	        	#{teachmaterial} ,
+	        	#{bdateapp} ,
+	        	#{bappid} ,
+	        	#{bdateapr} ,
+	        	#{baprman} ,
+	        	#{edateapp} ,
+	        	#{eappid} ,
+	        	#{edateapr} ,
+	        	#{eaprman} ,
+	        	#{isspec} ,
+	        	#{email} ,
+	        	#{status} ,
+	        	#{datenew} ,
+	        	#{dateedit} ,
+	        	#{memo} ,
+	        	#{pkid} 
+	        )
+	    ]]>
+	</insert>
+	
+	<!-- update 条件组合 -->
+	<sql id="update_sql">
+		<set>
+			<if test="orgid != null">
+				ORGID = #{orgid} ,
+			</if>
+			<if test="kindid != null">
+				KINDID = #{kindid} ,
+			</if>
+			<if test="careerid != null">
+				CAREERID = #{careerid} ,
+			</if>
+			<if test="gradeid != null">
+				GRADEID = #{gradeid} ,
+			</if>
+			<if test="datebegin != null and datebegin != ''">
+				DATEBEGIN = #{datebegin} ,
+			</if>
+			<if test="dateend != null and dateend != ''">
+				DATEEND = #{dateend} ,
+			</if>
+			<if test="termid != null">
+				TERMID = #{termid} ,
+			</if>
+			<if test="linkman != null and linkman != ''">
+				LINKMAN = #{linkman} ,
+			</if>
+			<if test="phoneno != null and phoneno != ''">
+				PHONENO = #{phoneno} ,
+			</if>
+			<if test="teachername != null and teachername != ''">
+				TEACHERNAME = #{teachername} ,
+			</if>
+			<if test="times != null and times != ''">
+				TIMES = #{times} ,
+			</if>
+			<if test="teachaddress != null and teachaddress != ''">
+				TEACHADDRESS = #{teachaddress} ,
+			</if>
+			<if test="teachcontent != null and teachcontent != ''">
+				TEACHCONTENT = #{teachcontent} ,
+			</if>
+			<if test="timestheory != null and timestheory != ''">
+				TIMESTHEORY = #{timestheory} ,
+			</if>
+			<if test="timeswork != null and timeswork != ''">
+				TIMESWORK = #{timeswork} ,
+			</if>
+			<if test="teachmaterial != null and teachmaterial != ''">
+				TEACHMATERIAL = #{teachmaterial} ,
+			</if>
+			<if test="bdateapp != null and bdateapp != ''">
+				BDATEAPP = #{bdateapp} ,
+			</if>
+			<if test="bappid != null">
+				BAPPID = #{bappid} ,
+			</if>
+			<if test="bdateapr != null and bdateapr != ''">
+				BDATEAPR = #{bdateapr} ,
+			</if>
+			<if test="baprman != null and baprman != ''">
+				BAPRMAN = #{baprman} ,
+			</if>
+			<if test="edateapp != null and edateapp != ''">
+				EDATEAPP = #{edateapp} ,
+			</if>
+			<if test="eappid != null">
+				EAPPID = #{eappid} ,
+			</if>
+			<if test="edateapr != null and edateapr != ''">
+				EDATEAPR = #{edateapr} ,
+			</if>
+			<if test="eaprman != null and eaprman != ''">
+				EAPRMAN = #{eaprman} ,
+			</if>
+			<if test="isspec != null">
+				ISSPEC = #{isspec} ,
+			</if>
+			<if test="email != null and email != ''">
+				EMAIL = #{email} ,
+			</if>
+			<if test="status != null">
+				STATUS = #{status} ,
+			</if>
+			<if test="datenew != null">
+				DATENEW = #{datenew} ,
+			</if>
+			<if test="dateedit != null">
+				DATEEDIT = #{dateedit} ,
+			</if>
+			<if test="memo != null and memo != ''">
+				MEMO = #{memo} 
+			</if>
+		</set>
+	</sql>
+	
+	<!-- 修改 -->
+	<update id="update">
+		UPDATE TIR_CLASS
+		<include refid="update_sql" />
+		WHERE
+			PKID = #{pkid} 	</update>
+
+	<!-- 根据ID删除 -->
+	<delete id="delete">
+    	<![CDATA[
+        	DELETE FROM TIR_CLASS 
+        	WHERE  PKID = #{pkid}
+    	]]>
+	</delete>
+	
+	<!-- getById -->
+	<select id="getById" resultMap="RM_TirClass">
+		SELECT
+		<include refid="columns" />
+		FROM TIR_CLASS
+		WHERE  PKID = #{pkid}  
+	</select>
+
+	<!-- 获取总数 -->
+	<select id="getTotalCount" resultType="int">
+		SELECT COUNT(1)
+		FROM TIR_CLASS
+		<where>
+			<if test="model != null">
+						<if test="model.orgid != null">
+							AND ORGID = #{model.orgid}
+						</if>
+						<if test="model.kindid != null">
+							AND KINDID = #{model.kindid}
+						</if>
+						<if test="model.careerid != null">
+							AND CAREERID = #{model.careerid}
+						</if>
+						<if test="model.gradeid != null">
+							AND GRADEID = #{model.gradeid}
+						</if>
+						<if test="model.datebegin != null and model.datebegin !=''">
+							AND DATEBEGIN = #{model.datebegin}
+						</if>
+						<if test="model.dateend != null and model.dateend !=''">
+							AND DATEEND = #{model.dateend}
+						</if>
+						<if test="model.termid != null">
+							AND TERMID = #{model.termid}
+						</if>
+						<if test="model.linkman != null and model.linkman !=''">
+							AND LINKMAN = #{model.linkman}
+						</if>
+						<if test="model.phoneno != null and model.phoneno !=''">
+							AND PHONENO = #{model.phoneno}
+						</if>
+						<if test="model.teachername != null and model.teachername !=''">
+							AND TEACHERNAME = #{model.teachername}
+						</if>
+						<if test="model.times != null and model.times !=''">
+							AND TIMES = #{model.times}
+						</if>
+						<if test="model.teachaddress != null and model.teachaddress !=''">
+							AND TEACHADDRESS = #{model.teachaddress}
+						</if>
+						<if test="model.teachcontent != null and model.teachcontent !=''">
+							AND TEACHCONTENT = #{model.teachcontent}
+						</if>
+						<if test="model.timestheory != null and model.timestheory !=''">
+							AND TIMESTHEORY = #{model.timestheory}
+						</if>
+						<if test="model.timeswork != null and model.timeswork !=''">
+							AND TIMESWORK = #{model.timeswork}
+						</if>
+						<if test="model.teachmaterial != null and model.teachmaterial !=''">
+							AND TEACHMATERIAL = #{model.teachmaterial}
+						</if>
+						<if test="model.bdateapp != null and model.bdateapp !=''">
+							AND BDATEAPP = #{model.bdateapp}
+						</if>
+						<if test="model.bappid != null">
+							AND BAPPID = #{model.bappid}
+						</if>
+						<if test="model.bdateapr != null and model.bdateapr !=''">
+							AND BDATEAPR = #{model.bdateapr}
+						</if>
+						<if test="model.baprman != null and model.baprman !=''">
+							AND BAPRMAN = #{model.baprman}
+						</if>
+						<if test="model.edateapp != null and model.edateapp !=''">
+							AND EDATEAPP = #{model.edateapp}
+						</if>
+						<if test="model.eappid != null">
+							AND EAPPID = #{model.eappid}
+						</if>
+						<if test="model.edateapr != null and model.edateapr !=''">
+							AND EDATEAPR = #{model.edateapr}
+						</if>
+						<if test="model.eaprman != null and model.eaprman !=''">
+							AND EAPRMAN = #{model.eaprman}
+						</if>
+						<if test="model.isspec != null">
+							AND ISSPEC = #{model.isspec}
+						</if>
+						<if test="model.email != null and model.email !=''">
+							AND EMAIL = #{model.email}
+						</if>
+						<if test="status != null and status != -1">
+							AND STATUS = #{model.status}
+						</if>
+						<if test="status != null and status == -1">
+							AND STATUS <![CDATA[<>]]> #{model.status}
+						</if>
+						<if test="model.datenew != null">
+							AND DATENEW = #{model.datenew}
+						</if> 
+						<if test="model.dateedit != null">
+							AND DATEEDIT = #{model.dateedit}
+						</if> 
+						<if test="model.memo != null and model.memo !=''">
+							AND MEMO = #{model.memo}
+						</if>
+						<if test="model.pkid != null">
+							AND PKID = #{model.pkid}
+						</if>
+			</if>
+		</where>
+	</select>  
+	
+	<!-- 按条件组合搜索列表  -->
+	<select id="findList" resultMap="RM_TirClass">
+		SELECT
+		d.name as careerName,c.*
+		FROM  TIR_CLASS c LEFT JOIN SYS_DICTIONARY d ON c.CAREERID = d.PKID 
+		<where>
+					<if test="orgid != null">
+						AND c.ORGID = #{orgid}
+					</if>
+					<if test="kindid != null">
+						AND c.KINDID = #{kindid}
+					</if>
+					<if test="careerid != null">
+						AND c.CAREERID = #{careerid}
+					</if>
+					<if test="gradeid != null">
+						AND c.GRADEID = #{gradeid}
+					</if>
+					<if test="datebegin != null and datebegin !=''">
+						AND c.DATEBEGIN = #{datebegin}
+					</if>
+					<if test="dateend != null and dateend !=''">
+						AND c.DATEEND = #{dateend}
+					</if>
+					<if test="termid != null">
+						AND c.TERMID = #{termid}
+					</if>
+					<if test="linkman != null and linkman !=''">
+						AND c.LINKMAN = #{linkman}
+					</if>
+					<if test="phoneno != null and phoneno !=''">
+						AND c.PHONENO = #{phoneno}
+					</if>
+					<if test="teachername != null and teachername !=''">
+						AND c.TEACHERNAME = #{teachername}
+					</if>
+					<if test="times != null and times !=''">
+						AND c.TIMES = #{times}
+					</if>
+					<if test="teachaddress != null and teachaddress !=''">
+						AND c.TEACHADDRESS = #{teachaddress}
+					</if>
+					<if test="teachcontent != null and teachcontent !=''">
+						AND c.TEACHCONTENT = #{teachcontent}
+					</if>
+					<if test="timestheory != null and timestheory !=''">
+						AND c.TIMESTHEORY = #{timestheory}
+					</if>
+					<if test="timeswork != null and timeswork !=''">
+						AND c.TIMESWORK = #{timeswork}
+					</if>
+					<if test="teachmaterial != null and teachmaterial !=''">
+						AND c.TEACHMATERIAL = #{teachmaterial}
+					</if>
+					<if test="bdateapp != null and bdateapp !=''">
+						AND c.BDATEAPP = #{bdateapp}
+					</if>
+					<if test="bappid != null">
+						AND c.BAPPID = #{bappid}
+					</if>
+					<if test="bdateapr != null and bdateapr !=''">
+						AND c.BDATEAPR = #{bdateapr}
+					</if>
+					<if test="baprman != null and baprman !=''">
+						AND c.BAPRMAN = #{baprman}
+					</if>
+					<if test="edateapp != null and edateapp !=''">
+						AND c.EDATEAPP = #{edateapp}
+					</if>
+					<if test="eappid != null">
+						AND c.EAPPID = #{eappid}
+					</if>
+					<if test="edateapr != null and edateapr !=''">
+						AND c.EDATEAPR = #{edateapr}
+					</if>
+					<if test="eaprman != null and eaprman !=''">
+						AND c.EAPRMAN = #{eaprman}
+					</if>
+					<if test="isspec != null">
+						AND c.ISSPEC = #{isspec}
+					</if>
+					<if test="email != null and email !=''">
+						AND c.EMAIL = #{email}
+					</if>
+					<if test="status != null and status != -1">
+						AND c.STATUS = #{status}
+					</if>
+					<if test="status != null and status == -1">
+						AND c.STATUS <![CDATA[<>]]> #{status}
+					</if>
+					<if test="datenew != null">
+						AND c.DATENEW = #{datenew}
+					</if>
+					<if test="dateedit != null">
+						AND c.DATEEDIT = #{dateedit}
+					</if>
+					<if test="memo != null and memo !=''">
+						AND c.MEMO = #{memo}
+					</if>
+					<if test="pkid != null">
+						AND c.PKID = #{pkid}
+					</if>
+		</where>
+		<if test="sortColumns != null and sortColumns !=''">
+			ORDER BY #{sortColumns}
+		</if>
+	</select>
+
+	<!-- 分页 -->
+	<select id="findPageList" resultMap="RM_TirClass">
+		select * from (
+		select t.*, rownum rn from(
+		SELECT <include refid="columns" />
+		FROM TIR_CLASS
+		<where>
+			<if test="model != null">
+						<if test="model.orgid != null">
+							AND ORGID = #{model.orgid}
+						</if>
+						<if test="model.kindid != null">
+							AND KINDID = #{model.kindid}
+						</if>
+						<if test="model.careerid != null">
+							AND CAREERID = #{model.careerid}
+						</if>
+						<if test="model.gradeid != null">
+							AND GRADEID = #{model.gradeid}
+						</if>
+						<if test="model.datebegin != null and model.datebegin !=''">
+							AND DATEBEGIN = #{model.datebegin}
+						</if>
+						<if test="model.dateend != null and model.dateend !=''">
+							AND DATEEND = #{model.dateend}
+						</if>
+						<if test="model.termid != null">
+							AND TERMID = #{model.termid}
+						</if>
+						<if test="model.linkman != null and model.linkman !=''">
+							AND LINKMAN = #{model.linkman}
+						</if>
+						<if test="model.phoneno != null and model.phoneno !=''">
+							AND PHONENO = #{model.phoneno}
+						</if>
+						<if test="model.teachername != null and model.teachername !=''">
+							AND TEACHERNAME = #{model.teachername}
+						</if>
+						<if test="model.times != null and model.times !=''">
+							AND TIMES = #{model.times}
+						</if>
+						<if test="model.teachaddress != null and model.teachaddress !=''">
+							AND TEACHADDRESS = #{model.teachaddress}
+						</if>
+						<if test="model.teachcontent != null and model.teachcontent !=''">
+							AND TEACHCONTENT = #{model.teachcontent}
+						</if>
+						<if test="model.timestheory != null and model.timestheory !=''">
+							AND TIMESTHEORY = #{model.timestheory}
+						</if>
+						<if test="model.timeswork != null and model.timeswork !=''">
+							AND TIMESWORK = #{model.timeswork}
+						</if>
+						<if test="model.teachmaterial != null and model.teachmaterial !=''">
+							AND TEACHMATERIAL = #{model.teachmaterial}
+						</if>
+						<if test="model.bdateapp != null and model.bdateapp !=''">
+							AND BDATEAPP = #{model.bdateapp}
+						</if>
+						<if test="model.bappid != null">
+							AND BAPPID = #{model.bappid}
+						</if>
+						<if test="model.bdateapr != null and model.bdateapr !=''">
+							AND BDATEAPR = #{model.bdateapr}
+						</if>
+						<if test="model.baprman != null and model.baprman !=''">
+							AND BAPRMAN = #{model.baprman}
+						</if>
+						<if test="model.edateapp != null and model.edateapp !=''">
+							AND EDATEAPP = #{model.edateapp}
+						</if>
+						<if test="model.eappid != null">
+							AND EAPPID = #{model.eappid}
+						</if>
+						<if test="model.edateapr != null and model.edateapr !=''">
+							AND EDATEAPR = #{model.edateapr}
+						</if>
+						<if test="model.eaprman != null and model.eaprman !=''">
+							AND EAPRMAN = #{model.eaprman}
+						</if>
+						<if test="model.isspec != null">
+							AND ISSPEC = #{model.isspec}
+						</if>
+						<if test="model.email != null and model.email !=''">
+							AND EMAIL = #{model.email}
+						</if>
+						<if test="status != null and status != -1">
+							AND STATUS = #{model.status}
+						</if>
+						<if test="status != null and status == -1">
+							AND STATUS <![CDATA[<>]]> #{model.status}
+						</if>
+						<if test="model.datenew != null">
+							AND DATENEW = #{model.datenew}
+						</if>
+						<if test="model.dateedit != null">
+							AND DATEEDIT = #{model.dateedit}
+						</if>
+						<if test="model.memo != null and model.memo !=''">
+							AND MEMO = #{model.memo}
+						</if>
+						<if test="model.pkid != null">
+							AND PKID = #{model.pkid}
+						</if>
+			</if>
+		</where>
+		 )t)
+		where rn between
+		<choose>
+			<when test="pager != null">
+				#{pager.begin}
+			</when>
+			<otherwise>
+				 0 
+			</otherwise>
+		</choose>
+		and 
+		<choose>
+			<when test="pager != null">
+				#{pager.end}
+			</when>
+			<otherwise>
+				20
+			</otherwise>
+		</choose>
+	</select>
+
+</mapper>

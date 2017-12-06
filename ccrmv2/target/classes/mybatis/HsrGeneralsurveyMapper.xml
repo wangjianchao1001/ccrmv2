@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.ccrm.dao.HsrGeneralsurveyDao">
+
+	<resultMap id="RM_HsrGeneralsurvey" type="com.ccrm.entity.HsrGeneralsurvey">
+        <result property="ppkid" column="PPKID"/>
+        <result property="branchid" column="BRANCHID"/>
+        <result property="svritemid" column="SVRITEMID"/>
+        <result property="emname" column="EMNAME"/>
+        <result property="emphoneno" column="EMPHONENO"/>
+        <result property="name" column="NAME"/>
+        <result property="idno" column="IDNO"/>
+        <result property="phoneno" column="PHONENO"/>
+        <result property="dateentry" column="DATEENTRY"/>
+        <result property="dateleave" column="DATELEAVE"/>
+        <result property="status" column="STATUS"/>
+        <result property="datenew" column="DATENEW"/>
+        <result property="dateedit" column="DATEEDIT"/>
+        <result property="memo" column="MEMO"/>
+        <result property="pkid" column="PKID"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		PPKID,BRANCHID,SVRITEMID,EMNAME,EMPHONENO,NAME,IDNO,PHONENO,DATEENTRY,DATELEAVE,STATUS,DATENEW,DATEEDIT,MEMO,PKID
+	    ]]>
+	</sql>
+
+	<!--保存 -->
+	<insert id="save">
+	    <![CDATA[
+	        INSERT INTO HSR_GENERALSURVEY (
+	        	PPKID ,
+	        	BRANCHID ,
+	        	SVRITEMID ,
+	        	EMNAME ,
+	        	EMPHONENO ,
+	        	NAME ,
+	        	IDNO ,
+	        	PHONENO ,
+	        	DATEENTRY ,
+	        	DATELEAVE ,
+	        	STATUS ,
+	        	DATENEW ,
+	        	DATEEDIT ,
+	        	MEMO ,
+	        	PKID 
+	        ) VALUES (
+	        	#{ppkid} ,
+	        	#{branchid} ,
+	        	#{svritemid} ,
+	        	#{emname} ,
+	        	#{emphoneno} ,
+	        	#{name} ,
+	        	#{idno} ,
+	        	#{phoneno} ,
+	        	#{dateentry} ,
+	        	#{dateleave} ,
+	        	#{status} ,
+	        	#{datenew} ,
+	        	#{dateedit} ,
+	        	#{memo} ,
+	        	#{pkid} 
+	        )
+	    ]]>
+	</insert>
+	
+	<!-- update 条件组合 -->
+	<sql id="update_sql">
+		<set>
+			<if test="ppkid != null">
+				PPKID = #{ppkid} ,
+			</if>
+			<if test="branchid != null">
+				BRANCHID = #{branchid} ,
+			</if>
+			<if test="svritemid != null">
+				SVRITEMID = #{svritemid} ,
+			</if>
+			<if test="emname != null and emname != ''">
+				EMNAME = #{emname} ,
+			</if>
+			<if test="emphoneno != null and emphoneno != ''">
+				EMPHONENO = #{emphoneno} ,
+			</if>
+			<if test="name != null and name != ''">
+				NAME = #{name} ,
+			</if>
+			<if test="idno != null and idno != ''">
+				IDNO = #{idno} ,
+			</if>
+			<if test="phoneno != null and phoneno != ''">
+				PHONENO = #{phoneno} ,
+			</if>
+			<if test="dateentry != null and dateentry != ''">
+				DATEENTRY = #{dateentry} ,
+			</if>
+			<if test="dateleave != null and dateleave != ''">
+				DATELEAVE = #{dateleave} ,
+			</if>
+			<if test="status != null">
+				STATUS = #{status} ,
+			</if>
+			<if test="memo != null and memo != ''">
+				MEMO = #{memo} 
+			</if>
+		</set>
+	</sql>
+	
+	<!-- 修改 -->
+	<update id="update">
+		UPDATE HSR_GENERALSURVEY
+		<include refid="update_sql" />
+		WHERE
+			PKID = #{pkid} 	</update>
+
+	<!-- 根据ID删除 -->
+	<delete id="delete">
+    	<![CDATA[
+        	DELETE FROM HSR_GENERALSURVEY 
+        	WHERE  PKID = #{pkid}
+    	]]>
+	</delete>
+	
+	<!-- getById -->
+	<select id="getById" resultMap="RM_HsrGeneralsurvey">
+		SELECT
+		<include refid="columns" />
+		FROM HSR_GENERALSURVEY
+		WHERE  PKID = #{pkid}  
+	</select>
+
+	<!-- 获取总数 -->
+	<select id="getTotalCount" resultType="int">
+		SELECT COUNT(1)
+		FROM HSR_GENERALSURVEY
+		<where>
+			<if test="model != null">
+						<if test="model.ppkid != null">
+							AND PPKID = #{model.ppkid}
+						</if>
+						<if test="model.branchid != null">
+							AND BRANCHID = #{model.branchid}
+						</if>
+						<if test="model.svritemid != null">
+							AND SVRITEMID = #{model.svritemid}
+						</if>
+						<if test="model.emname != null and model.emname !=''">
+							AND EMNAME = #{model.emname}
+						</if>
+						<if test="model.emphoneno != null and model.emphoneno !=''">
+							AND EMPHONENO = #{model.emphoneno}
+						</if>
+						<if test="model.name != null and model.name !=''">
+							AND NAME = #{model.name}
+						</if>
+						<if test="model.idno != null and model.idno !=''">
+							AND IDNO = #{model.idno}
+						</if>
+						<if test="model.phoneno != null and model.phoneno !=''">
+							AND PHONENO = #{model.phoneno}
+						</if>
+						<if test="model.dateentry != null and model.dateentry !=''">
+							AND DATEENTRY = #{model.dateentry}
+						</if>
+						<if test="model.dateleave != null and model.dateleave !=''">
+							AND DATELEAVE = #{model.dateleave}
+						</if>
+						<if test="model.status != null">
+							AND STATUS = #{model.status}
+						</if>
+						<if test="model.memo != null and model.memo !=''">
+							AND MEMO = #{model.memo}
+						</if>
+						<if test="model.pkid != null">
+							AND PKID = #{model.pkid}
+						</if>
+			</if>
+		</where>
+	</select>  
+	
+	<!-- 按条件组合搜索列表  -->
+	<select id="findList" resultMap="RM_HsrGeneralsurvey">
+		SELECT
+		<include refid="columns" />
+		FROM  HSR_GENERALSURVEY
+		<where>
+					<if test="ppkid != null">
+						AND PPKID = #{ppkid}
+					</if>
+					<if test="branchid != null">
+						AND BRANCHID = #{branchid}
+					</if>
+					<if test="svritemid != null">
+						AND SVRITEMID = #{svritemid}
+					</if>
+					<if test="emname != null and emname !=''">
+						AND EMNAME = #{emname}
+					</if>
+					<if test="emphoneno != null and emphoneno !=''">
+						AND EMPHONENO = #{emphoneno}
+					</if>
+					<if test="name != null and name !=''">
+						AND NAME = #{name}
+					</if>
+					<if test="idno != null and idno !=''">
+						AND IDNO = #{idno}
+					</if>
+					<if test="phoneno != null and phoneno !=''">
+						AND PHONENO = #{phoneno}
+					</if>
+					<if test="dateentry != null and dateentry !=''">
+						AND DATEENTRY = #{dateentry}
+					</if>
+					<if test="dateleave != null and dateleave !=''">
+						AND DATELEAVE = #{dateleave}
+					</if>
+					<if test="status != null">
+						AND STATUS = #{status}
+					</if>
+					<if test="memo != null and memo !=''">
+						AND MEMO = #{memo}
+					</if>
+					<if test="pkid != null">
+						AND PKID = #{pkid}
+					</if>
+		</where>
+		<if test="sortColumns != null and sortColumns !=''">
+			ORDER BY #{sortColumns}
+		</if>
+	</select>
+
+	<!-- 分页 -->
+	<select id="findPageList" resultMap="RM_HsrGeneralsurvey">
+		SELECT <include refid="columns" />
+		FROM HSR_GENERALSURVEY
+		<where>
+			<if test="model != null">
+						<if test="model.ppkid != null">
+							AND PPKID = #{model.ppkid}
+						</if>
+						<if test="model.branchid != null">
+							AND BRANCHID = #{model.branchid}
+						</if>
+						<if test="model.svritemid != null">
+							AND SVRITEMID = #{model.svritemid}
+						</if>
+						<if test="model.emname != null and model.emname !=''">
+							AND EMNAME = #{model.emname}
+						</if>
+						<if test="model.emphoneno != null and model.emphoneno !=''">
+							AND EMPHONENO = #{model.emphoneno}
+						</if>
+						<if test="model.name != null and model.name !=''">
+							AND NAME = #{model.name}
+						</if>
+						<if test="model.idno != null and model.idno !=''">
+							AND IDNO = #{model.idno}
+						</if>
+						<if test="model.phoneno != null and model.phoneno !=''">
+							AND PHONENO = #{model.phoneno}
+						</if>
+						<if test="model.dateentry != null and model.dateentry !=''">
+							AND DATEENTRY = #{model.dateentry}
+						</if>
+						<if test="model.dateleave != null and model.dateleave !=''">
+							AND DATELEAVE = #{model.dateleave}
+						</if>
+						<if test="model.status != null">
+							AND STATUS = #{model.status}
+						</if>
+						<if test="model.memo != null and model.memo !=''">
+							AND MEMO = #{model.memo}
+						</if>
+						<if test="model.pkid != null">
+							AND PKID = #{model.pkid}
+						</if>
+			</if>
+		</where>
+		limit 
+		<choose>
+			<when test="pager != null">
+				#{pager.begin},#{pager.pageSize}
+			</when>
+			<otherwise>
+				0,10
+			</otherwise>
+		</choose>
+	</select>
+
+</mapper>

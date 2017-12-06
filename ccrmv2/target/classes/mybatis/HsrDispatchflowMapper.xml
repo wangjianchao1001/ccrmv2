@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.ccrm.dao.HsrDispatchflowDao">
+
+	<resultMap id="RM_HsrDispatchflow" type="com.ccrm.entity.HsrDispatchflow">
+        <result property="ppkid" column="PPKID"/>
+        <result property="organid" column="ORGANID"/>
+        <result property="name" column="NAME"/>
+        <result property="idno" column="IDNO"/>
+        <result property="phoneno" column="PHONENO"/>
+        <result property="email" column="EMAIL"/>
+        <result property="dateentry" column="DATEENTRY"/>
+        <result property="dateleave" column="DATELEAVE"/>
+        <result property="svritemid" column="SVRITEMID"/>
+        <result property="emname" column="EMNAME"/>
+        <result property="emphoneno" column="EMPHONENO"/>
+        <result property="emadress" column="EMADRESS"/>
+        <result property="traincontent" column="TRAINCONTENT"/>
+        <result property="certificate" column="CERTIFICATE"/>
+        <result property="croperid" column="CROPERID"/>
+        <result property="status" column="STATUS"/>
+        <result property="datenew" column="DATENEW"/>
+        <result property="dateedit" column="DATEEDIT"/>
+        <result property="trainmemo" column="TRAINMEMO"/>
+        <result property="cermemo" column="CERMEMO"/>
+        <result property="memo" column="MEMO"/>
+        <result property="pkid" column="PKID"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		PPKID,ORGANID,NAME,IDNO,PHONENO,EMAIL,DATEENTRY,DATELEAVE,SVRITEMID,EMNAME,EMPHONENO,EMADRESS,TRAINCONTENT,CERTIFICATE,CROPERID,STATUS,DATENEW,DATEEDIT,TRAINMEMO,CERMEMO,MEMO,PKID
+	    ]]>
+	</sql>
+
+	<!--保存 -->
+	<insert id="save">
+	    <![CDATA[
+	        INSERT INTO HSR_DISPATCHFLOW (
+	        	PPKID ,
+	        	ORGANID ,
+	        	NAME ,
+	        	IDNO ,
+	        	PHONENO ,
+	        	EMAIL ,
+	        	DATEENTRY ,
+	        	DATELEAVE ,
+	        	SVRITEMID ,
+	        	EMNAME ,
+	        	EMPHONENO ,
+	        	EMADRESS ,
+	        	TRAINCONTENT ,
+	        	CERTIFICATE ,
+	        	CROPERID ,
+	        	STATUS ,
+	        	DATENEW ,
+	        	DATEEDIT ,
+	        	TRAINMEMO ,
+	        	CERMEMO ,
+	        	MEMO ,
+	        	PKID 
+	        ) VALUES (
+	        	#{ppkid} ,
+	        	#{organid} ,
+	        	#{name} ,
+	        	#{idno} ,
+	        	#{phoneno} ,
+	        	#{email} ,
+	        	#{dateentry} ,
+	        	#{dateleave} ,
+	        	#{svritemid} ,
+	        	#{emname} ,
+	        	#{emphoneno} ,
+	        	#{emadress} ,
+	        	#{traincontent} ,
+	        	#{certificate} ,
+	        	#{croperid} ,
+	        	#{status} ,
+	        	#{datenew} ,
+	        	#{dateedit} ,
+	        	#{trainmemo} ,
+	        	#{cermemo} ,
+	        	#{memo} ,
+	        	#{pkid} 
+	        )
+	    ]]>
+	</insert>
+	
+	<!-- update 条件组合 -->
+	<sql id="update_sql">
+		<set>
+			<if test="ppkid != null">
+				PPKID = #{ppkid} ,
+			</if>
+			<if test="organid != null">
+				ORGANID = #{organid} ,
+			</if>
+			<if test="name != null and name != ''">
+				NAME = #{name} ,
+			</if>
+			<if test="idno != null and idno != ''">
+				IDNO = #{idno} ,
+			</if>
+			<if test="phoneno != null and phoneno != ''">
+				PHONENO = #{phoneno} ,
+			</if>
+			<if test="email != null and email != ''">
+				EMAIL = #{email} ,
+			</if>
+			<if test="dateentry != null and dateentry != ''">
+				DATEENTRY = #{dateentry} ,
+			</if>
+			<if test="dateleave != null and dateleave != ''">
+				DATELEAVE = #{dateleave} ,
+			</if>
+			<if test="svritemid != null">
+				SVRITEMID = #{svritemid} ,
+			</if>
+			<if test="emname != null and emname != ''">
+				EMNAME = #{emname} ,
+			</if>
+			<if test="emphoneno != null and emphoneno != ''">
+				EMPHONENO = #{emphoneno} ,
+			</if>
+			<if test="emadress != null and emadress != ''">
+				EMADRESS = #{emadress} ,
+			</if>
+			<if test="traincontent != null and traincontent != ''">
+				TRAINCONTENT = #{traincontent} ,
+			</if>
+			<if test="certificate != null and certificate != ''">
+				CERTIFICATE = #{certificate} ,
+			</if>
+			<if test="croperid != null">
+				CROPERID = #{croperid} ,
+			</if>
+			<if test="status != null">
+				STATUS = #{status} ,
+			</if>
+			<if test="trainmemo != null and trainmemo != ''">
+				TRAINMEMO = #{trainmemo} ,
+			</if>
+			<if test="cermemo != null and cermemo != ''">
+				CERMEMO = #{cermemo} ,
+			</if>
+			<if test="memo != null and memo != ''">
+				MEMO = #{memo} 
+			</if>
+		</set>
+	</sql>
+	
+	<!-- 修改 -->
+	<update id="update">
+		UPDATE HSR_DISPATCHFLOW
+		<include refid="update_sql" />
+		WHERE
+			PKID = #{pkid} 	</update>
+
+	<!-- 根据ID删除 -->
+	<delete id="delete">
+    	<![CDATA[
+        	DELETE FROM HSR_DISPATCHFLOW 
+        	WHERE  PKID = #{pkid}
+    	]]>
+	</delete>
+	
+	<!-- getById -->
+	<select id="getById" resultMap="RM_HsrDispatchflow">
+		SELECT
+		<include refid="columns" />
+		FROM HSR_DISPATCHFLOW
+		WHERE  PKID = #{pkid}  
+	</select>
+
+	<!-- 获取总数 -->
+	<select id="getTotalCount" resultType="int">
+		SELECT COUNT(1)
+		FROM HSR_DISPATCHFLOW
+		<where>
+			<if test="model != null">
+						<if test="model.ppkid != null">
+							AND PPKID = #{model.ppkid}
+						</if>
+						<if test="model.organid != null">
+							AND ORGANID = #{model.organid}
+						</if>
+						<if test="model.name != null and model.name !=''">
+							AND NAME = #{model.name}
+						</if>
+						<if test="model.idno != null and model.idno !=''">
+							AND IDNO = #{model.idno}
+						</if>
+						<if test="model.phoneno != null and model.phoneno !=''">
+							AND PHONENO = #{model.phoneno}
+						</if>
+						<if test="model.email != null and model.email !=''">
+							AND EMAIL = #{model.email}
+						</if>
+						<if test="model.dateentry != null and model.dateentry !=''">
+							AND DATEENTRY = #{model.dateentry}
+						</if>
+						<if test="model.dateleave != null and model.dateleave !=''">
+							AND DATELEAVE = #{model.dateleave}
+						</if>
+						<if test="model.svritemid != null">
+							AND SVRITEMID = #{model.svritemid}
+						</if>
+						<if test="model.emname != null and model.emname !=''">
+							AND EMNAME = #{model.emname}
+						</if>
+						<if test="model.emphoneno != null and model.emphoneno !=''">
+							AND EMPHONENO = #{model.emphoneno}
+						</if>
+						<if test="model.emadress != null and model.emadress !=''">
+							AND EMADRESS = #{model.emadress}
+						</if>
+						<if test="model.traincontent != null and model.traincontent !=''">
+							AND TRAINCONTENT = #{model.traincontent}
+						</if>
+						<if test="model.certificate != null and model.certificate !=''">
+							AND CERTIFICATE = #{model.certificate}
+						</if>
+						<if test="model.croperid != null">
+							AND CROPERID = #{model.croperid}
+						</if>
+						<if test="model.status != null">
+							AND STATUS = #{model.status}
+						</if>
+						<if test="model.trainmemo != null and model.trainmemo !=''">
+							AND TRAINMEMO = #{model.trainmemo}
+						</if>
+						<if test="model.cermemo != null and model.cermemo !=''">
+							AND CERMEMO = #{model.cermemo}
+						</if>
+						<if test="model.memo != null and model.memo !=''">
+							AND MEMO = #{model.memo}
+						</if>
+						<if test="model.pkid != null">
+							AND PKID = #{model.pkid}
+						</if>
+			</if>
+		</where>
+	</select>  
+	
+	<!-- 按条件组合搜索列表  -->
+	<select id="findList" resultMap="RM_HsrDispatchflow">
+		SELECT
+		<include refid="columns" />
+		FROM  HSR_DISPATCHFLOW
+		<where>
+					<if test="ppkid != null">
+						AND PPKID = #{ppkid}
+					</if>
+					<if test="organid != null">
+						AND ORGANID = #{organid}
+					</if>
+					<if test="name != null and name !=''">
+						AND NAME = #{name}
+					</if>
+					<if test="idno != null and idno !=''">
+						AND IDNO = #{idno}
+					</if>
+					<if test="phoneno != null and phoneno !=''">
+						AND PHONENO = #{phoneno}
+					</if>
+					<if test="email != null and email !=''">
+						AND EMAIL = #{email}
+					</if>
+					<if test="dateentry != null and dateentry !=''">
+						AND DATEENTRY = #{dateentry}
+					</if>
+					<if test="dateleave != null and dateleave !=''">
+						AND DATELEAVE = #{dateleave}
+					</if>
+					<if test="svritemid != null">
+						AND SVRITEMID = #{svritemid}
+					</if>
+					<if test="emname != null and emname !=''">
+						AND EMNAME = #{emname}
+					</if>
+					<if test="emphoneno != null and emphoneno !=''">
+						AND EMPHONENO = #{emphoneno}
+					</if>
+					<if test="emadress != null and emadress !=''">
+						AND EMADRESS = #{emadress}
+					</if>
+					<if test="traincontent != null and traincontent !=''">
+						AND TRAINCONTENT = #{traincontent}
+					</if>
+					<if test="certificate != null and certificate !=''">
+						AND CERTIFICATE = #{certificate}
+					</if>
+					<if test="croperid != null">
+						AND CROPERID = #{croperid}
+					</if>
+					<if test="status != null">
+						AND STATUS = #{status}
+					</if>
+					<if test="trainmemo != null and trainmemo !=''">
+						AND TRAINMEMO = #{trainmemo}
+					</if>
+					<if test="cermemo != null and cermemo !=''">
+						AND CERMEMO = #{cermemo}
+					</if>
+					<if test="memo != null and memo !=''">
+						AND MEMO = #{memo}
+					</if>
+					<if test="pkid != null">
+						AND PKID = #{pkid}
+					</if>
+		</where>
+		<if test="sortColumns != null and sortColumns !=''">
+			ORDER BY #{sortColumns}
+		</if>
+	</select>
+
+	<!-- 分页 -->
+	<select id="findPageList" resultMap="RM_HsrDispatchflow">
+		SELECT <include refid="columns" />
+		FROM HSR_DISPATCHFLOW
+		<where>
+			<if test="model != null">
+						<if test="model.ppkid != null">
+							AND PPKID = #{model.ppkid}
+						</if>
+						<if test="model.organid != null">
+							AND ORGANID = #{model.organid}
+						</if>
+						<if test="model.name != null and model.name !=''">
+							AND NAME = #{model.name}
+						</if>
+						<if test="model.idno != null and model.idno !=''">
+							AND IDNO = #{model.idno}
+						</if>
+						<if test="model.phoneno != null and model.phoneno !=''">
+							AND PHONENO = #{model.phoneno}
+						</if>
+						<if test="model.email != null and model.email !=''">
+							AND EMAIL = #{model.email}
+						</if>
+						<if test="model.dateentry != null and model.dateentry !=''">
+							AND DATEENTRY = #{model.dateentry}
+						</if>
+						<if test="model.dateleave != null and model.dateleave !=''">
+							AND DATELEAVE = #{model.dateleave}
+						</if>
+						<if test="model.svritemid != null">
+							AND SVRITEMID = #{model.svritemid}
+						</if>
+						<if test="model.emname != null and model.emname !=''">
+							AND EMNAME = #{model.emname}
+						</if>
+						<if test="model.emphoneno != null and model.emphoneno !=''">
+							AND EMPHONENO = #{model.emphoneno}
+						</if>
+						<if test="model.emadress != null and model.emadress !=''">
+							AND EMADRESS = #{model.emadress}
+						</if>
+						<if test="model.traincontent != null and model.traincontent !=''">
+							AND TRAINCONTENT = #{model.traincontent}
+						</if>
+						<if test="model.certificate != null and model.certificate !=''">
+							AND CERTIFICATE = #{model.certificate}
+						</if>
+						<if test="model.croperid != null">
+							AND CROPERID = #{model.croperid}
+						</if>
+						<if test="model.status != null">
+							AND STATUS = #{model.status}
+						</if>
+						<if test="model.trainmemo != null and model.trainmemo !=''">
+							AND TRAINMEMO = #{model.trainmemo}
+						</if>
+						<if test="model.cermemo != null and model.cermemo !=''">
+							AND CERMEMO = #{model.cermemo}
+						</if>
+						<if test="model.memo != null and model.memo !=''">
+							AND MEMO = #{model.memo}
+						</if>
+						<if test="model.pkid != null">
+							AND PKID = #{model.pkid}
+						</if>
+			</if>
+		</where>
+		limit 
+		<choose>
+			<when test="pager != null">
+				#{pager.begin},#{pager.pageSize}
+			</when>
+			<otherwise>
+				0,10
+			</otherwise>
+		</choose>
+	</select>
+
+</mapper>

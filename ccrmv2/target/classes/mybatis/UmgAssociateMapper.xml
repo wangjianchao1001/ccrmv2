@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.ccrm.dao.UmgAssociateDao">
+
+	<resultMap id="RM_UmgAssociate" type="com.ccrm.entity.UmgAssociate">
+        <result property="clasid" column="CLASID"/>
+        <result property="assid" column="ASSID"/>
+        <result property="datenew" column="DATENEW"/>
+        <result property="dateedit" column="DATEEDIT"/>
+        <result property="operator" column="OPERATOR"/>
+        <result property="umgbranch" column="UMGBRANCH"/>
+        <result property="pkid" column="PKID"/>
+        <result property="subid" column="SUBID"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		CLASID,ASSID,DATENEW,DATEEDIT,OPERATOR,UMGBRANCH,PKID,SUBID
+	    ]]>
+	</sql>
+
+	<!--保存 -->
+	<insert id="save">
+	    <![CDATA[
+	        INSERT INTO UMG_ASSOCIATE (
+	        	CLASID ,
+	        	ASSID ,
+	        	DATENEW ,
+	        	DATEEDIT ,
+	        	OPERATOR ,
+	        	UMGBRANCH ,
+	        	PKID ,
+	        	SUBID 
+	        ) VALUES (
+	        	#{clasid} ,
+	        	#{assid} ,
+	        	#{datenew} ,
+	        	#{dateedit} ,
+	        	#{operator} ,
+	        	#{umgbranch} ,
+	        	#{pkid} ,
+	        	#{subid} 
+	        )
+	    ]]>
+	</insert>
+	
+	<!-- update 条件组合 -->
+	<sql id="update_sql">
+		<set>
+			<if test="clasid != null">
+				CLASID = #{clasid} ,
+			</if>
+			<if test="assid != null">
+				ASSID = #{assid} ,
+			</if>
+			<if test="operator != null and operator != ''">
+				OPERATOR = #{operator} ,
+			</if>
+			<if test="umgbranch != null and umgbranch != ''">
+				UMGBRANCH = #{umgbranch} ,
+			</if>
+			<if test="subid != null and subid != ''">
+				SUBID = #{subid} 
+			</if>
+		</set>
+	</sql>
+	
+	<!-- 修改 -->
+	<update id="update">
+		UPDATE UMG_ASSOCIATE
+		<include refid="update_sql" />
+		WHERE
+			PKID = #{pkid} 	</update>
+
+	<!-- 根据ID删除 -->
+	<delete id="delete">
+    	<![CDATA[
+        	DELETE FROM UMG_ASSOCIATE 
+        	WHERE  PKID = #{pkid}
+    	]]>
+	</delete>
+
+	<!-- 删除用户权限 -->
+	<delete id="deleteBySubId">
+    	<![CDATA[
+        	DELETE FROM UMG_ASSOCIATE 
+        	WHERE  SUBID = '${subId}'
+    	]]>
+	</delete>
+	
+	<!-- getById -->
+	<select id="getById" resultMap="RM_UmgAssociate">
+		SELECT
+		<include refid="columns" />
+		FROM UMG_ASSOCIATE
+		WHERE  PKID = #{pkid}  
+	</select>
+
+	<!-- 获取总数 -->
+	<select id="getTotalCount" resultType="int">
+		SELECT COUNT(1)
+		FROM UMG_ASSOCIATE
+		<where>
+			<if test="model != null">
+						<if test="model.clasid != null">
+							AND CLASID = #{model.clasid}
+						</if>
+						<if test="model.assid != null">
+							AND ASSID = #{model.assid}
+						</if>
+						<if test="model.operator != null and model.operator !=''">
+							AND OPERATOR = #{model.operator}
+						</if>
+						<if test="model.umgbranch != null and model.umgbranch !=''">
+							AND UMGBRANCH = #{model.umgbranch}
+						</if>
+						<if test="model.pkid != null">
+							AND PKID = #{model.pkid}
+						</if>
+						<if test="model.subid != null and model.subid !=''">
+							AND SUBID = #{model.subid}
+						</if>
+			</if>
+		</where>
+	</select>  
+	
+	<!-- 按条件组合搜索列表  -->
+	<select id="findList" resultMap="RM_UmgAssociate">
+		SELECT
+		<include refid="columns" />
+		FROM  UMG_ASSOCIATE
+		<where>
+					<if test="clasid != null">
+						AND CLASID = #{clasid}
+					</if>
+					<if test="assid != null">
+						AND ASSID = #{assid}
+					</if>
+					<if test="operator != null and operator !=''">
+						AND OPERATOR = #{operator}
+					</if>
+					<if test="umgbranch != null and umgbranch !=''">
+						AND UMGBRANCH = #{umgbranch}
+					</if>
+					<if test="pkid != null">
+						AND PKID = #{pkid}
+					</if>
+					<if test="subid != null and subid !=''">
+						AND SUBID = #{subid}
+					</if>
+		</where>
+		<if test="sortColumns != null and sortColumns !=''">
+			ORDER BY #{sortColumns}
+		</if>
+	</select>
+
+	<!-- 分页 -->
+	<select id="findPageList" resultMap="RM_UmgAssociate">
+		SELECT <include refid="columns" />
+		FROM UMG_ASSOCIATE
+		<where>
+			<if test="model != null">
+						<if test="model.clasid != null">
+							AND CLASID = #{model.clasid}
+						</if>
+						<if test="model.assid != null">
+							AND ASSID = #{model.assid}
+						</if>
+						<if test="model.operator != null and model.operator !=''">
+							AND OPERATOR = #{model.operator}
+						</if>
+						<if test="model.umgbranch != null and model.umgbranch !=''">
+							AND UMGBRANCH = #{model.umgbranch}
+						</if>
+						<if test="model.pkid != null">
+							AND PKID = #{model.pkid}
+						</if>
+						<if test="model.subid != null and model.subid !=''">
+							AND SUBID = #{model.subid}
+						</if>
+			</if>
+		</where>
+		limit 
+		<choose>
+			<when test="pager != null">
+				#{pager.begin},#{pager.pageSize}
+			</when>
+			<otherwise>
+				0,10
+			</otherwise>
+		</choose>
+	</select>
+
+</mapper>

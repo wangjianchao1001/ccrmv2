@@ -1,0 +1,959 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.ccrm.dao.RegOrganinfoDao">
+
+	<resultMap id="RM_RegOrganinfo" type="com.ccrm.entity.RegOrganinfo">
+        <result property="ppkid" column="PPKID"/>
+        <result property="status" column="STATUS"/>
+        <result property="branchid" column="BRANCHID"/>
+        <result property="name" column="NAME"/>
+        <result property="idno" column="IDNO"/>
+        <result property="corpperson" column="CORPPERSON"/>
+        <result property="regfund" column="REGFUND"/>
+        <result property="linkman" column="LINKMAN"/>
+        <result property="phoneno" column="PHONENO"/>
+        <result property="email" column="EMAIL"/>
+        <result property="wwwurl" column="WWWURL"/>
+        <result property="address" column="ADDRESS"/>
+        <result property="croperid" column="CROPERID"/>
+        <result property="cmoperid" column="CMOPERID"/>
+        <result property="cmdate" column="CMDATE"/>
+        <result property="datenew" column="DATENEW"/>
+        <result property="dateedit" column="DATEEDIT"/>
+        <result property="valueint01" column="VALUEINT01"/>
+        <result property="valueint02" column="VALUEINT02"/>
+        <result property="valueint03" column="VALUEINT03"/>
+        <result property="valueint04" column="VALUEINT04"/>
+        <result property="valueint05" column="VALUEINT05"/>
+        <result property="valueint06" column="VALUEINT06"/>
+        <result property="valueint07" column="VALUEINT07"/>
+        <result property="valueint08" column="VALUEINT08"/>
+        <result property="valueint09" column="VALUEINT09"/>
+        <result property="valueint10" column="VALUEINT10"/>
+        <result property="valuecode01" column="VALUECODE01"/>
+        <result property="valuecode02" column="VALUECODE02"/>
+        <result property="valuecode03" column="VALUECODE03"/>
+        <result property="valuecode04" column="VALUECODE04"/>
+        <result property="valuecode05" column="VALUECODE05"/>
+        <result property="valuecode06" column="VALUECODE06"/>
+        <result property="valuecode07" column="VALUECODE07"/>
+        <result property="valuecode08" column="VALUECODE08"/>
+        <result property="valuecode09" column="VALUECODE09"/>
+        <result property="valuecode10" column="VALUECODE10"/>
+        <result property="valuenum01" column="VALUENUM01"/>
+        <result property="valuenum02" column="VALUENUM02"/>
+        <result property="valuenum03" column="VALUENUM03"/>
+        <result property="valuenum04" column="VALUENUM04"/>
+        <result property="valuenum05" column="VALUENUM05"/>
+        <result property="kindid" column="KINDID"/>
+        <result property="memo" column="MEMO"/>
+        <result property="valuestr01" column="VALUESTR01"/>
+        <result property="valuestr02" column="VALUESTR02"/>
+        <result property="valuestr03" column="VALUESTR03"/>
+        <result property="valuestr04" column="VALUESTR04"/>
+        <result property="valuestr05" column="VALUESTR05"/>
+        <result property="valuestr06" column="VALUESTR06"/>
+        <result property="valuestr07" column="VALUESTR07"/>
+        <result property="valuestr08" column="VALUESTR08"/>
+        <result property="valuestr09" column="VALUESTR09"/>
+        <result property="valuestr10" column="VALUESTR10"/>
+        <result property="pkid" column="PKID"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		PPKID,STATUS,BRANCHID,NAME,IDNO,CORPPERSON,REGFUND,LINKMAN,PHONENO,EMAIL,WWWURL,ADDRESS,CROPERID,CMOPERID,CMDATE,DATENEW,DATEEDIT,VALUEINT01,VALUEINT02,VALUEINT03,VALUEINT04,VALUEINT05,VALUEINT06,VALUEINT07,VALUEINT08,VALUEINT09,VALUEINT10,VALUECODE01,VALUECODE02,VALUECODE03,VALUECODE04,VALUECODE05,VALUECODE06,VALUECODE07,VALUECODE08,VALUECODE09,VALUECODE10,VALUENUM01,VALUENUM02,VALUENUM03,VALUENUM04,VALUENUM05,KINDID,MEMO,VALUESTR01,VALUESTR02,VALUESTR03,VALUESTR04,VALUESTR05,VALUESTR06,VALUESTR07,VALUESTR08,VALUESTR09,VALUESTR10,PKID
+	    ]]>
+	</sql>
+
+	<!--保存 -->
+	<insert id="save">
+	    <![CDATA[
+	        INSERT INTO REG_ORGANINFO (
+	        	PPKID ,
+	        	STATUS ,
+	        	BRANCHID ,
+	        	NAME ,
+	        	IDNO ,
+	        	CORPPERSON ,
+	        	REGFUND ,
+	        	LINKMAN ,
+	        	PHONENO ,
+	        	EMAIL ,
+	        	WWWURL ,
+	        	ADDRESS ,
+	        	CROPERID ,
+	        	CMOPERID ,
+	        	CMDATE ,
+	        	DATENEW ,
+	        	DATEEDIT ,
+	        	VALUEINT01 ,
+	        	VALUEINT02 ,
+	        	VALUEINT03 ,
+	        	VALUEINT04 ,
+	        	VALUEINT05 ,
+	        	VALUEINT06 ,
+	        	VALUEINT07 ,
+	        	VALUEINT08 ,
+	        	VALUEINT09 ,
+	        	VALUEINT10 ,
+	        	VALUECODE01 ,
+	        	VALUECODE02 ,
+	        	VALUECODE03 ,
+	        	VALUECODE04 ,
+	        	VALUECODE05 ,
+	        	VALUECODE06 ,
+	        	VALUECODE07 ,
+	        	VALUECODE08 ,
+	        	VALUECODE09 ,
+	        	VALUECODE10 ,
+	        	VALUENUM01 ,
+	        	VALUENUM02 ,
+	        	VALUENUM03 ,
+	        	VALUENUM04 ,
+	        	VALUENUM05 ,
+	        	KINDID ,
+	        	MEMO ,
+	        	VALUESTR01 ,
+	        	VALUESTR02 ,
+	        	VALUESTR03 ,
+	        	VALUESTR04 ,
+	        	VALUESTR05 ,
+	        	VALUESTR06 ,
+	        	VALUESTR07 ,
+	        	VALUESTR08 ,
+	        	VALUESTR09 ,
+	        	VALUESTR10 ,
+	        	PKID 
+	        ) VALUES (
+	        	#{ppkid} ,
+	        	#{status} ,
+	        	#{branchid} ,
+	        	#{name} ,
+	        	#{idno} ,
+	        	#{corpperson} ,
+	        	#{regfund} ,
+	        	#{linkman} ,
+	        	#{phoneno} ,
+	        	#{email} ,
+	        	#{wwwurl} ,
+	        	#{address} ,
+	        	#{croperid} ,
+	        	#{cmoperid} ,
+	        	#{cmdate} ,
+	        	#{datenew} ,
+	        	#{dateedit} ,
+	        	#{valueint01} ,
+	        	#{valueint02} ,
+	        	#{valueint03} ,
+	        	#{valueint04} ,
+	        	#{valueint05} ,
+	        	#{valueint06} ,
+	        	#{valueint07} ,
+	        	#{valueint08} ,
+	        	#{valueint09} ,
+	        	#{valueint10} ,
+	        	#{valuecode01} ,
+	        	#{valuecode02} ,
+	        	#{valuecode03} ,
+	        	#{valuecode04} ,
+	        	#{valuecode05} ,
+	        	#{valuecode06} ,
+	        	#{valuecode07} ,
+	        	#{valuecode08} ,
+	        	#{valuecode09} ,
+	        	#{valuecode10} ,
+	        	#{valuenum01} ,
+	        	#{valuenum02} ,
+	        	#{valuenum03} ,
+	        	#{valuenum04} ,
+	        	#{valuenum05} ,
+	        	#{kindid} ,
+	        	#{memo} ,
+	        	#{valuestr01} ,
+	        	#{valuestr02} ,
+	        	#{valuestr03} ,
+	        	#{valuestr04} ,
+	        	#{valuestr05} ,
+	        	#{valuestr06} ,
+	        	#{valuestr07} ,
+	        	#{valuestr08} ,
+	        	#{valuestr09} ,
+	        	#{valuestr10} ,
+	        	#{pkid} 
+	        )
+	    ]]>
+	</insert>
+	
+	<!-- update 条件组合 -->
+	<sql id="update_sql">
+		<set>
+			<if test="ppkid != null">
+				PPKID = #{ppkid} ,
+			</if>
+			<if test="status != null">
+				STATUS = #{status} ,
+			</if>
+			<if test="branchid != null">
+				BRANCHID = #{branchid} ,
+			</if>
+			<if test="name != null and name != ''">
+				NAME = #{name} ,
+			</if>
+			<if test="idno != null and idno != ''">
+				IDNO = #{idno} ,
+			</if>
+			<if test="corpperson != null and corpperson != ''">
+				CORPPERSON = #{corpperson} ,
+			</if>
+			<if test="regfund != null">
+				REGFUND = #{regfund} ,
+			</if>
+			<if test="linkman != null and linkman != ''">
+				LINKMAN = #{linkman} ,
+			</if>
+			<if test="phoneno != null and phoneno != ''">
+				PHONENO = #{phoneno} ,
+			</if>
+			<if test="email != null and email != ''">
+				EMAIL = #{email} ,
+			</if>
+			<if test="wwwurl != null and wwwurl != ''">
+				WWWURL = #{wwwurl} ,
+			</if>
+			<if test="address != null and address != ''">
+				ADDRESS = #{address} ,
+			</if>
+			<if test="croperid != null">
+				CROPERID = #{croperid} ,
+			</if>
+			<if test="cmoperid != null">
+				CMOPERID = #{cmoperid} ,
+			</if>
+			<if test="cmdate != null and cmdate != ''">
+				CMDATE = #{cmdate} ,
+			</if>
+			<if test="datenew != null">
+				DATENEW = #{datenew} ,
+			</if>
+			<if test="dateedit != null">
+				DATEEDIT = #{dateedit} ,
+			</if>
+			<if test="valueint01 != null">
+				VALUEINT01 = #{valueint01} ,
+			</if>
+			<if test="valueint02 != null">
+				VALUEINT02 = #{valueint02} ,
+			</if>
+			<if test="valueint03 != null">
+				VALUEINT03 = #{valueint03} ,
+			</if>
+			<if test="valueint04 != null">
+				VALUEINT04 = #{valueint04} ,
+			</if>
+			<if test="valueint05 != null">
+				VALUEINT05 = #{valueint05} ,
+			</if>
+			<if test="valueint06 != null">
+				VALUEINT06 = #{valueint06} ,
+			</if>
+			<if test="valueint07 != null">
+				VALUEINT07 = #{valueint07} ,
+			</if>
+			<if test="valueint08 != null">
+				VALUEINT08 = #{valueint08} ,
+			</if>
+			<if test="valueint09 != null">
+				VALUEINT09 = #{valueint09} ,
+			</if>
+			<if test="valueint10 != null">
+				VALUEINT10 = #{valueint10} ,
+			</if>
+			<if test="valuecode01 != null">
+				VALUECODE01 = #{valuecode01} ,
+			</if>
+			<if test="valuecode02 != null">
+				VALUECODE02 = #{valuecode02} ,
+			</if>
+			<if test="valuecode03 != null">
+				VALUECODE03 = #{valuecode03} ,
+			</if>
+			<if test="valuecode04 != null">
+				VALUECODE04 = #{valuecode04} ,
+			</if>
+			<if test="valuecode05 != null">
+				VALUECODE05 = #{valuecode05} ,
+			</if>
+			<if test="valuecode06 != null">
+				VALUECODE06 = #{valuecode06} ,
+			</if>
+			<if test="valuecode07 != null">
+				VALUECODE07 = #{valuecode07} ,
+			</if>
+			<if test="valuecode08 != null">
+				VALUECODE08 = #{valuecode08} ,
+			</if>
+			<if test="valuecode09 != null">
+				VALUECODE09 = #{valuecode09} ,
+			</if>
+			<if test="valuecode10 != null">
+				VALUECODE10 = #{valuecode10} ,
+			</if>
+			<if test="valuenum01 != null">
+				VALUENUM01 = #{valuenum01} ,
+			</if>
+			<if test="valuenum02 != null">
+				VALUENUM02 = #{valuenum02} ,
+			</if>
+			<if test="valuenum03 != null">
+				VALUENUM03 = #{valuenum03} ,
+			</if>
+			<if test="valuenum04 != null">
+				VALUENUM04 = #{valuenum04} ,
+			</if>
+			<if test="valuenum05 != null">
+				VALUENUM05 = #{valuenum05} ,
+			</if>
+			<if test="kindid != null">
+				KINDID = #{kindid} ,
+			</if>
+			<if test="memo != null and memo != ''">
+				MEMO = #{memo} ,
+			</if>
+			<if test="valuestr01 != null and valuestr01 != ''">
+				VALUESTR01 = #{valuestr01} ,
+			</if>
+			<if test="valuestr02 != null and valuestr02 != ''">
+				VALUESTR02 = #{valuestr02} ,
+			</if>
+			<if test="valuestr03 != null and valuestr03 != ''">
+				VALUESTR03 = #{valuestr03} ,
+			</if>
+			<if test="valuestr04 != null and valuestr04 != ''">
+				VALUESTR04 = #{valuestr04} ,
+			</if>
+			<if test="valuestr05 != null and valuestr05 != ''">
+				VALUESTR05 = #{valuestr05} ,
+			</if>
+			<if test="valuestr06 != null and valuestr06 != ''">
+				VALUESTR06 = #{valuestr06} ,
+			</if>
+			<if test="valuestr07 != null and valuestr07 != ''">
+				VALUESTR07 = #{valuestr07} ,
+			</if>
+			<if test="valuestr08 != null and valuestr08 != ''">
+				VALUESTR08 = #{valuestr08} ,
+			</if>
+			<if test="valuestr09 != null and valuestr09 != ''">
+				VALUESTR09 = #{valuestr09} ,
+			</if>
+			<if test="valuestr10 != null and valuestr10 != ''">
+				VALUESTR10 = #{valuestr10} 
+			</if>
+		</set>
+	</sql>
+	
+	<!-- 修改 -->
+	<update id="update">
+		UPDATE REG_ORGANINFO
+		<include refid="update_sql" />
+		WHERE
+			PKID = #{pkid} 	</update>
+
+	<!-- 根据ID删除 -->
+	<delete id="delete">
+    	<![CDATA[
+        	DELETE FROM REG_ORGANINFO 
+        	WHERE  PKID = #{pkid}
+    	]]>
+	</delete>
+	
+	<!-- getById -->
+	<select id="getById" resultMap="RM_RegOrganinfo">
+		SELECT
+		<include refid="columns" />
+		FROM REG_ORGANINFO
+		WHERE  PKID = #{pkid}  
+	</select>
+
+	<!-- 获取总数 -->
+	<select id="getTotalCount" resultType="int">
+		SELECT COUNT(1)
+		FROM REG_ORGANINFO o
+		<where>
+				o.PKID <![CDATA[>]]> 10000
+				<if test="model != null">
+							<if test="model.status != null and model.status != -1">
+								AND o.STATUS = #{model.status}
+							</if>
+							<if test="model.status != null and model.status == -1">
+								AND o.STATUS <![CDATA[<>]]> -1
+							</if>
+							<if test="model.ppkid != null">
+								AND o.PPKID = #{model.ppkid}
+							</if>
+							<if test="model.branchid != null">
+								AND (o.branchid in (
+										SELECT pkid FROM umg_branch u 
+										WHERE u.status = 1 
+										START WITH pkid=#{model.branchid} 
+										CONNECT BY PRIOR u.pkid = u.ppkid 
+										)  or o.pkid = #{model.branchid}
+									)
+							</if>
+							<if test="model.name != null and model.name !=''">
+								AND NAME = #{model.name}
+							</if>
+							<if test="model.idno != null and model.idno !=''">
+								AND o.IDNO = #{model.idno}
+							</if>
+							<if test="model.corpperson != null and model.corpperson !=''">
+								AND o.CORPPERSON = #{model.corpperson}
+							</if>
+							<if test="model.regfund != null">
+								AND o.REGFUND = #{model.regfund}
+							</if>
+							<if test="model.linkman != null and model.linkman !=''">
+								AND o.LINKMAN = #{model.linkman}
+							</if>
+							<if test="model.phoneno != null and model.phoneno !=''">
+								AND o.PHONENO = #{model.phoneno}
+							</if>
+							<if test="model.email != null and model.email !=''">
+								AND o.EMAIL = #{model.email}
+							</if>
+							<if test="model.wwwurl != null and model.wwwurl !=''">
+								AND o.WWWURL = #{model.wwwurl}
+							</if>
+							<if test="model.address != null and model.address !=''">
+								AND o.ADDRESS = #{model.address}
+							</if>
+							<if test="model.croperid != null">
+								AND o.CROPERID = #{model.croperid}
+							</if>
+							<if test="model.cmoperid != null">
+								AND o.CMOPERID = #{model.cmoperid}
+							</if>
+							<if test="model.cmdate != null and model.cmdate !=''">
+								AND o.CMDATE = #{model.cmdate}
+							</if>
+							<if test="model.datenew != null">
+								AND o.DATENEW = #{model.datenew}
+							</if>
+							<if test="model.dateedit != null">
+								AND o.DATEEDIT = #{model.dateedit}
+							</if>
+							<if test="model.valueint01 != null">
+								AND o.VALUEINT01 = #{model.valueint01}
+							</if>
+							<if test="model.valueint02 != null">
+								AND o.VALUEINT02 = #{model.valueint02}
+							</if>
+							<if test="model.valueint03 != null">
+								AND o.VALUEINT03 = #{model.valueint03}
+							</if>
+							<if test="model.valueint04 != null">
+								AND o.VALUEINT04 = #{model.valueint04}
+							</if>
+							<if test="model.valueint05 != null">
+								AND o.VALUEINT05 = #{model.valueint05}
+							</if>
+							<if test="model.valueint06 != null">
+								AND o.VALUEINT06 = #{model.valueint06}
+							</if>
+							<if test="model.valueint07 != null">
+								AND o.VALUEINT07 = #{model.valueint07}
+							</if>
+							<if test="model.valueint08 != null">
+								AND o.VALUEINT08 = #{model.valueint08}
+							</if>
+							<if test="model.valueint09 != null">
+								AND o.VALUEINT09 = #{model.valueint09}
+							</if>
+							<if test="model.valueint10 != null">
+								AND o.VALUEINT10 = #{model.valueint10}
+							</if>
+							<if test="model.valuecode01 != null">
+								AND o.VALUECODE01 = #{model.valuecode01}
+							</if>
+							<if test="model.valuecode02 != null">
+								AND o.VALUECODE02 = #{model.valuecode02}
+							</if>
+							<if test="model.valuecode03 != null">
+								AND o.VALUECODE03 = #{model.valuecode03}
+							</if>
+							<if test="model.valuecode04 != null">
+								AND o.VALUECODE04 = #{model.valuecode04}
+							</if>
+							<if test="model.valuecode05 != null">
+								AND o.VALUECODE05 = #{model.valuecode05}
+							</if>
+							<if test="model.valuecode06 != null">
+								AND o.VALUECODE06 = #{model.valuecode06}
+							</if>
+							<if test="model.valuecode07 != null">
+								AND o.VALUECODE07 = #{model.valuecode07}
+							</if>
+							<if test="model.valuecode08 != null">
+								AND o.VALUECODE08 = #{model.valuecode08}
+							</if>
+							<if test="model.valuecode09 != null">
+								AND o.VALUECODE09 = #{model.valuecode09}
+							</if>
+							<if test="model.valuecode10 != null">
+								AND o.VALUECODE10 = #{model.valuecode10}
+							</if>
+							<if test="model.valuenum01 != null">
+								AND o.VALUENUM01 = #{model.valuenum01}
+							</if>
+							<if test="model.valuenum02 != null">
+								AND o.VALUENUM02 = #{model.valuenum02}
+							</if>
+							<if test="model.valuenum03 != null">
+								AND o.VALUENUM03 = #{model.valuenum03}
+							</if>
+							<if test="model.valuenum04 != null">
+								AND o.VALUENUM04 = #{model.valuenum04}
+							</if>
+							<if test="model.valuenum05 != null">
+								AND o.VALUENUM05 = #{model.valuenum05}
+							</if>
+							<if test="model.kindid != null">
+								AND o.KINDID = #{model.kindid}
+							</if>
+							<if test="model.memo != null and model.memo !=''">
+								AND o.MEMO = #{model.memo}
+							</if>
+							<if test="model.valuestr01 != null and model.valuestr01 !=''">
+								AND o.VALUESTR01 = #{model.valuestr01}
+							</if>
+							<if test="model.valuestr02 != null and model.valuestr02 !=''">
+								AND o.VALUESTR02 = #{model.valuestr02}
+							</if>
+							<if test="model.valuestr03 != null and model.valuestr03 !=''">
+								AND o.VALUESTR03 = #{model.valuestr03}
+							</if>
+							<if test="model.valuestr04 != null and model.valuestr04 !=''">
+								AND o.VALUESTR04 = #{model.valuestr04}
+							</if>
+							<if test="model.valuestr05 != null and model.valuestr05 !=''">
+								AND o.VALUESTR05 = #{model.valuestr05}
+							</if>
+							<if test="model.valuestr06 != null and model.valuestr06 !=''">
+								AND o.VALUESTR06 = #{model.valuestr06}
+							</if>
+							<if test="model.valuestr07 != null and model.valuestr07 !=''">
+								AND o.VALUESTR07 = #{model.valuestr07}
+							</if>
+							<if test="model.valuestr08 != null and model.valuestr08 !=''">
+								AND o.VALUESTR08 = #{model.valuestr08}
+							</if>
+							<if test="model.valuestr09 != null and model.valuestr09 !=''">
+								AND o.VALUESTR09 = #{model.valuestr09}
+							</if>
+							<if test="model.valuestr10 != null and model.valuestr10 !=''">
+								AND o.VALUESTR10 = #{model.valuestr10}
+							</if>
+							<if test="model.pkid != null">
+								AND o.PKID = #{model.pkid}
+							</if>
+				</if>
+			</where>
+	</select>  
+	
+	<!-- 按条件组合搜索列表  -->
+	<select id="findList" resultMap="RM_RegOrganinfo">
+		SELECT
+		<include refid="columns" />
+		FROM  REG_ORGANINFO
+		<where>
+					<if test="ppkid != null">
+						AND PPKID = #{ppkid}
+					</if>
+					<if test="status != null and status != -1">
+						AND STATUS = #{status}
+					</if>
+					<if test="status != null and status == -1">
+						AND STATUS <![CDATA[<>]]> -1
+					</if>
+					<if test="branchid != null">
+						AND (branchid in (
+								SELECT pkid FROM umg_branch u 
+								WHERE u.status = 1 
+								START WITH pkid=#{branchid} 
+								CONNECT BY PRIOR u.pkid = u.ppkid 
+								)  or pkid = #{branchid}
+							)
+					</if>
+					<if test="name != null and name !=''">
+						AND NAME = #{name}
+					</if>
+					<if test="idno != null and idno !=''">
+						AND IDNO = #{idno}
+					</if>
+					<if test="corpperson != null and corpperson !=''">
+						AND CORPPERSON = #{corpperson}
+					</if>
+					<if test="regfund != null">
+						AND REGFUND = #{regfund}
+					</if>
+					<if test="linkman != null and linkman !=''">
+						AND LINKMAN = #{linkman}
+					</if>
+					<if test="phoneno != null and phoneno !=''">
+						AND PHONENO = #{phoneno}
+					</if>
+					<if test="email != null and email !=''">
+						AND EMAIL = #{email}
+					</if>
+					<if test="wwwurl != null and wwwurl !=''">
+						AND WWWURL = #{wwwurl}
+					</if>
+					<if test="address != null and address !=''">
+						AND ADDRESS = #{address}
+					</if>
+					<if test="croperid != null">
+						AND CROPERID = #{croperid}
+					</if>
+					<if test="cmoperid != null">
+						AND CMOPERID = #{cmoperid}
+					</if>
+					<if test="cmdate != null and cmdate !=''">
+						AND CMDATE = #{cmdate}
+					</if>
+					<if test="datenew != null">
+						AND DATENEW = #{datenew}
+					</if>
+					<if test="dateedit != null">
+						AND DATEEDIT = #{dateedit}
+					</if>
+					<if test="valueint01 != null">
+						AND VALUEINT01 = #{valueint01}
+					</if>
+					<if test="valueint02 != null">
+						AND VALUEINT02 = #{valueint02}
+					</if>
+					<if test="valueint03 != null">
+						AND VALUEINT03 = #{valueint03}
+					</if>
+					<if test="valueint04 != null">
+						AND VALUEINT04 = #{valueint04}
+					</if>
+					<if test="valueint05 != null">
+						AND VALUEINT05 = #{valueint05}
+					</if>
+					<if test="valueint06 != null">
+						AND VALUEINT06 = #{valueint06}
+					</if>
+					<if test="valueint07 != null">
+						AND VALUEINT07 = #{valueint07}
+					</if>
+					<if test="valueint08 != null">
+						AND VALUEINT08 = #{valueint08}
+					</if>
+					<if test="valueint09 != null">
+						AND VALUEINT09 = #{valueint09}
+					</if>
+					<if test="valueint10 != null">
+						AND VALUEINT10 = #{valueint10}
+					</if>
+					<if test="valuecode01 != null">
+						AND VALUECODE01 = #{valuecode01}
+					</if>
+					<if test="valuecode02 != null">
+						AND VALUECODE02 = #{valuecode02}
+					</if>
+					<if test="valuecode03 != null">
+						AND VALUECODE03 = #{valuecode03}
+					</if>
+					<if test="valuecode04 != null">
+						AND VALUECODE04 = #{valuecode04}
+					</if>
+					<if test="valuecode05 != null">
+						AND VALUECODE05 = #{valuecode05}
+					</if>
+					<if test="valuecode06 != null">
+						AND VALUECODE06 = #{valuecode06}
+					</if>
+					<if test="valuecode07 != null">
+						AND VALUECODE07 = #{valuecode07}
+					</if>
+					<if test="valuecode08 != null">
+						AND VALUECODE08 = #{valuecode08}
+					</if>
+					<if test="valuecode09 != null">
+						AND VALUECODE09 = #{valuecode09}
+					</if>
+					<if test="valuecode10 != null">
+						AND VALUECODE10 = #{valuecode10}
+					</if>
+					<if test="valuenum01 != null">
+						AND VALUENUM01 = #{valuenum01}
+					</if>
+					<if test="valuenum02 != null">
+						AND VALUENUM02 = #{valuenum02}
+					</if>
+					<if test="valuenum03 != null">
+						AND VALUENUM03 = #{valuenum03}
+					</if>
+					<if test="valuenum04 != null">
+						AND VALUENUM04 = #{valuenum04}
+					</if>
+					<if test="valuenum05 != null">
+						AND VALUENUM05 = #{valuenum05}
+					</if>
+					<if test="kindid != null">
+						AND KINDID = #{kindid}
+					</if>
+					<if test="memo != null and memo !=''">
+						AND MEMO = #{memo}
+					</if>
+					<if test="valuestr01 != null and valuestr01 !=''">
+						AND VALUESTR01 = #{valuestr01}
+					</if>
+					<if test="valuestr02 != null and valuestr02 !=''">
+						AND VALUESTR02 = #{valuestr02}
+					</if>
+					<if test="valuestr03 != null and valuestr03 !=''">
+						AND VALUESTR03 = #{valuestr03}
+					</if>
+					<if test="valuestr04 != null and valuestr04 !=''">
+						AND VALUESTR04 = #{valuestr04}
+					</if>
+					<if test="valuestr05 != null and valuestr05 !=''">
+						AND VALUESTR05 = #{valuestr05}
+					</if>
+					<if test="valuestr06 != null and valuestr06 !=''">
+						AND VALUESTR06 = #{valuestr06}
+					</if>
+					<if test="valuestr07 != null and valuestr07 !=''">
+						AND VALUESTR07 = #{valuestr07}
+					</if>
+					<if test="valuestr08 != null and valuestr08 !=''">
+						AND VALUESTR08 = #{valuestr08}
+					</if>
+					<if test="valuestr09 != null and valuestr09 !=''">
+						AND VALUESTR09 = #{valuestr09}
+					</if>
+					<if test="valuestr10 != null and valuestr10 !=''">
+						AND VALUESTR10 = #{valuestr10}
+					</if>
+					<if test="pkid != null">
+						AND PKID = #{pkid}
+					</if>
+		</where>
+		<if test="sortColumns != null and sortColumns !=''">
+			ORDER BY #{sortColumns}
+		</if>
+	</select>
+
+	<!-- 分页 -->
+	<select id="findPageList" resultMap="RM_RegOrganinfo">
+	select * from (
+		select t.*, rownum rn from(
+			SELECT b.name as branchName , o.* 
+			FROM REG_ORGANINFO o left join umg_branch b on o.BRANCHID = b.pkid
+			<where>
+				o.PKID <![CDATA[>]]> 10000
+				<if test="model != null">
+					<if test="model.status != null and model.status != -1">
+						AND o.STATUS = #{model.status}
+					</if>
+					<if test="model.status != null and model.status == -1">
+						AND o.STATUS <![CDATA[<>]]> -1
+					</if>
+					<if test="model.ppkid != null">
+						AND o.PPKID = #{model.ppkid}
+					</if>
+					<if test="model.branchid != null">
+						AND (o.branchid in (
+								SELECT pkid FROM umg_branch u 
+								WHERE u.status = 1 
+								START WITH pkid=#{model.branchid} 
+								CONNECT BY PRIOR u.pkid = u.ppkid 
+								)  or o.pkid = #{model.branchid}
+							)
+					</if>
+					<if test="model.name != null and model.name !=''">
+						AND NAME = #{model.name}
+					</if>
+					<if test="model.idno != null and model.idno !=''">
+						AND o.IDNO = #{model.idno}
+					</if>
+					<if test="model.corpperson != null and model.corpperson !=''">
+						AND o.CORPPERSON = #{model.corpperson}
+					</if>
+					<if test="model.regfund != null">
+						AND o.REGFUND = #{model.regfund}
+					</if>
+					<if test="model.linkman != null and model.linkman !=''">
+						AND o.LINKMAN = #{model.linkman}
+					</if>
+					<if test="model.phoneno != null and model.phoneno !=''">
+						AND o.PHONENO = #{model.phoneno}
+					</if>
+					<if test="model.email != null and model.email !=''">
+						AND o.EMAIL = #{model.email}
+					</if>
+					<if test="model.wwwurl != null and model.wwwurl !=''">
+						AND o.WWWURL = #{model.wwwurl}
+					</if>
+					<if test="model.address != null and model.address !=''">
+						AND o.ADDRESS = #{model.address}
+					</if>
+					<if test="model.croperid != null">
+						AND o.CROPERID = #{model.croperid}
+					</if>
+					<if test="model.cmoperid != null">
+						AND o.CMOPERID = #{model.cmoperid}
+					</if>
+					<if test="model.cmdate != null and model.cmdate !=''">
+						AND o.CMDATE = #{model.cmdate}
+					</if>
+					<if test="model.datenew != null">
+						AND o.DATENEW = #{model.datenew}
+					</if>
+					<if test="model.dateedit != null">
+						AND o.DATEEDIT = #{model.dateedit}
+					</if>
+					<if test="model.valueint01 != null">
+						AND o.VALUEINT01 = #{model.valueint01}
+					</if>
+					<if test="model.valueint02 != null">
+						AND o.VALUEINT02 = #{model.valueint02}
+					</if>
+					<if test="model.valueint03 != null">
+						AND o.VALUEINT03 = #{model.valueint03}
+					</if>
+					<if test="model.valueint04 != null">
+						AND o.VALUEINT04 = #{model.valueint04}
+					</if>
+					<if test="model.valueint05 != null">
+						AND o.VALUEINT05 = #{model.valueint05}
+					</if>
+					<if test="model.valueint06 != null">
+						AND o.VALUEINT06 = #{model.valueint06}
+					</if>
+					<if test="model.valueint07 != null">
+						AND o.VALUEINT07 = #{model.valueint07}
+					</if>
+					<if test="model.valueint08 != null">
+						AND o.VALUEINT08 = #{model.valueint08}
+					</if>
+					<if test="model.valueint09 != null">
+						AND o.VALUEINT09 = #{model.valueint09}
+					</if>
+					<if test="model.valueint10 != null">
+						AND o.VALUEINT10 = #{model.valueint10}
+					</if>
+					<if test="model.valuecode01 != null">
+						AND o.VALUECODE01 = #{model.valuecode01}
+					</if>
+					<if test="model.valuecode02 != null">
+						AND o.VALUECODE02 = #{model.valuecode02}
+					</if>
+					<if test="model.valuecode03 != null">
+						AND o.VALUECODE03 = #{model.valuecode03}
+					</if>
+					<if test="model.valuecode04 != null">
+						AND o.VALUECODE04 = #{model.valuecode04}
+					</if>
+					<if test="model.valuecode05 != null">
+						AND o.VALUECODE05 = #{model.valuecode05}
+					</if>
+					<if test="model.valuecode06 != null">
+						AND o.VALUECODE06 = #{model.valuecode06}
+					</if>
+					<if test="model.valuecode07 != null">
+						AND o.VALUECODE07 = #{model.valuecode07}
+					</if>
+					<if test="model.valuecode08 != null">
+						AND o.VALUECODE08 = #{model.valuecode08}
+					</if>
+					<if test="model.valuecode09 != null">
+						AND o.VALUECODE09 = #{model.valuecode09}
+					</if>
+					<if test="model.valuecode10 != null">
+						AND o.VALUECODE10 = #{model.valuecode10}
+					</if>
+					<if test="model.valuenum01 != null">
+						AND o.VALUENUM01 = #{model.valuenum01}
+					</if>
+					<if test="model.valuenum02 != null">
+						AND o.VALUENUM02 = #{model.valuenum02}
+					</if>
+					<if test="model.valuenum03 != null">
+						AND o.VALUENUM03 = #{model.valuenum03}
+					</if>
+					<if test="model.valuenum04 != null">
+						AND o.VALUENUM04 = #{model.valuenum04}
+					</if>
+					<if test="model.valuenum05 != null">
+						AND o.VALUENUM05 = #{model.valuenum05}
+					</if>
+					<if test="model.kindid != null">
+						AND o.KINDID = #{model.kindid}
+					</if>
+					<if test="model.memo != null and model.memo !=''">
+						AND o.MEMO = #{model.memo}
+					</if>
+					<if test="model.valuestr01 != null and model.valuestr01 !=''">
+						AND o.VALUESTR01 = #{model.valuestr01}
+					</if>
+					<if test="model.valuestr02 != null and model.valuestr02 !=''">
+						AND o.VALUESTR02 = #{model.valuestr02}
+					</if>
+					<if test="model.valuestr03 != null and model.valuestr03 !=''">
+						AND o.VALUESTR03 = #{model.valuestr03}
+					</if>
+					<if test="model.valuestr04 != null and model.valuestr04 !=''">
+						AND o.VALUESTR04 = #{model.valuestr04}
+					</if>
+					<if test="model.valuestr05 != null and model.valuestr05 !=''">
+						AND o.VALUESTR05 = #{model.valuestr05}
+					</if>
+					<if test="model.valuestr06 != null and model.valuestr06 !=''">
+						AND o.VALUESTR06 = #{model.valuestr06}
+					</if>
+					<if test="model.valuestr07 != null and model.valuestr07 !=''">
+						AND o.VALUESTR07 = #{model.valuestr07}
+					</if>
+					<if test="model.valuestr08 != null and model.valuestr08 !=''">
+						AND o.VALUESTR08 = #{model.valuestr08}
+					</if>
+					<if test="model.valuestr09 != null and model.valuestr09 !=''">
+						AND o.VALUESTR09 = #{model.valuestr09}
+					</if>
+					<if test="model.valuestr10 != null and model.valuestr10 !=''">
+						AND o.VALUESTR10 = #{model.valuestr10}
+					</if>
+				</if>
+				 <if test="model.sortColumns != null and model.sortColumns !=''">
+					ORDER BY #{model.sortColumns}
+				</if>
+			</where>
+		 )t)
+		where rn between
+		<choose>
+			<when test="pager != null">
+				#{pager.begin}
+			</when>
+			<otherwise>
+				 0 
+			</otherwise>
+		</choose>
+		and 
+		<choose>
+			<when test="pager != null">
+				#{pager.end}
+			</when>
+			<otherwise>
+				20
+			</otherwise>
+		</choose>
+	</select>
+
+</mapper>
