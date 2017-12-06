@@ -23,139 +23,90 @@
 	<!-- Content Header (Page header) -->
 	<section class="content-header">
 		<h1>
-			学员管理 <small>学员修改</small>
+			居委会统计管理 <small>居委会统计人员修改</small>
 		</h1>
 		<ol class="breadcrumb">
-			<li><a href="#"><i class="fa fa-dashboard"></i>学员列表</a></li>
-			<li><a href="#"><i class="fa"></i>学员修改</a></li>
+			<li><a href="#"><i class="fa fa-dashboard"></i>人员修改列表</a></li>
+			<li><a href="#"><i class="fa"></i>人员信息修改</a></li>
 			<!-- <li class="active">Here</li> -->
 		</ol>
 	</section>
 	<!-- Main content -->
 	<section class="content">
 		<div class="box box-solid box-default">
-			<div class="box-header">学员列表</div>
+			<div class="box-header">居委会统计人员列表</div>
 			<div class="box-body">
-				<form class="form-horizontal" role="form" id="mgtuserForm" method="post" action="<%=path%>/mgtuser/${mgtUser.userId==null?"add":"update"}">
+				<form class="form-horizontal" role="form" id="mgtuserForm" method="post" action="<%=path%>/community/save}">
 						<input id="hid_pkid" name="pkid" type="hidden"/>
-					    <input id="hid_nationid" type="hidden"/>
-						<input id="hid_householdid" type="hidden"/>
-						<input id="hid_cultureid" type="hidden"/>
-						<input id="hid_structid" type="hidden"/>
-						<input id="hid_identid" type="hidden"/>
-						<input id="hid_identlevel" type="hidden"/>
-						<input id="hid_certificateType" type="hidden"/>
-						<input id="hid_add_idxid"  name="idxid" type="hidden"/>
 				
-					<div class="form-group"  hidden="true">
-						<input type="hidden" class="form-control" id="userId" name="userId" value="${mgtUser.userId}">
-					</div>
 					<div class="form-group">
-						<label for="loginName" class="col-sm-2 control-label"><font color="red">*</font>班级联系人</label>
+						<label for="branchid" class="col-sm-2 control-label"><font color="red">*</font>管理机构名称</label>
 						<div class="input-group col-sm-5">
-							<input type="text" class="form-control" id="careerid" name="careerid" placeholder="请输入用户名" value="${mgtUser.careerid}">
+							<input type="text" class="form-control" id="branchid" name="branchid" placeholder="请输入管理机构名称" value="${community.branchid}">
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="nickName" class="col-sm-2 control-label">专业名称</label>
+						<label for="emname" class="col-sm-2 control-label">雇主姓名</label>
 						<div class="input-group col-sm-5">
-							<input type="text" class="form-control" id="nickName" name="nickName" placeholder="请输入真实姓名" value="${mgtUser.nickName}">
+							<input type="text" class="form-control" id="emname" name="emname" placeholder="请输入雇主姓名" value="${community.emname}">
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="nickName" class="col-sm-2 control-label">学员姓名</label>
+						<label for="emphoneno" class="col-sm-2 control-label">雇主联系电话</label>
 						<div class="input-group col-sm-5">
-							<input type="text" class="form-control" id="nickName" name="nickName" placeholder="请输入真实姓名" value="${mgtUser.nickName}">
+							<input type="text" class="form-control" id="emphoneno" name="emphoneno" placeholder="请输入雇主联系电话" value="${community.emphoneno}">
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="nickName" class="col-sm-2 control-label">民族</label>
+						<label for="nickName" class="col-sm-2 control-label">家庭服务行业项目分类</label>
 						<div class="input-group col-sm-5">
-							<input type="text" class="form-control" id="nickName" name="nickName" placeholder="请输入真实姓名" value="${mgtUser.nickName}">
+							<input type="text" class="form-control" id="svritemid" name="svritemid" placeholder="请输入家庭服务行业项目分类" value="${community.svritemid}">
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="nickName" class="col-sm-2 control-label">户口性质</label>
+						<label for="name" class="col-sm-2 control-label">姓名</label>
 						<div class="input-group col-sm-5">
-							<input type="text" class="form-control" id="nickName" name="nickName" placeholder="请输入真实姓名" value="${mgtUser.nickName}">
+							<input type="text" class="form-control" id="name" name="name" placeholder="请输入姓名" value="${community.name}">
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="nickName" class="col-sm-2 control-label">身份证号</label>
+						<label for="idno" class="col-sm-2 control-label">身份证号</label>
 						<div class="input-group col-sm-5">
-							<input type="text" class="form-control" id="nickName" name="nickName" placeholder="请输入真实姓名" value="${mgtUser.nickName}">
+							<input type="text" class="form-control" id="idno" name="idno" placeholder="请输入身份证号" value="${community.idno}">
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="nickName" class="col-sm-2 control-label">联系电话</label>
+						<label for="phoneno" class="col-sm-2 control-label">联系电话</label>
 						<div class="input-group col-sm-5">
-							<input type="text" class="form-control" id="nickName" name="nickName" placeholder="请输入真实姓名" value="${mgtUser.nickName}">
+							<input type="text" class="form-control" id="phoneno" name="phoneno" placeholder="请输入联系电话" value="${community.phoneno}">
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="nickName" class="col-sm-2 control-label">地址</label>
+						<label for="dateentry" class="col-sm-2 control-label">入职工作起始时间</label>
 						<div class="input-group col-sm-5">
-							<input type="text" class="form-control" id="nickName" name="nickName" placeholder="请输入真实姓名" value="${mgtUser.nickName}">
+							<div class="input-group col-sm-5">
+							<input type="text" class="form-control" id="dateentry" name="dateentry" placeholder="请输选择入职工作起始时间" readonly 
+										onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-{%d-1}'})" value="${community.dateentry}">
+						</div>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="nickName" class="col-sm-2 control-label">文化程度</label>
+						<label for="dateleave" class="col-sm-2 control-label">离开时间</label>
 						<div class="input-group col-sm-5">
-							<input type="text" class="form-control" id="nickName" name="nickName" placeholder="请输入真实姓名" value="${mgtUser.nickName}">
+							<input type="text" class="form-control" id="dateleave" name="dateleave" placeholder="请输选择离开时间" readonly 
+										onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-{%d-1}'})" value="${community.dateleave}">
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="nickName" class="col-sm-2 control-label">人员类型</label>
+						<label for="status" class="col-sm-2 control-label">状态</label>
 						<div class="input-group col-sm-5">
-							<input type="text" class="form-control" id="nickName" name="nickName" placeholder="请输入真实姓名" value="${mgtUser.nickName}">
+							<input type="text" class="form-control" id="status" name="status" placeholder="请输入真实姓名" value="${community.status}">
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="nickName" class="col-sm-2 control-label">证件类型</label>
+						<label for="memo" class="col-sm-2 control-label">备注</label>
 						<div class="input-group col-sm-5">
-							<input type="text" class="form-control" id="nickName" name="nickName" placeholder="请输入真实姓名" value="${mgtUser.nickName}">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="nickName" class="col-sm-2 control-label">证件号</label>
-						<div class="input-group col-sm-5">
-							<input type="text" class="form-control" id="nickName" name="nickName" placeholder="请输入真实姓名" value="${mgtUser.nickName}">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="nickName" class="col-sm-2 control-label">证书类型</label>
-						<div class="input-group col-sm-5">
-							<input type="text" class="form-control" id="nickName" name="nickName" placeholder="请输入真实姓名" value="${mgtUser.nickName}">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="nickName" class="col-sm-2 control-label">证书级别</label>
-						<div class="input-group col-sm-5">
-							<input type="text" class="form-control" id="nickName" name="nickName" placeholder="请输入真实姓名" value="${mgtUser.nickName}">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="nickName" class="col-sm-2 control-label">失业日期</label>
-						<div class="input-group col-sm-5">
-							<input type="text" class="form-control" id="nickName" name="nickName" placeholder="请输入真实姓名" value="${mgtUser.nickName}">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="nickName" class="col-sm-2 control-label">是否就业/创业</label>
-						<div class="input-group col-sm-5">
-							<input type="text" class="form-control" id="nickName" name="nickName" placeholder="请输入真实姓名" value="${mgtUser.nickName}">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="nickName" class="col-sm-2 control-label">是否结业</label>
-						<div class="input-group col-sm-5">
-							<input type="text" class="form-control" id="nickName" name="nickName" placeholder="请输入真实姓名" value="${mgtUser.nickName}">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="nickName" class="col-sm-2 control-label">备注</label>
-						<div class="input-group col-sm-5">
-							<input type="text" class="form-control" id="nickName" name="nickName" placeholder="请输入真实姓名" value="${mgtUser.nickName}">
+							<input type="text" class="form-control" id="memo" name="memo" placeholder="" value="${community.memo}">
 						</div>
 					</div>
 					<div class="form-group">

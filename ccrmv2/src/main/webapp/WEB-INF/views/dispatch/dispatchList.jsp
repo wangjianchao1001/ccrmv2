@@ -10,15 +10,15 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/static/ztree/css/demo.css" />	
 <link rel="stylesheet" href="<%=request.getContextPath()%>/static/ztree/css/zTreeStyle/zTreeStyle.css" />	
 <meta name="decorator" content="mainframe" />
-<title>培训机构管理</title>
+<title>家政企业派遣管理</title>
 </head>
 <body>
 	<section class="content-header">
 		<h1 style="text-align : left;">
-			培训机构<small>列表显示</small>
+			派遣人员管理<small>列表显示</small>
 		</h1>
 		<ol class="breadcrumb">
-			<li><a href="#"><i class="fa fa-dashboard"></i>培训机构信息</a></li>
+			<li><a href="#"><i class="fa fa-dashboard"></i>派遣人员信息</a></li>
 		</ol>
 	</section>
 	<!-- Main content -->
@@ -202,7 +202,7 @@
 		};
 		function addorUpdate(nowTr){
 			var pkid = $(nowTr).parent().parent().find("input[name=pkid]").val();
-			window.location.href = "<%=request.getContextPath()%>/dispatch/edit.html?id="+pkid;
+			window.location.href = path + "/dispatch/edit.html?id="+pkid;
 		}; 
 		
 		

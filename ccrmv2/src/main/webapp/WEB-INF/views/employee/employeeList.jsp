@@ -12,15 +12,15 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/static/ztree/css/demo.css" />	
 <link rel="stylesheet" href="<%=request.getContextPath()%>/static/ztree/css/zTreeStyle/zTreeStyle.css" />	
 <meta name="decorator" content="mainframe" />
-<title>培训机构管理</title>
+<title>家政企业员工管理</title>
 </head>
 <body>
 	<section class="content-header">
 		<h1 style="text-align : left;">
-			培训机构<small>列表显示</small>
+			员工管理<small>列表显示</small>
 		</h1>
 		<ol class="breadcrumb">
-			<li><a href="#"><i class="fa fa-dashboard"></i>培训机构信息</a></li>
+			<li><a href="#"><i class="fa fa-dashboard"></i>员工列表信息</a></li>
 		</ol>
 	</section>
 	<!-- Main content -->
@@ -82,14 +82,13 @@
 								<td hidden="true">
 									<input type="hidden" value="${employ.pkid}" id="pkid" name="pkid" />${employ.pkid}
 								</td>
-								<td><input type="hidden" value="${employ.branchid}" name="branchid" />${employ.branchName}</td>
+								<td><input type="hidden" value="${employ.organid}" name="organid" />${employ.organid}</td>
 								<td>${employ.name}</td>
 								<td>${employ.idno}</td>
 								<td>${employ.phoneno}</td>
 								<td>${employ.email}</td>
 								<td>${employ.dateentry}</td>
 								<td>${employ.dateleave}</td>
-								<td>${employ.status}</td>
 								<td>
 									<c:if test="${employ.status == 0 }">
 										离职
@@ -199,7 +198,7 @@
 		};
 		function addorUpdate(nowTr){
 			var pkid = $(nowTr).parent().parent().find("input[name=pkid]").val();
-			window.location.href = "<%=request.getContextPath()%>/employee/edit.html?id="+pkid;
+			window.location.href = path + "/employee/edit.html?id="+pkid;
 		}; 
 		
 		

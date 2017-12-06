@@ -29,7 +29,7 @@
 					<button type="button" class="btn btn-default" id="add">添加</button>
 				</shiro:hasPermission>
 				<div class="box-tools pull-right" var="agentUser" items="${agentUser}">
-					<form class="form-horizontal" role="form" id="searchForm" action="<%=request.getContextPath()%>/tirOrgan/tirOrganList.html">
+					<form class="form-horizontal" role="form" id="searchForm" action="<%=request.getContextPath()%>/community/communityList.html">
 						<div class="input-group input-group-sm" style="width:220px;display:inline-block">
 							<input type="text" class="form-control " id="branchName" name="branchName" placeholder="按所属机构查找" readonly value="${regOrgan.branchName }" onfocus="showBranchTree(); return false;"/>
 							<input type="hidden" class="form-control " id="branchid" name="branchid" value="${regOrgan.branchid }"/>
@@ -78,34 +78,22 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="organ" items="${pager.datas }" varStatus="status"> 
+						<c:forEach var="community" items="${pager.datas }" varStatus="status"> 
 							<tr>
 								<td hidden="true">
-									<input type="hidden" value="${organ.pkid}" id="pkid" name="pkid" />${organ.pkid}
+									<input type="hidden" value="${community.pkid}" id="pkid" name="pkid" />${community.pkid}
 								</td>
-								<td><input type="hidden" value="${organ.branchid}" name="branchid" />${organ.branchName}</td>
-								<td>${organ.name}</td>
-								<td>${organ.idno}</td>
-								<td>${organ.regfund}</td>
-								<td>${organ.corpperson}</td>
-								<td>${organ.phoneno}</td>
-								<td>${organ.linkman}</td>
-								<td>${organ.address}</td>
-								<td>${organ.address}</td>
-								<td>
-									<c:if test="${organ.status == -1 }">
-										删除
-									</c:if>
-									<c:if test="${organ.status == 0 }">
-										新建未提交
-									</c:if>
-									<c:if test="${organ.status == 1 }">
-										正常
-									</c:if>
-									<c:if test="${organ.status == 2 }">
-										冻结
-									</c:if>
-								</td>
+								<td>${community.branchid}</td>
+								<td>${community.emname}</td>
+								<td>${community.emphoneno}</td>
+								<td>${community.svritemid}</td>
+								<td>${community.name}</td>
+								<td>${community.idno}</td>
+								<td>${community.phoneno}</td>
+								<td>${community.dateentry}</td>
+								<td>${community.dateleave}</td>
+								<td>${community.status}</td>
+								<td>${community.memo}</td>
 								<td>
 									<shiro:hasPermission name="10010600">
 										<a href="#"onclick="addorUpdate(this)">修改</a>&nbsp;&nbsp;
@@ -114,7 +102,7 @@
 										<a href="#" onclick="delteTirOrg(this)">删除</a>&nbsp;&nbsp;
 									</shiro:hasPermission>
 									<shiro:hasPermission name="10010400">
-										<c:if test="${organ.status == 0 }">
+										<c:if test="${community.status == 0 }">
 											<a href="#" onclick="commitTirOrg(this)">提交</a>&nbsp;&nbsp;
 										</c:if>
 									</shiro:hasPermission>
@@ -209,7 +197,7 @@
 		};
 		function addorUpdate(nowTr){
 			var pkid = $(nowTr).parent().parent().find("input[name=pkid]").val();
-			window.location.href = "<%=request.getContextPath()%>/tirOrgan/edit.html?id="+pkid;
+			window.location.href = path + "/community/edit.html?id="+pkid;
 		}; 
 		function commitTirOrg(nowTr){
 			var pkid = $(nowTr).parent().parent().find("input[name=pkid]").val();

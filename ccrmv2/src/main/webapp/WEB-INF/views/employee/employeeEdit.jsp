@@ -43,31 +43,31 @@
 					<div class="form-group">
 						<label for="loginName" class="col-sm-2 control-label"><font color="red">*</font>所属家庭服务业企业</label>
 						<div class="input-group col-sm-5">
-							<input type="text" class="form-control" id="organname" name="organname" placeholder="请选择家庭服务企业" value="">
+							<input type="text" class="form-control" id="organid" name="organid" placeholder="请选择家庭服务企业" value="">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="name" class="col-sm-2 control-label">员工姓名</label>
 						<div class="input-group col-sm-5">
-							<input type="text" class="form-control" id="name" name="name" placeholder="请输入姓名" value="${employ.nickName}">
+							<input type="text" class="form-control" id="name" name="name" placeholder="请输入姓名" value="${employ.name}">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="idno" class="col-sm-2 control-label">身份证号</label>
 						<div class="input-group col-sm-5">
-							<input type="text" class="form-control" id="idno" name="idno" placeholder="请输入身份证号" value="${employ.nickName}">
+							<input type="text" class="form-control" id="idno" name="idno" placeholder="请输入身份证号" value="${employ.idno}">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="phoneno" class="col-sm-2 control-label">联系电话</label>
 						<div class="input-group col-sm-5">
-							<input type="text" class="form-control" id="phoneno" name="phoneno" placeholder="请输入联系电话" value="${employ.nickName}">
+							<input type="text" class="form-control" id="phoneno" name="phoneno" placeholder="请输入联系电话" value="${employ.phoneno}">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="email" class="col-sm-2 control-label">邮箱</label>
 						<div class="input-group col-sm-5">
-							<input type="text" class="form-control" id="email" name="email" placeholder="请输入邮箱" value="${employ.nickName}">
+							<input type="text" class="form-control" id="email" name="email" placeholder="请输入邮箱" value="${employ.email}">
 						</div>
 					</div>
 					<div class="form-group">
