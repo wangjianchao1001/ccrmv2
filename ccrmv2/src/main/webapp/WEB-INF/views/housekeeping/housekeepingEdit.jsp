@@ -1,31 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ taglib prefix="sitemesh" uri="http://www.opensymphony.com/sitemesh/decorator"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%
-	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
-			+ path + "/";
-%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title></title>
-<meta name="decorator" content="mainframe" />
 <script type="text/javascript" src="<%=request.getContextPath()%>/static/ztree/js/jquery.ztree.core-3.5.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/static/ztree/js/callZtree.js"></script>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/static/ztree/css/demo.css" />	
 <link rel="stylesheet" href="<%=request.getContextPath()%>/static/ztree/css/zTreeStyle/zTreeStyle.css" />	
-<link rel="stylesheet" href="<%=request.getContextPath()%>/static/plugins/datepicker/skin/WdatePicker.css">
-<!--[if lt IE 9]>
-		<script src="js/html5.js"></script>	
-	<![endif]-->
+<meta name="decorator" content="mainframe" />
+<title>家庭服务企业管理</title>
 </head>
 <body>
-	<!-- Content Header (Page header) -->
 	<section class="content-header">
 		<h1 style="text-align : left;">
 			家庭服务企业管理 <small>家庭服务企业添加/修改</small>
@@ -41,7 +28,7 @@
 		<div class="box box-solid box-default">
 			<div class="box-header"></div>
 			<div class="box-body">
-				<form class="form-horizontal" role="form" id="tirOrganForm" method="post" action="<%=path%>/housekeeping/save">
+				<form class="form-horizontal" role="form" id="tirOrganForm" method="post" action="<%=request.getContextPath()%>/housekeeping/save">
 					<c:if test="${not empty regOrgan.pkid}">
 						<div class="form-group"  hidden="true">
 							<label for="pkid" class="col-sm-2 control-label">pkid</label>
@@ -53,14 +40,21 @@
 					<div class="form-group">
 						<label for="branchid" class="col-sm-2 control-label"><font color="red">*</font>所属管理机构：</label>
 						<div class="input-group col-sm-5">
-							<c:if test="${empty branchTree }">
-								<c:forEach var="branch" items="${branchList }">
-									<c:if test="${regOrgan.branchid eq branch.pkid }">
-										<input type="text" class="form-control" id="branchName" required="required"
-											name="branchName" placeholder="请选择所属机构" readonly 
-											value="${branch.name}"> 
-									</c:if> 
-								</c:forEach>
+							<c:if test="${type == 'add' }">
+								<input type="text" class="form-control" id="branchName" required="required"
+												name="branchName" placeholder="请选择所属机构" readonly 
+												value="${branch.name}" onfocus="showBranchTree(); return false;"> 
+							</c:if>
+							<c:if test="${type != 'add' }">
+								<c:if test="${not empty branchTree }">
+									<c:forEach var="branch" items="${branchList }">
+										<c:if test="${regOrgan.branchid eq branch.pkid }">
+											<input type="text" class="form-control" id="branchName" required="required"
+												name="branchName" placeholder="请选择所属机构" readonly 
+												value="${branch.name}" onfocus="showBranchTree(); return false;"> 
+										</c:if> 
+									</c:forEach>
+								</c:if>
 							</c:if>
 								<input type="hidden" class="form-control " id="branchid" name="branchid" value="${regOrgan.branchid }" />
 						</div>
@@ -76,7 +70,6 @@
 						<div class="input-group col-sm-5">
 								<select class="form-control selectpicker show-tick" name="valuecode01" >
 								
-								<option value='' <c:if test="${regOrgan.valuecode01 == '' }">selected="selected"</c:if>>请选择机构分类</option>
 								<option value='8201' <c:if test="${regOrgan.valuecode01 == 8201 }">selected="selected"</c:if>>员工制企业</option>
 								<option value='8202' <c:if test="${regOrgan.valuecode01 == 8202 }">selected="selected"</c:if>>综合类企业</option>
 								<option value='8203' <c:if test="${regOrgan.valuecode01 == 8203 }">selected="selected"</c:if>>家政服务企业</option>
@@ -115,7 +108,7 @@
 					<div class="form-group">
 						<label for="address" class="col-sm-2 control-label"><font color="red">*</font>注册资金(万元)</label>
 						<div class="input-group col-sm-5">
-							<input type="text" class="form-control" id="tempRegfund" name="tempRegfund" placeholder="请输入注册资金(万元)<" value="${regOrgan.tempRegfund}">
+							<input type="text" class="form-control" id="regfund" name="regfund" placeholder="请输入注册资金(万元)" value="${regOrgan.regfund}" />
 						</div>
 					</div>
 					<div class="form-group">
@@ -198,7 +191,9 @@
 					</div>
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
-							<button type="submit" class="btn btn-primary">提交</button>
+							<c:if test="${type != 'view' }">
+								<button type="submit" class="btn btn-primary">提交</button>
+							</c:if>
 							<input type="button" class="btn btn-default" id="back"
 								name="back" onclick="javascript:window.history.go(-1);"
 								value="返回" />

@@ -45,15 +45,14 @@ public class HousekeepingController {
 		
 		//从session 取用户
 		UmgOperator user = (UmgOperator) req.getSession().getAttribute("umgOperator");
-		Long branchId = regOrgan.getBranchid();
+		Long branchId = user.getBranchid() == 100l ? 398l : user.getBranchid(); 
+		
+		if(regOrgan == null ) regOrgan = new RegOrganinfo();
+		if(regOrgan.getBranchid() == null ) regOrgan.setBranchid(branchId);
 		regOrgan.setStatus(-1);
-		if(user != null && branchId == null && user.getBranchid() != 100l){
-			regOrgan.setBranchid(user.getBranchid());
-		}else if(user != null && user.getBranchid() == 100l){
-			regOrgan.setBranchid(398l);
-		}
-		branchId = regOrgan.getBranchid();
+		regOrgan.setType("HK");
 		regOrgan.setSortColumns("o.status asc");
+		
 		Pager pager = regOrgService.findPageList(regOrgan, page.getPageNumber(), page.getPageSize());
 		
 		List<UmgBranch> branchList = umgBranchService.getBranchTree("2200",String.valueOf(branchId)); 
@@ -70,12 +69,15 @@ public class HousekeepingController {
 	 * 跳转新增页面
 	 */
 	@RequestMapping("edit.html")
-	public String update(String id, HttpServletRequest req, HttpServletResponse res, ModelMap model){
+	public String update(String id, String type, HttpServletRequest req, HttpServletResponse res, ModelMap model){
 		log.info("跳转页面，参数 id ："+id);
 		
+		//从session 取用户
 		UmgOperator user = (UmgOperator) req.getSession().getAttribute("umgOperator");
-		List<UmgBranch> branchList = umgBranchService.getBranchTree("1200",String.valueOf(user.getBranchid())); 
-		String branchTree = umgBranchService.umgBranchTree(branchList); 
+		Long branchId = user.getBranchid() == 100l ? 398l : user.getBranchid(); 
+		
+		List<UmgBranch> branchList = umgBranchService.getBranchTree("2200",String.valueOf(branchId)); 
+		String branchTree = umgBranchService.umgBranchTree(branchList);  
 		
 		if(StringUtils.isNotBlank(id)){
 			RegOrganinfo regOrgan = regOrgService.getById(Long.valueOf(id));
@@ -84,6 +86,7 @@ public class HousekeepingController {
 		
 		model.put("branchList", branchList);
 		model.put("branchTree", branchTree);
+		model.put("type", type);
 		
 		return "housekeeping/housekeepingEdit";
 	}
@@ -109,7 +112,7 @@ public class HousekeepingController {
 	 * 提交
 	 */
 	@RequestMapping("commit")
-	public @ResponseBody String commit(String id, HttpServletRequest req, HttpServletResponse res, ModelMap model, final RedirectAttributes redirectAttributes){
+	public String commit(String id, HttpServletRequest req, HttpServletResponse res, ModelMap model, final RedirectAttributes redirectAttributes){
 		String msg = "操作成功";
 		RegOrganinfo regOrgan = regOrgService.getById(Long.valueOf(id));
 		regOrgan.setStatus(1);

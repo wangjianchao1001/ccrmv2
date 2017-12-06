@@ -49,7 +49,7 @@ public class RegOrganinfoController {
 		}else if(user != null && regOrgan.getBranchid() == null && user.getKindid() == 2){
 			regOrgan.setBranchid(user.getOrganid());
 		}
-		
+		regOrgan.setType("TR");
 		Pager pager = regOrgService.findPageList(regOrgan, page.getPageNumber(), page.getPageSize());
 		
 		List<UmgBranch> branchList = umgBranchService.getBranchTree("1200",String.valueOf(user.getBranchid())); 

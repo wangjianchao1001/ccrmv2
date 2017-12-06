@@ -31,7 +31,7 @@
 				<div class="box-tools pull-right" var="agentUser" items="${agentUser}">
 					<form class="form-horizontal" role="form" id="searchForm" action="<%=request.getContextPath()%>/housekeeping/housekeepingList.html">
 						<div class="input-group input-group-sm" style="width:220px;display:inline-block">
-							<input type="text" class="form-control " id="branchName" name="" placeholder="按所属机构查找" readonly value="${regOrgan.branchName }" onfocus="showBranchTree(); return false;"/>
+							<input type="text" class="form-control " id="branchName" name="branchName" placeholder="按所属机构查找" readonly value="${regOrgan.branchName }" onfocus="showBranchTree(); return false;"/>
 							<input type="hidden" class="form-control " id="branchid" name="branchid" value="${regOrgan.branchid }"/>
 						</div>
 						<div class="input-group input-group-sm" style="width:180px;display:inline-block">
@@ -89,7 +89,7 @@
 									<input type="hidden" value="${organ.pkid}" id="pkid" name="pkid" />${organ.pkid}
 								</td>
 								<td><input type="hidden" value="${organ.branchid}" name="branchid" />${organ.branchName}</td>
-								<td>${organ.name}</td>
+								<td><a href="#" onclick="addorUpdate(this,'view')">${organ.name}</a></td>
 								<td>
 									<c:if test="${organ.valuecode01 == 8201 }">员工制企业</c:if>
 									<c:if test="${organ.valuecode01 == 8202 }">综合类企业</c:if>
@@ -105,7 +105,7 @@
 								<td>${organ.phoneno}</td>
 								<td>${organ.linkman}</td>
 								<td>${organ.address}</td>
-								<td>${organ.address}</td>
+								<td>${organ.valuecode07}</td>
 								<td>
 									<c:if test="${organ.status == -1 }">
 										删除
@@ -122,18 +122,18 @@
 								</td>
 								<td>
 									<shiro:hasPermission name="10010600">
-										<a href="#"onclick="addorUpdate(this)">修改</a>&nbsp;&nbsp;
+										<a href="#"onclick="addorUpdate(this,'edit')">修改</a>&nbsp;&nbsp;
 									</shiro:hasPermission>
 									<shiro:hasPermission name="10010200">
 										<a href="#" onclick="delteTirOrg(this)">删除</a>&nbsp;&nbsp;
 									</shiro:hasPermission>
 									<shiro:hasPermission name="10010400">
 										<c:if test="${organ.status == 0 }">
-											<a href="#" onclick="commitTirOrg(this)">提交</a>&nbsp;&nbsp;
+											<a href="#" onclick="commitHK(this)">提交</a>&nbsp;&nbsp;
 										</c:if>
 									</shiro:hasPermission>
 									<br />
-									<a href="#" onclick="getTirClass(this)">查看培训班</a>&nbsp;&nbsp;
+									<a href="#" onclick="getEmployee(this)">查看员工</a>&nbsp;&nbsp;
 								</td>
 							</tr>
 						</c:forEach>
@@ -180,7 +180,7 @@
 			$.fn.zTree.init($("#treeDemo"), setting, branchTree);
 			
 			$("#add").bind('click',function(){
-				window.location.href ="<%=request.getContextPath()%>/tirOrgan/edit.html";
+				window.location.href ="<%=request.getContextPath()%>/housekeeping/edit.html?type=add";
 			});
 			
 			//操作成功提示
@@ -196,6 +196,8 @@
 		
 		function submitSearch(){
 			$("#searchForm").submit();
+			//机构数
+			$.fn.zTree.init($("#treeDemo"), setting, branchTree);
 		};
 		
 		//删除
@@ -221,21 +223,21 @@
 				okText : "删除",
 			});
 		};
-		function addorUpdate(nowTr){
+		function addorUpdate(nowTr,type){
 			var pkid = $(nowTr).parent().parent().find("input[name=pkid]").val();
-			window.location.href = "<%=request.getContextPath()%>/tirOrgan/edit.html?id="+pkid;
+			window.location.href = path + "/housekeeping/edit.html?type="+type+"&id="+pkid;
 		}; 
-		function commitTirOrg(nowTr){
+		function commitHK(nowTr){
 			var pkid = $(nowTr).parent().parent().find("input[name=pkid]").val();
-			window.location.href = "<%=request.getContextPath()%>/tirOrgan/commit?id="+pkid;
+			window.location.href = path + "/housekeeping/commit?id="+pkid;
 		}; 
 		
-		function getTirClass(nowTr){
+		function getEmployee(nowTr){
 			var pkid = $(nowTr).parent().parent().find("input[name=pkid]").val();
-			var tabUrl = "<%=request.getContextPath()%>/tirClass/tirClassList.html?orgid="+pkid;
-			window.parent.parent.openTab('1018','培训班级管理',tabUrl);
+			var tabUrl = path + "/employee/employeeList.html?organid="+pkid;
+			window.parent.parent.openTab('1018','员工管理',tabUrl);
 
-		}
+		};
 		
 		
 		

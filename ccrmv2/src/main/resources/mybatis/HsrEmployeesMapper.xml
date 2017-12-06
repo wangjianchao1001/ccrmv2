@@ -278,8 +278,11 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 						<if test="model.certificate != null and model.certificate !=''">
 							AND CERTIFICATE = #{model.certificate}
 						</if>
-						<if test="model.status != null">
+						<if test="model.status != null and model.status != -1">
 							AND STATUS = #{model.status}
+						</if>
+						<if test="model.status != null and model.status == -1">
+							AND STATUS <![CDATA[<>]]> #{model.status}
 						</if>
 						<if test="model.trainmemo != null and model.trainmemo !=''">
 							AND TRAINMEMO = #{model.trainmemo}

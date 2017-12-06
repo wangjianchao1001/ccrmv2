@@ -261,8 +261,8 @@
 		
 		function getTirClass(nowTr){
 			var pkid = $(nowTr).parent().parent().find("input[name=pkid]").val();
-			var pkid = $(nowTr).parent().parent().find("input[name=pkid]").val();
-			var tabUrl = "<%=request.getContextPath()%>/tirClass/tirClassList.html?orgid="+pkid+"&branchname="++"pageNumber=1&pageSize=10";
+			var branchname = $(nowTr).parent().parent().find("input[name=branchname]").val();
+			var tabUrl = path + "/tirClass/tirClassList.html?orgid="+pkid+"&branchname="+branchname+"pageNumber=1&pageSize=10";
 			window.parent.parent.openTab('1018','培训班级管理',tabUrl);
 		}
 		

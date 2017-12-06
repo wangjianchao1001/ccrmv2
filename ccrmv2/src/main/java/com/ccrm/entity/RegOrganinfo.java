@@ -354,6 +354,8 @@ public class RegOrganinfo extends BaseEntity {
 	private Long pkid;
 	
 	private String branchName;
+	//家政/培训
+	private String type;
 	
 	public RegOrganinfo(){
 	}
@@ -773,4 +775,14 @@ public class RegOrganinfo extends BaseEntity {
 	public void setBranchName(String branchName) {
 		this.branchName = branchName;
 	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+	
+	
 }
