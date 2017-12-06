@@ -315,7 +315,7 @@ public class UserController {
 			for (int i = 0; i < authId.length; i++) {
 				
 				UmgAssociate mgtUA = new UmgAssociate();
-				mgtUA.setPkid(Long.valueOf(PkidGenerator.radomNumber(2)));
+				mgtUA.setPkid(Long.valueOf(PkidGenerator.randomNumber(2)));
 				mgtUA.setAssid(Long.valueOf(userId));
 				mgtUA.setDatenew(DateTimeUtils.getNowDate());
 				mgtUA.setSubid(authId[i]);

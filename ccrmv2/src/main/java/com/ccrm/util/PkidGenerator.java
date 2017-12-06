@@ -10,7 +10,7 @@ import java.util.Random;
  */
 public class PkidGenerator {
 	
-	public static String radomNumber(int count){
+	public static String randomNumber(int count){
 		
 		if(count < 1){
 			return null;
