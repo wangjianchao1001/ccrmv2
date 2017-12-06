@@ -1,8 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
-<%@ taglib prefix="sitemesh"
-	uri="http://www.opensymphony.com/sitemesh/decorator"%>
+<%@ taglib prefix="sitemesh" uri="http://www.opensymphony.com/sitemesh/decorator"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,15 +10,15 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/static/ztree/css/demo.css" />	
 <link rel="stylesheet" href="<%=request.getContextPath()%>/static/ztree/css/zTreeStyle/zTreeStyle.css" />	
 <meta name="decorator" content="mainframe" />
-<title>培训机构管理</title>
+<title>居委会普查登记</title>
 </head>
 <body>
 	<section class="content-header">
 		<h1 style="text-align : left;">
-			培训机构<small>列表显示</small>
+			居委会普查登记<small>列表显示</small>
 		</h1>
 		<ol class="breadcrumb">
-			<li><a href="#"><i class="fa fa-dashboard"></i>培训机构信息</a></li>
+			<li><a href="#"><i class="fa fa-dashboard"></i>居委会普查登记</a></li>
 		</ol>
 	</section>
 	<!-- Main content -->
@@ -66,15 +64,16 @@
 						<tr>
 							<th hidden="true">序号</th>
 							<th>管理机构名称</th>
-							<th>企业名称</th>
-							<th>营业执照号</th>
-							<th>注册资金(万元)</th>
-							<th>法人代表</th>
+							<th>雇主姓名</th>
+							<th>雇主联系电话</th>
+							<th>家庭服务行业项目分类</th>
+							<th>姓名</th>
+							<th>身份证号</th>
 							<th>联系电话</th>
-							<th>联系人</th>
-							<th>企业地址</th>
-							<th>职工总数</th>
+							<th>入职工作起始时间</th>
+							<th>离开时间</th>
 							<th>状态</th>
+							<th>备注</th>
 							<th>操作</th>
 						</tr>
 					</thead>

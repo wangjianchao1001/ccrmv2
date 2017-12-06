@@ -31,7 +31,7 @@
 					<button type="button" class="btn btn-default" id="add">添加</button>
 				</shiro:hasPermission>
 				<div class="box-tools pull-right" var="agentUser" items="${agentUser}">
-					<form class="form-horizontal" role="form" id="searchForm" action="<%=request.getContextPath()%>/tirOrgan/tirOrganList.html">
+					<form class="form-horizontal" role="form" id="searchForm" action="<%=request.getContextPath()%>/employee/employeeList.html">
 						<div class="input-group input-group-sm" style="width:220px;display:inline-block">
 							<input type="text" class="form-control " id="branchName" name="branchName" placeholder="按所属机构查找" readonly value="${regOrgan.branchName }" onfocus="showBranchTree(); return false;"/>
 							<input type="hidden" class="form-control " id="branchid" name="branchid" value="${regOrgan.branchid }"/>
@@ -65,46 +65,37 @@
 					
 						<tr>
 							<th hidden="true">序号</th>
-							<th>管理机构名称</th>
-							<th>企业名称</th>
-							<th>营业执照号</th>
-							<th>注册资金(万元)</th>
-							<th>法人代表</th>
+							<th>所属家庭服务业企业</th>
+							<th>员工姓名</th>
+							<th>身份证号</th>
 							<th>联系电话</th>
-							<th>联系人</th>
-							<th>企业地址</th>
-							<th>职工总数</th>
+							<th>邮箱</th>
+							<th>入职时间</th>
+							<th>离职时间</th>
 							<th>状态</th>
 							<th>操作</th>
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="organ" items="${pager.datas }" varStatus="status"> 
+						<c:forEach var="employ" items="${pager.datas }" varStatus="status"> 
 							<tr>
 								<td hidden="true">
-									<input type="hidden" value="${organ.pkid}" id="pkid" name="pkid" />${organ.pkid}
+									<input type="hidden" value="${employ.pkid}" id="pkid" name="pkid" />${employ.pkid}
 								</td>
-								<td><input type="hidden" value="${organ.branchid}" name="branchid" />${organ.branchName}</td>
-								<td>${organ.name}</td>
-								<td>${organ.idno}</td>
-								<td>${organ.regfund}</td>
-								<td>${organ.corpperson}</td>
-								<td>${organ.phoneno}</td>
-								<td>${organ.linkman}</td>
-								<td>${organ.address}</td>
-								<td>${organ.address}</td>
+								<td><input type="hidden" value="${employ.branchid}" name="branchid" />${employ.branchName}</td>
+								<td>${employ.name}</td>
+								<td>${employ.idno}</td>
+								<td>${employ.phoneno}</td>
+								<td>${employ.email}</td>
+								<td>${employ.dateentry}</td>
+								<td>${employ.dateleave}</td>
+								<td>${employ.status}</td>
 								<td>
-									<c:if test="${organ.status == -1 }">
-										删除
+									<c:if test="${employ.status == 0 }">
+										离职
 									</c:if>
-									<c:if test="${organ.status == 0 }">
-										新建未提交
-									</c:if>
-									<c:if test="${organ.status == 1 }">
-										正常
-									</c:if>
-									<c:if test="${organ.status == 2 }">
-										冻结
+									<c:if test="${employ.status == 1 }">
+										在职
 									</c:if>
 								</td>
 								<td>
@@ -115,12 +106,10 @@
 										<a href="#" onclick="delteTirOrg(this)">删除</a>&nbsp;&nbsp;
 									</shiro:hasPermission>
 									<shiro:hasPermission name="10010400">
-										<c:if test="${organ.status == 0 }">
-											<a href="#" onclick="commitTirOrg(this)">提交</a>&nbsp;&nbsp;
+										<c:if test="${employ.status == 0 }">
+											<a href="#" onclick="view(this)">查看</a>&nbsp;&nbsp;
 										</c:if>
 									</shiro:hasPermission>
-									<br />
-									<a href="#" onclick="getTirClass(this)">查看培训班</a>&nbsp;&nbsp;
 								</td>
 							</tr>
 						</c:forEach>
@@ -167,7 +156,7 @@
 			$.fn.zTree.init($("#treeDemo"), setting, branchTree);
 			
 			$("#add").bind('click',function(){
-				window.location.href ="<%=request.getContextPath()%>/tirOrgan/edit.html";
+				window.location.href ="<%=request.getContextPath()%>/employee/edit.html";
 			});
 			
 			//操作成功提示
@@ -190,7 +179,7 @@
 			confirmBox("确认删除？",function(nowTr){
 				var id = $(nowTr).parent().parent().find("input[name=pkid]").val();
 				$.ajax({
-					url : path+"/tirOrgan/delete",
+					url : path+"/employee/delete",
 					data : {id : id},
 					dataType : "json",
 					success : function(msg){
@@ -210,20 +199,8 @@
 		};
 		function addorUpdate(nowTr){
 			var pkid = $(nowTr).parent().parent().find("input[name=pkid]").val();
-			window.location.href = "<%=request.getContextPath()%>/tirOrgan/edit.html?id="+pkid;
+			window.location.href = "<%=request.getContextPath()%>/employee/edit.html?id="+pkid;
 		}; 
-		function commitTirOrg(nowTr){
-			var pkid = $(nowTr).parent().parent().find("input[name=pkid]").val();
-			window.location.href = "<%=request.getContextPath()%>/tirOrgan/commit?id="+pkid;
-		}; 
-		
-		function getTirClass(nowTr){
-			var pkid = $(nowTr).parent().parent().find("input[name=pkid]").val();
-			var tabUrl = "<%=request.getContextPath()%>/tirClass/tirClassList.html?orgid="+pkid;
-			window.parent.parent.openTab('1018','培训班级管理',tabUrl);
-
-		}
-		
 		
 		
 	</script>

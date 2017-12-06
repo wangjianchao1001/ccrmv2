@@ -23,11 +23,11 @@
 	<!-- Content Header (Page header) -->
 	<section class="content-header">
 		<h1>
-			学员管理 <small>学员修改</small>
+			员工管理 <small>员工新增/修改</small>
 		</h1>
 		<ol class="breadcrumb">
-			<li><a href="#"><i class="fa fa-dashboard"></i>学员列表</a></li>
-			<li><a href="#"><i class="fa"></i>学员修改</a></li>
+			<li><a href="#"><i class="fa fa-dashboard"></i>员工列表</a></li>
+			<li><a href="#"><i class="fa"></i>员工新增/修改</a></li>
 			<!-- <li class="active">Here</li> -->
 		</ol>
 	</section>
@@ -36,126 +36,68 @@
 		<div class="box box-solid box-default">
 			<div class="box-header">学员列表</div>
 			<div class="box-body">
-				<form class="form-horizontal" role="form" id="mgtuserForm" method="post" action="<%=path%>/mgtuser/${mgtUser.userId==null?"add":"update"}">
+				<form class="form-horizontal" role="form" id="mgtuserForm" method="post" action="<%=path%>/employee/save"}">
 						<input id="hid_pkid" name="pkid" type="hidden"/>
-					    <input id="hid_nationid" type="hidden"/>
-						<input id="hid_householdid" type="hidden"/>
-						<input id="hid_cultureid" type="hidden"/>
-						<input id="hid_structid" type="hidden"/>
-						<input id="hid_identid" type="hidden"/>
-						<input id="hid_identlevel" type="hidden"/>
-						<input id="hid_certificateType" type="hidden"/>
-						<input id="hid_add_idxid"  name="idxid" type="hidden"/>
+					    <input id="hid_organid" name="organid" type="hidden"/>
 				
-					<div class="form-group"  hidden="true">
-						<input type="hidden" class="form-control" id="userId" name="userId" value="${mgtUser.userId}">
-					</div>
 					<div class="form-group">
-						<label for="loginName" class="col-sm-2 control-label"><font color="red">*</font>班级联系人</label>
+						<label for="loginName" class="col-sm-2 control-label"><font color="red">*</font>所属家庭服务业企业</label>
 						<div class="input-group col-sm-5">
-							<input type="text" class="form-control" id="careerid" name="careerid" placeholder="请输入用户名" value="${mgtUser.careerid}">
+							<input type="text" class="form-control" id="organname" name="organname" placeholder="请选择家庭服务企业" value="">
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="nickName" class="col-sm-2 control-label">专业名称</label>
+						<label for="name" class="col-sm-2 control-label">员工姓名</label>
 						<div class="input-group col-sm-5">
-							<input type="text" class="form-control" id="nickName" name="nickName" placeholder="请输入真实姓名" value="${mgtUser.nickName}">
+							<input type="text" class="form-control" id="name" name="name" placeholder="请输入姓名" value="${employ.nickName}">
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="nickName" class="col-sm-2 control-label">学员姓名</label>
+						<label for="idno" class="col-sm-2 control-label">身份证号</label>
 						<div class="input-group col-sm-5">
-							<input type="text" class="form-control" id="nickName" name="nickName" placeholder="请输入真实姓名" value="${mgtUser.nickName}">
+							<input type="text" class="form-control" id="idno" name="idno" placeholder="请输入身份证号" value="${employ.nickName}">
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="nickName" class="col-sm-2 control-label">民族</label>
+						<label for="phoneno" class="col-sm-2 control-label">联系电话</label>
 						<div class="input-group col-sm-5">
-							<input type="text" class="form-control" id="nickName" name="nickName" placeholder="请输入真实姓名" value="${mgtUser.nickName}">
+							<input type="text" class="form-control" id="phoneno" name="phoneno" placeholder="请输入联系电话" value="${employ.nickName}">
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="nickName" class="col-sm-2 control-label">户口性质</label>
+						<label for="email" class="col-sm-2 control-label">邮箱</label>
 						<div class="input-group col-sm-5">
-							<input type="text" class="form-control" id="nickName" name="nickName" placeholder="请输入真实姓名" value="${mgtUser.nickName}">
+							<input type="text" class="form-control" id="email" name="email" placeholder="请输入邮箱" value="${employ.nickName}">
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="nickName" class="col-sm-2 control-label">身份证号</label>
+						<label for="status" class="col-sm-2 control-label">状态</label>
 						<div class="input-group col-sm-5">
-							<input type="text" class="form-control" id="nickName" name="nickName" placeholder="请输入真实姓名" value="${mgtUser.nickName}">
+							<select class="form-control selectpicker show-tick" name="status" >
+								<option value='' <c:if test="${employ.status == '' }">selected="selected"</c:if>>请选择状态</option>
+								<option value='0' <c:if test="${employ.status == 0 }">selected="selected"</c:if>>离职</option>
+								<option value='1' <c:if test="${employ.status == 1 }">selected="selected"</c:if>>在职</option>
+							</select> 
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="nickName" class="col-sm-2 control-label">联系电话</label>
+						<label for="dateentry" class="col-sm-2 control-label"><font color="red">*</font>入职时间</label>
 						<div class="input-group col-sm-5">
-							<input type="text" class="form-control" id="nickName" name="nickName" placeholder="请输入真实姓名" value="${mgtUser.nickName}">
+							<input type="text" class="form-control" id="dateentry" name="dateentry" placeholder="请输选择入职日期" readonly 
+										onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-{%d-1}'})" value="${regOrgan.dateentry}">
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="nickName" class="col-sm-2 control-label">地址</label>
+						<label for="dateleave" class="col-sm-2 control-label"><font color="red">*</font>离职时间</label>
 						<div class="input-group col-sm-5">
-							<input type="text" class="form-control" id="nickName" name="nickName" placeholder="请输入真实姓名" value="${mgtUser.nickName}">
+							<input type="text" class="form-control" id="dateleave" name="dateleave" placeholder="请输选择离职日期" readonly 
+										onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-{%d-1}'})" value="${regOrgan.dateleave}">
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="nickName" class="col-sm-2 control-label">文化程度</label>
+						<label for="memo" class="col-sm-2 control-label">备注</label>
 						<div class="input-group col-sm-5">
-							<input type="text" class="form-control" id="nickName" name="nickName" placeholder="请输入真实姓名" value="${mgtUser.nickName}">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="nickName" class="col-sm-2 control-label">人员类型</label>
-						<div class="input-group col-sm-5">
-							<input type="text" class="form-control" id="nickName" name="nickName" placeholder="请输入真实姓名" value="${mgtUser.nickName}">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="nickName" class="col-sm-2 control-label">证件类型</label>
-						<div class="input-group col-sm-5">
-							<input type="text" class="form-control" id="nickName" name="nickName" placeholder="请输入真实姓名" value="${mgtUser.nickName}">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="nickName" class="col-sm-2 control-label">证件号</label>
-						<div class="input-group col-sm-5">
-							<input type="text" class="form-control" id="nickName" name="nickName" placeholder="请输入真实姓名" value="${mgtUser.nickName}">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="nickName" class="col-sm-2 control-label">证书类型</label>
-						<div class="input-group col-sm-5">
-							<input type="text" class="form-control" id="nickName" name="nickName" placeholder="请输入真实姓名" value="${mgtUser.nickName}">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="nickName" class="col-sm-2 control-label">证书级别</label>
-						<div class="input-group col-sm-5">
-							<input type="text" class="form-control" id="nickName" name="nickName" placeholder="请输入真实姓名" value="${mgtUser.nickName}">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="nickName" class="col-sm-2 control-label">失业日期</label>
-						<div class="input-group col-sm-5">
-							<input type="text" class="form-control" id="nickName" name="nickName" placeholder="请输入真实姓名" value="${mgtUser.nickName}">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="nickName" class="col-sm-2 control-label">是否就业/创业</label>
-						<div class="input-group col-sm-5">
-							<input type="text" class="form-control" id="nickName" name="nickName" placeholder="请输入真实姓名" value="${mgtUser.nickName}">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="nickName" class="col-sm-2 control-label">是否结业</label>
-						<div class="input-group col-sm-5">
-							<input type="text" class="form-control" id="nickName" name="nickName" placeholder="请输入真实姓名" value="${mgtUser.nickName}">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="nickName" class="col-sm-2 control-label">备注</label>
-						<div class="input-group col-sm-5">
-							<input type="text" class="form-control" id="nickName" name="nickName" placeholder="请输入真实姓名" value="${mgtUser.nickName}">
+							<input type="text" class="form-control" id="memo" name="memo" placeholder="请输入备注" value="${employ.memo}">
 						</div>
 					</div>
 					<div class="form-group">
