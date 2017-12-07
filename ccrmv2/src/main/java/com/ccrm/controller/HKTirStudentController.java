@@ -5,8 +5,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONObject;
-
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,15 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.alibaba.fastjson.JSONArray;
 import com.ccrm.dto.Pager;
-import com.ccrm.entity.RegOrganinfo;
-import com.ccrm.entity.TirClass;
+import com.ccrm.entity.HsrTrinsStudent;
 import com.ccrm.entity.UmgBranch;
 import com.ccrm.entity.UmgOperator;
+import com.ccrm.service.HsrTrinsStudentService;
 import com.ccrm.service.RegOrganinfoService;
-import com.ccrm.service.TirClassService;
-import com.ccrm.service.TirStudentService;
 import com.ccrm.service.UmgBranchService;
 
 @Controller
@@ -38,29 +33,26 @@ public class HKTirStudentController {
 	@Autowired
 	UmgBranchService umgBranchService;
 	@Autowired
-	TirClassService tirClassService;
-	@Autowired
-	TirStudentService studentService;
+	HsrTrinsStudentService studentSevice;
 	
 	@RequestMapping("hkStudentList.html")
-	public String famCopList(RegOrganinfo regOrgan, HttpServletRequest req, HttpServletResponse res, ModelMap model,Pager page){
+	public String famCopList(HsrTrinsStudent student, HttpServletRequest req, HttpServletResponse res, ModelMap model,Pager page){
 		
 		//从session 取用户
 		UmgOperator user = (UmgOperator) req.getSession().getAttribute("umgOperator");
-		Long branchId = regOrgan.getBranchid();
-		regOrgan.setStatus(-1);
-		if(user != null && branchId == null){
-			regOrgan.setBranchid(user.getBranchid());
+		if(user != null){
+			student.setBranchid(user.getBranchid()+"");
 		}
 		
-		Pager pager = regOrgService.findPageList(regOrgan, page.getPageNumber(), page.getPageSize());
+		Pager pager = studentSevice.findPageList(student, page.getPageNumber(), page.getPageSize());
 		
 		List<UmgBranch> branchList = umgBranchService.getBranchTree("2200",String.valueOf(user.getBranchid())); 
-//		String branchTree = umgBranchTree(branchList); 
+		String branchTree = umgBranchService.umgBranchTree(branchList); 
 		
 		model.put("pager", pager);
-//		model.put("branchTree", branchTree);
-		model.put("regOrgan",regOrgan);
+		model.put("branchTree", branchTree);
+		model.put("student",student);
+		
 		return "hkStudent/hkStudentList";
 	}
 	
@@ -74,15 +66,15 @@ public class HKTirStudentController {
 		
 		UmgOperator user = (UmgOperator) req.getSession().getAttribute("umgOperator");
 		List<UmgBranch> branchList = umgBranchService.getBranchTree("1200",String.valueOf(user.getBranchid())); 
-//		String branchTree = umgBranchTree(branchList); 
+		String branchTree = umgBranchService.umgBranchTree(branchList); 
 		
 		if(StringUtils.isNotBlank(id)){
-			RegOrganinfo regOrgan = regOrgService.getById(Long.valueOf(id));
-			model.put("regOrgan", regOrgan);
+			HsrTrinsStudent student = studentSevice.getById(Long.valueOf(id));
+			model.put("student", student);
 		}
 		
 		model.put("branchList", branchList);
-//		model.put("branchTree", branchTree);
+		model.put("branchTree", branchTree);
 		
 		return "hkStudent/hkStudentEdit";
 	}
@@ -92,12 +84,12 @@ public class HKTirStudentController {
 	 * 保存
 	 */
 	@RequestMapping("save")
-	public String save(RegOrganinfo regOrgan, HttpServletRequest req, HttpServletResponse res, ModelMap model, final RedirectAttributes redirectAttributes){
+	public String save(HsrTrinsStudent student, HttpServletRequest req, HttpServletResponse res, ModelMap model, final RedirectAttributes redirectAttributes){
 		String msg = "操作成功";
-		if(regOrgan.getPkid() == null ){
-			regOrgService.save(regOrgan);
+		if(student.getPkid() == null ){
+			studentSevice.save(student);
 		}else{
-			regOrgService.update(regOrgan);
+			studentSevice.update(student);
 		}
 		
 		redirectAttributes.addFlashAttribute("message", msg);
@@ -112,18 +104,7 @@ public class HKTirStudentController {
 	public @ResponseBody String delete(String id, HttpServletRequest req, HttpServletResponse res, ModelMap model){
 		int msg = 0;
 		if(StringUtils.isNotBlank(id)){
-			RegOrganinfo regOrgan = regOrgService.getById(Long.valueOf(id));
-			regOrgan.setStatus(-1);
-			msg = regOrgService.update(regOrgan);
-			
-			TirClass tirClass = new TirClass();
-			tirClass.setOrgid(regOrgan.getPkid());
-			List<TirClass> classList = tirClassService.findList(tirClass);
-			for(TirClass tClass : classList){
-				tClass.setStatus(-1l);
-				tirClassService.update(tClass);
-				studentService.updateStudentByIdxid(tClass.getPkid());
-			}
+			msg = studentSevice.delete(Long.valueOf(id));
 		}
 		return msg+"";
 	}

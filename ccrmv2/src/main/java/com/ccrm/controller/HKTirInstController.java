@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ccrm.dto.Pager;
-import com.ccrm.entity.RegOrganinfo;
-import com.ccrm.entity.TirClass;
+import com.ccrm.entity.HsrTriInstitution;
+import com.ccrm.entity.HsrTrinsStudent;
 import com.ccrm.entity.UmgBranch;
 import com.ccrm.entity.UmgOperator;
+import com.ccrm.service.HsrTriInstitutionService;
+import com.ccrm.service.HsrTrinsStudentService;
 import com.ccrm.service.RegOrganinfoService;
-import com.ccrm.service.TirClassService;
-import com.ccrm.service.TirStudentService;
 import com.ccrm.service.UmgBranchService;
 
 @Controller
@@ -35,29 +35,27 @@ public class HKTirInstController {
 	@Autowired
 	UmgBranchService umgBranchService;
 	@Autowired
-	TirClassService tirClassService;
+	HsrTriInstitutionService hkTriService;
 	@Autowired
-	TirStudentService studentService;
+	HsrTrinsStudentService studentService;
 	
 	@RequestMapping("hktirInstList.html")
-	public String famCopList(RegOrganinfo regOrgan, HttpServletRequest req, HttpServletResponse res, ModelMap model,Pager page){
+	public String famCopList(HsrTriInstitution hkTirInst, Pager page, HttpServletRequest req, HttpServletResponse res, ModelMap model){
 		
 		//从session 取用户
 		UmgOperator user = (UmgOperator) req.getSession().getAttribute("umgOperator");
-		Long branchId = regOrgan.getBranchid();
-		regOrgan.setStatus(-1);
-		if(user != null && branchId == null){
-			regOrgan.setBranchid(user.getBranchid());
+		if(StringUtils.isBlank(hkTirInst.getBranchid())){
+			hkTirInst.setBranchid(user.getBranchid()+"");
 		}
 		
-		Pager pager = regOrgService.findPageList(regOrgan, page.getPageNumber(), page.getPageSize());
+		Pager pager = hkTriService.findPageList(hkTirInst, page.getPageNumber(), page.getPageSize());
 		
 		List<UmgBranch> branchList = umgBranchService.getBranchTree("2200",String.valueOf(user.getBranchid())); 
-//		String branchTree = umgBranchTree(branchList); 
+		String branchTree = umgBranchService.umgBranchTree(branchList); 
 		
 		model.put("pager", pager);
-//		model.put("branchTree", branchTree);
-		model.put("regOrgan",regOrgan);
+		model.put("branchTree", branchTree);
+		model.put("hkTirInst",hkTirInst);
 		return "hktirInst/hktirInstList";
 	}
 	
@@ -67,19 +65,19 @@ public class HKTirInstController {
 	 */
 	@RequestMapping("edit.html")
 	public String update(String id, HttpServletRequest req, HttpServletResponse res, ModelMap model){
-		log.info("跳转页面，参数 studentId ："+id);
+		log.info("跳转页面，参数 id ："+id);
 		
 		UmgOperator user = (UmgOperator) req.getSession().getAttribute("umgOperator");
-		List<UmgBranch> branchList = umgBranchService.getBranchTree("1200",String.valueOf(user.getBranchid())); 
-//		String branchTree = umgBranchTree(branchList); 
+		List<UmgBranch> branchList = umgBranchService.getBranchTree("2200",String.valueOf(user.getBranchid())); 
+		String branchTree = umgBranchService.umgBranchTree(branchList); 
 		
 		if(StringUtils.isNotBlank(id)){
-			RegOrganinfo regOrgan = regOrgService.getById(Long.valueOf(id));
-			model.put("regOrgan", regOrgan);
+			HsrTriInstitution hkTirInst = hkTriService.getById(Long.valueOf(id));
+			model.put("hkTirInst", hkTirInst);
 		}
 		
 		model.put("branchList", branchList);
-//		model.put("branchTree", branchTree);
+		model.put("branchTree", branchTree);
 		
 		return "hktirInst/hktirInstEdit";
 	}
@@ -89,12 +87,12 @@ public class HKTirInstController {
 	 * 保存
 	 */
 	@RequestMapping("save")
-	public String save(RegOrganinfo regOrgan, HttpServletRequest req, HttpServletResponse res, ModelMap model, final RedirectAttributes redirectAttributes){
+	public String save(HsrTriInstitution hkTirInst, HttpServletRequest req, HttpServletResponse res, ModelMap model, final RedirectAttributes redirectAttributes){
 		String msg = "操作成功";
-		if(regOrgan.getPkid() == null ){
-			regOrgService.save(regOrgan);
+		if(hkTirInst.getPkid() == null ){
+			hkTriService.save(hkTirInst);
 		}else{
-			regOrgService.update(regOrgan);
+			hkTriService.update(hkTirInst);
 		}
 		
 		redirectAttributes.addFlashAttribute("message", msg);
@@ -109,17 +107,13 @@ public class HKTirInstController {
 	public @ResponseBody String delete(String id, HttpServletRequest req, HttpServletResponse res, ModelMap model){
 		int msg = 0;
 		if(StringUtils.isNotBlank(id)){
-			RegOrganinfo regOrgan = regOrgService.getById(Long.valueOf(id));
-			regOrgan.setStatus(-1);
-			msg = regOrgService.update(regOrgan);
+			msg = hkTriService.delete(Long.valueOf(id));
 			
-			TirClass tirClass = new TirClass();
-			tirClass.setOrgid(regOrgan.getPkid());
-			List<TirClass> classList = tirClassService.findList(tirClass);
-			for(TirClass tClass : classList){
-				tClass.setStatus(-1l);
-				tirClassService.update(tClass);
-				studentService.updateStudentByIdxid(tClass.getPkid());
+			HsrTrinsStudent student = new HsrTrinsStudent();
+			student.setBranchid(id);
+			List<HsrTrinsStudent> studentList = studentService.findList(student);
+			for(HsrTrinsStudent hstudent : studentList){
+				studentService.delete(hstudent.getPkid());
 			}
 		}
 		return msg+"";
