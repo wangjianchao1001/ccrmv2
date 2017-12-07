@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.ccrm.dao.HsrTriInstitutionDao">
+
+	<resultMap id="RM_HsrTriinstitution" type="com.ccrm.entity.HsrTriInstitution">
+        <result property="pkid" column="PKID"/>
+        <result property="type" column="TYPE"/>
+        <result property="organid" column="ORGANID"/>
+        <result property="branchid" column="BRANCHID"/>
+        <result property="corpperson" column="CORPPERSON"/>
+        <result property="corpcode" column="CORPCODE"/>
+        <result property="corpphone" column="CORPPHONE"/>
+        <result property="contactname" column="CONTACTNAME"/>
+        <result property="contactphone" column="CONTACTPHONE"/>
+        <result property="established" column="ESTABLISHED"/>
+        <result property="professioname" column="PROFESSIONAME"/>
+        <result property="relationshipenterprise" column="RELATIONSHIPENTERPRISE"/>
+        <result property="relationshipdomenterpris" column="RELATIONSHIPDOMENTERPRIS"/>
+        <result property="teacher" column="TEACHER"/>
+        <result property="fulltimeteacher" column="FULLTIMETEACHER"/>
+        <result property="parttimeteacher" column="PARTTIMETEACHER"/>
+        <result property="seniortitleteacher" column="SENIORTITLETEACHER"/>
+        <result property="graduate" column="GRADUATE"/>
+        <result property="thridentify" column="THRIDENTIFY"/>
+        <result property="yearemployment" column="YEAREMPLOYMENT"/>
+        <result property="passtraining" column="PASSTRAINING"/>
+        <result property="trainingplace" column="TRAININGPLACE"/>
+        <result property="employeetraining" column="EMPLOYEETRAINING"/>
+        <result property="memo" column="MEMO"/>
+        <result property="addtime" column="ADDTIME"/>
+        <result property="updatetime" column="UPDATETIME"/>
+        <result property="ylhlTeacher" column="YLHL_TEACHER"/>
+        <result property="bhphTeacher" column="BHPH_TEACHER"/>
+        <result property="sqzlTeacher" column="SQZL_TEACHER"/>
+        <result property="qtytTeacher" column="QTYT_TEACHER"/>
+        <result property="jzfwTeacher" column="JZFW_TEACHER"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		PKID,TYPE,ORGANID,BRANCHID,CORPPERSON,CORPCODE,CORPPHONE,CONTACTNAME,CONTACTPHONE,ESTABLISHED,PROFESSIONAME,RELATIONSHIPENTERPRISE,RELATIONSHIPDOMENTERPRIS,TEACHER,FULLTIMETEACHER,PARTTIMETEACHER,SENIORTITLETEACHER,GRADUATE,THRIDENTIFY,YEAREMPLOYMENT,PASSTRAINING,TRAININGPLACE,EMPLOYEETRAINING,MEMO,ADDTIME,UPDATETIME,YLHL_TEACHER,BHPH_TEACHER,SQZL_TEACHER,QTYT_TEACHER,JZFW_TEACHER
+	    ]]>
+	</sql>
+
+	<!--保存 -->
+	<insert id="save">
+	    <![CDATA[
+	        INSERT INTO HSR_TRIINSTITUTION (
+	        	PKID ,
+	        	TYPE ,
+	        	ORGANID ,
+	        	BRANCHID ,
+	        	CORPPERSON ,
+	        	CORPCODE ,
+	        	CORPPHONE ,
+	        	CONTACTNAME ,
+	        	CONTACTPHONE ,
+	        	ESTABLISHED ,
+	        	PROFESSIONAME ,
+	        	RELATIONSHIPENTERPRISE ,
+	        	RELATIONSHIPDOMENTERPRIS ,
+	        	TEACHER ,
+	        	FULLTIMETEACHER ,
+	        	PARTTIMETEACHER ,
+	        	SENIORTITLETEACHER ,
+	        	GRADUATE ,
+	        	THRIDENTIFY ,
+	        	YEAREMPLOYMENT ,
+	        	PASSTRAINING ,
+	        	TRAININGPLACE ,
+	        	EMPLOYEETRAINING ,
+	        	MEMO ,
+	        	ADDTIME ,
+	        	UPDATETIME ,
+	        	YLHL_TEACHER ,
+	        	BHPH_TEACHER ,
+	        	SQZL_TEACHER ,
+	        	QTYT_TEACHER ,
+	        	JZFW_TEACHER 
+	        ) VALUES (
+	        	#{pkid} ,
+	        	#{type} ,
+	        	#{organid} ,
+	        	#{branchid} ,
+	        	#{corpperson} ,
+	        	#{corpcode} ,
+	        	#{corpphone} ,
+	        	#{contactname} ,
+	        	#{contactphone} ,
+	        	#{established} ,
+	        	#{professioname} ,
+	        	#{relationshipenterprise} ,
+	        	#{relationshipdomenterpris} ,
+	        	#{teacher} ,
+	        	#{fulltimeteacher} ,
+	        	#{parttimeteacher} ,
+	        	#{seniortitleteacher} ,
+	        	#{graduate} ,
+	        	#{thridentify} ,
+	        	#{yearemployment} ,
+	        	#{passtraining} ,
+	        	#{trainingplace} ,
+	        	#{employeetraining} ,
+	        	#{memo} ,
+	        	#{addtime} ,
+	        	#{updatetime} ,
+	        	#{ylhlTeacher} ,
+	        	#{bhphTeacher} ,
+	        	#{sqzlTeacher} ,
+	        	#{qtytTeacher} ,
+	        	#{jzfwTeacher} 
+	        )
+	    ]]>
+	</insert>
+	
+	<!-- update 条件组合 -->
+	<sql id="update_sql">
+		<set>
+			<if test="pkid != null">
+				PKID = #{pkid} ,
+			</if>
+			<if test="type != null and type != ''">
+				TYPE = #{type} ,
+			</if>
+			<if test="organid != null and organid != ''">
+				ORGANID = #{organid} ,
+			</if>
+			<if test="branchid != null and branchid != ''">
+				BRANCHID = #{branchid} ,
+			</if>
+			<if test="corpperson != null and corpperson != ''">
+				CORPPERSON = #{corpperson} ,
+			</if>
+			<if test="corpcode != null and corpcode != ''">
+				CORPCODE = #{corpcode} ,
+			</if>
+			<if test="corpphone != null and corpphone != ''">
+				CORPPHONE = #{corpphone} ,
+			</if>
+			<if test="contactname != null and contactname != ''">
+				CONTACTNAME = #{contactname} ,
+			</if>
+			<if test="contactphone != null and contactphone != ''">
+				CONTACTPHONE = #{contactphone} ,
+			</if>
+			<if test="established != null">
+				ESTABLISHED = #{established} ,
+			</if>
+			<if test="professioname != null and professioname != ''">
+				PROFESSIONAME = #{professioname} ,
+			</if>
+			<if test="relationshipenterprise != null and relationshipenterprise != ''">
+				RELATIONSHIPENTERPRISE = #{relationshipenterprise} ,
+			</if>
+			<if test="relationshipdomenterpris != null and relationshipdomenterpris != ''">
+				RELATIONSHIPDOMENTERPRIS = #{relationshipdomenterpris} ,
+			</if>
+			<if test="teacher != null">
+				TEACHER = #{teacher} ,
+			</if>
+			<if test="fulltimeteacher != null">
+				FULLTIMETEACHER = #{fulltimeteacher} ,
+			</if>
+			<if test="parttimeteacher != null">
+				PARTTIMETEACHER = #{parttimeteacher} ,
+			</if>
+			<if test="seniortitleteacher != null">
+				SENIORTITLETEACHER = #{seniortitleteacher} ,
+			</if>
+			<if test="graduate != null">
+				GRADUATE = #{graduate} ,
+			</if>
+			<if test="thridentify != null">
+				THRIDENTIFY = #{thridentify} ,
+			</if>
+			<if test="yearemployment != null">
+				YEAREMPLOYMENT = #{yearemployment} ,
+			</if>
+			<if test="passtraining != null">
+				PASSTRAINING = #{passtraining} ,
+			</if>
+			<if test="trainingplace != null and trainingplace != ''">
+				TRAININGPLACE = #{trainingplace} ,
+			</if>
+			<if test="employeetraining != null">
+				EMPLOYEETRAINING = #{employeetraining} ,
+			</if>
+			<if test="memo != null and memo != ''">
+				MEMO = #{memo} ,
+			</if>
+			<if test="addtime != null">
+				ADDTIME = #{addtime} ,
+			</if>
+			<if test="updatetime != null">
+				UPDATETIME = #{updatetime} ,
+			</if>
+			<if test="ylhlTeacher != null">
+				YLHL_TEACHER = #{ylhlTeacher} ,
+			</if>
+			<if test="bhphTeacher != null">
+				BHPH_TEACHER = #{bhphTeacher} ,
+			</if>
+			<if test="sqzlTeacher != null">
+				SQZL_TEACHER = #{sqzlTeacher} ,
+			</if>
+			<if test="qtytTeacher != null">
+				QTYT_TEACHER = #{qtytTeacher} ,
+			</if>
+			<if test="jzfwTeacher != null">
+				JZFW_TEACHER = #{jzfwTeacher} 
+			</if>
+		</set>
+	</sql>
+	
+	<!-- 修改 -->
+	<update id="update">
+		UPDATE HSR_TRIINSTITUTION
+		<include refid="update_sql" />
+		WHERE
+	</update>
+
+	<!-- 根据ID删除 -->
+	<delete id="delete">
+    	<![CDATA[
+        	DELETE FROM HSR_TRIINSTITUTION 
+        	WHERE 
+    	]]>
+	</delete>
+	
+	<!-- getById -->
+	<select id="getById" resultMap="RM_HsrTriinstitution">
+		SELECT
+		<include refid="columns" />
+		FROM HSR_TRIINSTITUTION
+		WHERE 
+	</select>
+
+	<!-- 获取总数 -->
+	<select id="getTotalCount" resultType="int">
+		SELECT COUNT(1)
+		FROM HSR_TRIINSTITUTION
+		<where>
+			<if test="model != null">
+						<if test="model.pkid != null">
+							AND PKID = #{model.pkid}
+						</if>
+						<if test="model.type != null and model.type !=''">
+							AND TYPE = #{model.type}
+						</if>
+						<if test="model.organid != null and model.organid !=''">
+							AND ORGANID = #{model.organid}
+						</if>
+						<if test="model.branchid != null and model.branchid !=''">
+							AND BRANCHID = #{model.branchid}
+						</if>
+						<if test="model.corpperson != null and model.corpperson !=''">
+							AND CORPPERSON = #{model.corpperson}
+						</if>
+						<if test="model.corpcode != null and model.corpcode !=''">
+							AND CORPCODE = #{model.corpcode}
+						</if>
+						<if test="model.corpphone != null and model.corpphone !=''">
+							AND CORPPHONE = #{model.corpphone}
+						</if>
+						<if test="model.contactname != null and model.contactname !=''">
+							AND CONTACTNAME = #{model.contactname}
+						</if>
+						<if test="model.contactphone != null and model.contactphone !=''">
+							AND CONTACTPHONE = #{model.contactphone}
+						</if>
+						<if test="model.established != null">
+							AND ESTABLISHED = #{model.established}
+						</if> 
+						<if test="model.professioname != null and model.professioname !=''">
+							AND PROFESSIONAME = #{model.professioname}
+						</if>
+						<if test="model.relationshipenterprise != null and model.relationshipenterprise !=''">
+							AND RELATIONSHIPENTERPRISE = #{model.relationshipenterprise}
+						</if>
+						<if test="model.relationshipdomenterpris != null and model.relationshipdomenterpris !=''">
+							AND RELATIONSHIPDOMENTERPRIS = #{model.relationshipdomenterpris}
+						</if>
+						<if test="model.teacher != null">
+							AND TEACHER = #{model.teacher}
+						</if>
+						<if test="model.fulltimeteacher != null">
+							AND FULLTIMETEACHER = #{model.fulltimeteacher}
+						</if>
+						<if test="model.parttimeteacher != null">
+							AND PARTTIMETEACHER = #{model.parttimeteacher}
+						</if>
+						<if test="model.seniortitleteacher != null">
+							AND SENIORTITLETEACHER = #{model.seniortitleteacher}
+						</if>
+						<if test="model.graduate != null">
+							AND GRADUATE = #{model.graduate}
+						</if>
+						<if test="model.thridentify != null">
+							AND THRIDENTIFY = #{model.thridentify}
+						</if>
+						<if test="model.yearemployment != null">
+							AND YEAREMPLOYMENT = #{model.yearemployment}
+						</if>
+						<if test="model.passtraining != null">
+							AND PASSTRAINING = #{model.passtraining}
+						</if>
+						<if test="model.trainingplace != null and model.trainingplace !=''">
+							AND TRAININGPLACE = #{model.trainingplace}
+						</if>
+						<if test="model.employeetraining != null">
+							AND EMPLOYEETRAINING = #{model.employeetraining}
+						</if>
+						<if test="model.memo != null and model.memo !=''">
+							AND MEMO = #{model.memo}
+						</if>
+						<if test="model.addtime != null">
+							AND ADDTIME = #{model.addtime}
+						</if> 
+						<if test="model.updatetime != null">
+							AND UPDATETIME = #{model.updatetime}
+						</if> 
+						<if test="model.ylhlTeacher != null">
+							AND YLHL_TEACHER = #{model.ylhlTeacher}
+						</if>
+						<if test="model.bhphTeacher != null">
+							AND BHPH_TEACHER = #{model.bhphTeacher}
+						</if>
+						<if test="model.sqzlTeacher != null">
+							AND SQZL_TEACHER = #{model.sqzlTeacher}
+						</if>
+						<if test="model.qtytTeacher != null">
+							AND QTYT_TEACHER = #{model.qtytTeacher}
+						</if>
+						<if test="model.jzfwTeacher != null">
+							AND JZFW_TEACHER = #{model.jzfwTeacher}
+						</if>
+			</if>
+		</where>
+	</select>  
+	
+	<!-- 按条件组合搜索列表  -->
+	<select id="findList" resultMap="RM_HsrTriinstitution">
+		SELECT
+		<include refid="columns" />
+		FROM  HSR_TRIINSTITUTION
+		<where>
+					<if test="pkid != null">
+						AND PKID = #{pkid}
+					</if>
+					<if test="type != null and type !=''">
+						AND TYPE = #{type}
+					</if>
+					<if test="organid != null and organid !=''">
+						AND ORGANID = #{organid}
+					</if>
+					<if test="branchid != null and branchid !=''">
+						AND BRANCHID = #{branchid}
+					</if>
+					<if test="corpperson != null and corpperson !=''">
+						AND CORPPERSON = #{corpperson}
+					</if>
+					<if test="corpcode != null and corpcode !=''">
+						AND CORPCODE = #{corpcode}
+					</if>
+					<if test="corpphone != null and corpphone !=''">
+						AND CORPPHONE = #{corpphone}
+					</if>
+					<if test="contactname != null and contactname !=''">
+						AND CONTACTNAME = #{contactname}
+					</if>
+					<if test="contactphone != null and contactphone !=''">
+						AND CONTACTPHONE = #{contactphone}
+					</if>
+					<if test="established != null">
+						AND ESTABLISHED = #{established}
+					</if>
+					<if test="professioname != null and professioname !=''">
+						AND PROFESSIONAME = #{professioname}
+					</if>
+					<if test="relationshipenterprise != null and relationshipenterprise !=''">
+						AND RELATIONSHIPENTERPRISE = #{relationshipenterprise}
+					</if>
+					<if test="relationshipdomenterpris != null and relationshipdomenterpris !=''">
+						AND RELATIONSHIPDOMENTERPRIS = #{relationshipdomenterpris}
+					</if>
+					<if test="teacher != null">
+						AND TEACHER = #{teacher}
+					</if>
+					<if test="fulltimeteacher != null">
+						AND FULLTIMETEACHER = #{fulltimeteacher}
+					</if>
+					<if test="parttimeteacher != null">
+						AND PARTTIMETEACHER = #{parttimeteacher}
+					</if>
+					<if test="seniortitleteacher != null">
+						AND SENIORTITLETEACHER = #{seniortitleteacher}
+					</if>
+					<if test="graduate != null">
+						AND GRADUATE = #{graduate}
+					</if>
+					<if test="thridentify != null">
+						AND THRIDENTIFY = #{thridentify}
+					</if>
+					<if test="yearemployment != null">
+						AND YEAREMPLOYMENT = #{yearemployment}
+					</if>
+					<if test="passtraining != null">
+						AND PASSTRAINING = #{passtraining}
+					</if>
+					<if test="trainingplace != null and trainingplace !=''">
+						AND TRAININGPLACE = #{trainingplace}
+					</if>
+					<if test="employeetraining != null">
+						AND EMPLOYEETRAINING = #{employeetraining}
+					</if>
+					<if test="memo != null and memo !=''">
+						AND MEMO = #{memo}
+					</if>
+					<if test="addtime != null">
+						AND ADDTIME = #{addtime}
+					</if>
+					<if test="updatetime != null">
+						AND UPDATETIME = #{updatetime}
+					</if>
+					<if test="ylhlTeacher != null">
+						AND YLHL_TEACHER = #{ylhlTeacher}
+					</if>
+					<if test="bhphTeacher != null">
+						AND BHPH_TEACHER = #{bhphTeacher}
+					</if>
+					<if test="sqzlTeacher != null">
+						AND SQZL_TEACHER = #{sqzlTeacher}
+					</if>
+					<if test="qtytTeacher != null">
+						AND QTYT_TEACHER = #{qtytTeacher}
+					</if>
+					<if test="jzfwTeacher != null">
+						AND JZFW_TEACHER = #{jzfwTeacher}
+					</if>
+		</where>
+		<if test="sortColumns != null and sortColumns !=''">
+			ORDER BY #{sortColumns}
+		</if>
+	</select>
+
+	<!-- 分页 -->
+	<select id="findPageList" resultMap="RM_HsrTriinstitution">
+		SELECT <include refid="columns" />
+		FROM HSR_TRIINSTITUTION
+		<where>
+			<if test="model != null">
+						<if test="model.pkid != null">
+							AND PKID = #{model.pkid}
+						</if>
+						<if test="model.type != null and model.type !=''">
+							AND TYPE = #{model.type}
+						</if>
+						<if test="model.organid != null and model.organid !=''">
+							AND ORGANID = #{model.organid}
+						</if>
+						<if test="model.branchid != null and model.branchid !=''">
+							AND BRANCHID = #{model.branchid}
+						</if>
+						<if test="model.corpperson != null and model.corpperson !=''">
+							AND CORPPERSON = #{model.corpperson}
+						</if>
+						<if test="model.corpcode != null and model.corpcode !=''">
+							AND CORPCODE = #{model.corpcode}
+						</if>
+						<if test="model.corpphone != null and model.corpphone !=''">
+							AND CORPPHONE = #{model.corpphone}
+						</if>
+						<if test="model.contactname != null and model.contactname !=''">
+							AND CONTACTNAME = #{model.contactname}
+						</if>
+						<if test="model.contactphone != null and model.contactphone !=''">
+							AND CONTACTPHONE = #{model.contactphone}
+						</if>
+						<if test="model.established != null">
+							AND ESTABLISHED = #{model.established}
+						</if>
+						<if test="model.professioname != null and model.professioname !=''">
+							AND PROFESSIONAME = #{model.professioname}
+						</if>
+						<if test="model.relationshipenterprise != null and model.relationshipenterprise !=''">
+							AND RELATIONSHIPENTERPRISE = #{model.relationshipenterprise}
+						</if>
+						<if test="model.relationshipdomenterpris != null and model.relationshipdomenterpris !=''">
+							AND RELATIONSHIPDOMENTERPRIS = #{model.relationshipdomenterpris}
+						</if>
+						<if test="model.teacher != null">
+							AND TEACHER = #{model.teacher}
+						</if>
+						<if test="model.fulltimeteacher != null">
+							AND FULLTIMETEACHER = #{model.fulltimeteacher}
+						</if>
+						<if test="model.parttimeteacher != null">
+							AND PARTTIMETEACHER = #{model.parttimeteacher}
+						</if>
+						<if test="model.seniortitleteacher != null">
+							AND SENIORTITLETEACHER = #{model.seniortitleteacher}
+						</if>
+						<if test="model.graduate != null">
+							AND GRADUATE = #{model.graduate}
+						</if>
+						<if test="model.thridentify != null">
+							AND THRIDENTIFY = #{model.thridentify}
+						</if>
+						<if test="model.yearemployment != null">
+							AND YEAREMPLOYMENT = #{model.yearemployment}
+						</if>
+						<if test="model.passtraining != null">
+							AND PASSTRAINING = #{model.passtraining}
+						</if>
+						<if test="model.trainingplace != null and model.trainingplace !=''">
+							AND TRAININGPLACE = #{model.trainingplace}
+						</if>
+						<if test="model.employeetraining != null">
+							AND EMPLOYEETRAINING = #{model.employeetraining}
+						</if>
+						<if test="model.memo != null and model.memo !=''">
+							AND MEMO = #{model.memo}
+						</if>
+						<if test="model.addtime != null">
+							AND ADDTIME = #{model.addtime}
+						</if>
+						<if test="model.updatetime != null">
+							AND UPDATETIME = #{model.updatetime}
+						</if>
+						<if test="model.ylhlTeacher != null">
+							AND YLHL_TEACHER = #{model.ylhlTeacher}
+						</if>
+						<if test="model.bhphTeacher != null">
+							AND BHPH_TEACHER = #{model.bhphTeacher}
+						</if>
+						<if test="model.sqzlTeacher != null">
+							AND SQZL_TEACHER = #{model.sqzlTeacher}
+						</if>
+						<if test="model.qtytTeacher != null">
+							AND QTYT_TEACHER = #{model.qtytTeacher}
+						</if>
+						<if test="model.jzfwTeacher != null">
+							AND JZFW_TEACHER = #{model.jzfwTeacher}
+						</if>
+			</if>
+		</where>
+		limit 
+		<choose>
+			<when test="pager != null">
+				#{pager.begin},#{pager.pageSize}
+			</when>
+			<otherwise>
+				0,10
+			</otherwise>
+		</choose>
+	</select>
+
+</mapper>
