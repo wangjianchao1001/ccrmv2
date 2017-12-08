@@ -35,13 +35,13 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	        	MEMO ,
 	        	PKID 
 	        ) VALUES (
-	        	#{idxid} ,
-	        	#{fileexp} ,
-	        	#{value} ,
-	        	#{status} ,
-	        	#{datenew} ,
-	        	#{dateedit} ,
-	        	#{memo} ,
+	        	#{idxid,jdbcType=INTEGER} ,
+	        	#{fileexp,jdbcType=VARCHAR} ,
+	        	#{value,jdbcType=BLOB} ,
+	        	#{status,jdbcType=INTEGER} ,
+	        	#{datenew,jdbcType=TIMESTAMP} ,
+	        	#{dateedit,jdbcType=TIMESTAMP} ,
+	        	#{memo,jdbcType=VARCHAR} ,
 	        	#{pkid} 
 	        )
 	    ]]>

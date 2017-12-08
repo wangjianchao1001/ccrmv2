@@ -35,14 +35,14 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	        	PKID ,
 	        	SUBID 
 	        ) VALUES (
-	        	#{clasid} ,
-	        	#{assid} ,
-	        	#{datenew} ,
-	        	#{dateedit} ,
-	        	#{operator} ,
-	        	#{umgbranch} ,
+	        	#{clasid,jdbcType=INTEGER} ,
+	        	#{assid,jdbcType=INTEGER} ,
+	        	#{datenew,jdbcType=TIMESTAMP} ,
+	        	#{dateedit,jdbcType=TIMESTAMP} ,
+	        	#{operator,jdbcType=BLOB} ,
+	        	#{umgbranch,jdbcType=BLOB} ,
 	        	#{pkid} ,
-	        	#{subid} 
+	        	#{subid,jdbcType=VARCHAR} 
 	        )
 	    ]]>
 	</insert>

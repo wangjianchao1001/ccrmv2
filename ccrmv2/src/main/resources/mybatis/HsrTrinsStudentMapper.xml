@@ -54,22 +54,22 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	        	BRANCHID 
 	        ) VALUES (
 	        	#{pkid} ,
-	        	#{name} ,
-	        	#{sexual} ,
-	        	#{age} ,
-	        	#{idnumber} ,
-	        	#{triainyear} ,
-	        	#{traintime} ,
-	        	#{trainprof} ,
-	        	#{trainperiod} ,
-	        	#{proflevel} ,
-	        	#{famaddress} ,
-	        	#{phone} ,
-	        	#{ispassidentify} ,
-	        	#{istrainqualify} ,
-	        	#{memo} ,
-	        	#{instpkid} ,
-	        	#{branchid} 
+	        	#{name,jdbcType=VARCHAR} ,
+	        	#{sexual,jdbcType=VARCHAR} ,
+	        	#{age,jdbcType=DOUBLE} ,
+	        	#{idnumber,jdbcType=VARCHAR} ,
+	        	#{triainyear,jdbcType=VARCHAR} ,
+	        	#{traintime,jdbcType=DATE} ,
+	        	#{trainprof,jdbcType=VARCHAR} ,
+	        	#{trainperiod,jdbcType=VARCHAR} ,
+	        	#{proflevel,jdbcType=VARCHAR} ,
+	        	#{famaddress,jdbcType=VARCHAR} ,
+	        	#{phone,jdbcType=VARCHAR} ,
+	        	#{ispassidentify,jdbcType=DOUBLE} ,
+	        	#{istrainqualify,jdbcType=DOUBLE} ,
+	        	#{memo,jdbcType=VARCHAR} ,
+	        	#{instpkid,jdbcType=DOUBLE} ,
+	        	#{branchid,jdbcType=VARCHAR} 
 	        )
 	    ]]>
 	</insert>

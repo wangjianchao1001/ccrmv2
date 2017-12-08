@@ -47,19 +47,19 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	        	DATEEDIT ,
 	        	PKID 
 	        ) VALUES (
-	        	#{kindid} ,
-	        	#{isstick} ,
-	        	#{seqno} ,
-	        	#{title} ,
-	        	#{textbody} ,
-	        	#{unitpost} ,
-	        	#{datepost} ,
-	        	#{cropperid} ,
-	        	#{cmoperid} ,
-	        	#{cmdate} ,
-	        	#{status} ,
-	        	#{datenew} ,
-	        	#{dateedit} ,
+	        	#{kindid,jdbcType=INTEGER} ,
+	        	#{isstick,jdbcType=INTEGER} ,
+	        	#{seqno,jdbcType=INTEGER} ,
+	        	#{title,jdbcType=VARCHAR} ,
+	        	#{textbody,jdbcType=BLOB} ,
+	        	#{unitpost,jdbcType=VARCHAR} ,
+	        	#{datepost,jdbcType=CHAR} ,
+	        	#{cropperid,jdbcType=INTEGER} ,
+	        	#{cmoperid,jdbcType=INTEGER} ,
+	        	#{cmdate,jdbcType=CHAR} ,
+	        	#{status,jdbcType=INTEGER} ,
+	        	#{datenew,jdbcType=TIMESTAMP} ,
+	        	#{dateedit,jdbcType=TIMESTAMP} ,
 	        	#{pkid} 
 	        )
 	    ]]>
