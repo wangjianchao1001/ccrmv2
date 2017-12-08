@@ -5,8 +5,8 @@ h1, h2, h3, h4, h5, h6 {color: #2f332a;font-weight: bold;font-family: Helvetica,
 h1 {font-size: 24px;line-height: 34px;text-align: center;}
 h2 {font-size: 14px;line-height: 24px;padding-top: 5px;}
 h6 {font-weight: normal;font-size: 12px;letter-spacing: 1px;line-height: 24px;text-align: center;}
-a {color:#3C6E31;text-decoration: underline;}
-a:hover {background-color:#3C6E31;color:white;}
+a {color:#3c8dbc;text-decoration: underline;}
+a:hover {background-color:#3c8dbc;color:white;}
 input.radio {margin: 0 2px 0 8px;}
 input.radio.first {margin-left:0;}
 input.empty {color: lightgray;}
@@ -30,4 +30,4 @@ ul.log li.dark {background-color: #E3E3E3;}
 
 /* ruler */
 div.ruler {height:20px; width:220px; background-color:#f0f6e4;border: 1px solid #333; margin-bottom: 5px; cursor: pointer}
-div.ruler div.cursor {height:20px; width:30px; background-color:#3C6E31; color:white; text-align: right; padding-right: 5px; cursor: pointer}
+div.ruler div.cursor {height:20px; width:30px; background-color:#3c8dbc; color:white; text-align: right; padding-right: 5px; cursor: pointer}
