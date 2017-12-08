@@ -409,7 +409,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 					)
 				</if>
 				<if test="model.name != null and model.name !=''">
-					AND NAME = #{model.name}
+					AND o.NAME like '%${model.name}%'
 				</if>
 				<if test="model.idno != null and model.idno !=''">
 					AND o.IDNO = #{model.idno}
@@ -787,7 +787,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 					)
 				</if>
 				<if test="model.name != null and model.name !=''">
-					AND NAME = #{model.name}
+					AND o.NAME like '%${model.name}%'
 				</if>
 				<if test="model.idno != null and model.idno !=''">
 					AND o.IDNO = #{model.idno}

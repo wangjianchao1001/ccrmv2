@@ -82,7 +82,7 @@
 								<td hidden="true">
 									<input type="hidden" value="${employ.pkid}" id="pkid" name="pkid" />${employ.pkid}
 								</td>
-								<td><input type="hidden" value="${employ.organid}" name="organid" />${employ.organid}</td>
+								<td><input type="hidden" value="${employ.organid}" name="organid" />${employ.orgName}</td>
 								<td>${employ.name}</td>
 								<td>${employ.idno}</td>
 								<td>${employ.phoneno}</td>
@@ -90,7 +90,7 @@
 								<td>${employ.dateentry}</td>
 								<td>${employ.dateleave}</td>
 								<td>
-									<c:if test="${employ.status == 0 }">
+									<c:if test="${employ.status == 2 }">
 										离职
 									</c:if>
 									<c:if test="${employ.status == 1 }">

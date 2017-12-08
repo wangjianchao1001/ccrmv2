@@ -5,24 +5,24 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.ccrm.dao.HsrEmployeesDao">
 
 	<resultMap id="RM_HsrEmployees" type="com.ccrm.entity.HsrEmployees">
-        <result property="organid" column="ORGANID"/>
-        <result property="name" column="NAME"/>
-        <result property="idno" column="IDNO"/>
-        <result property="phoneno" column="PHONENO"/>
-        <result property="email" column="EMAIL"/>
-        <result property="dateentry" column="DATEENTRY"/>
-        <result property="dateleave" column="DATELEAVE"/>
-        <result property="traincontent" column="TRAINCONTENT"/>
-        <result property="certificate" column="CERTIFICATE"/>
-        <result property="status" column="STATUS"/>
-        <result property="datenew" column="DATENEW"/>
-        <result property="dateedit" column="DATEEDIT"/>
-        <result property="trainmemo" column="TRAINMEMO"/>
-        <result property="cermemo" column="CERMEMO"/>
-        <result property="memo" column="MEMO"/>
-        <result property="pkid" column="PKID"/>
+		<result property="organid" column="ORGANID" />
+		<result property="name" column="NAME" />
+		<result property="idno" column="IDNO" />
+		<result property="phoneno" column="PHONENO" />
+		<result property="email" column="EMAIL" />
+		<result property="dateentry" column="DATEENTRY" />
+		<result property="dateleave" column="DATELEAVE" />
+		<result property="traincontent" column="TRAINCONTENT" />
+		<result property="certificate" column="CERTIFICATE" />
+		<result property="status" column="STATUS" />
+		<result property="datenew" column="DATENEW" />
+		<result property="dateedit" column="DATEEDIT" />
+		<result property="trainmemo" column="TRAINMEMO" />
+		<result property="cermemo" column="CERMEMO" />
+		<result property="memo" column="MEMO" />
+		<result property="pkid" column="PKID" />
 	</resultMap>
-	
+
 	<!-- 用于select查询公用抽取的列 -->
 	<sql id="columns">
 	    <![CDATA[
@@ -70,7 +70,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	        )
 	    ]]>
 	</insert>
-	
+
 	<!-- update 条件组合 -->
 	<sql id="update_sql">
 		<set>
@@ -111,17 +111,18 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 				CERMEMO = #{cermemo} ,
 			</if>
 			<if test="memo != null and memo != ''">
-				MEMO = #{memo} 
+				MEMO = #{memo}
 			</if>
 		</set>
 	</sql>
-	
+
 	<!-- 修改 -->
 	<update id="update">
 		UPDATE HSR_EMPLOYEES
 		<include refid="update_sql" />
 		WHERE
-			PKID = #{pkid} 	</update>
+		PKID = #{pkid}
+	</update>
 
 	<!-- 根据ID删除 -->
 	<delete id="delete">
@@ -130,13 +131,13 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         	WHERE  PKID = #{pkid}
     	]]>
 	</delete>
-	
+
 	<!-- getById -->
 	<select id="getById" resultMap="RM_HsrEmployees">
 		SELECT
 		<include refid="columns" />
 		FROM HSR_EMPLOYEES
-		WHERE  PKID = #{pkid}  
+		WHERE PKID = #{pkid}
 	</select>
 
 	<!-- 获取总数 -->
@@ -145,100 +146,103 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		FROM HSR_EMPLOYEES
 		<where>
 			<if test="model != null">
-						<if test="model.organid != null">
-							AND ORGANID = #{model.organid}
-						</if>
-						<if test="model.name != null and model.name !=''">
-							AND NAME = #{model.name}
-						</if>
-						<if test="model.idno != null and model.idno !=''">
-							AND IDNO = #{model.idno}
-						</if>
-						<if test="model.phoneno != null and model.phoneno !=''">
-							AND PHONENO = #{model.phoneno}
-						</if>
-						<if test="model.email != null and model.email !=''">
-							AND EMAIL = #{model.email}
-						</if>
-						<if test="model.dateentry != null and model.dateentry !=''">
-							AND DATEENTRY = #{model.dateentry}
-						</if>
-						<if test="model.dateleave != null and model.dateleave !=''">
-							AND DATELEAVE = #{model.dateleave}
-						</if>
-						<if test="model.traincontent != null and model.traincontent !=''">
-							AND TRAINCONTENT = #{model.traincontent}
-						</if>
-						<if test="model.certificate != null and model.certificate !=''">
-							AND CERTIFICATE = #{model.certificate}
-						</if>
-						<if test="model.status != null">
-							AND STATUS = #{model.status}
-						</if>
-						<if test="model.trainmemo != null and model.trainmemo !=''">
-							AND TRAINMEMO = #{model.trainmemo}
-						</if>
-						<if test="model.cermemo != null and model.cermemo !=''">
-							AND CERMEMO = #{model.cermemo}
-						</if>
-						<if test="model.memo != null and model.memo !=''">
-							AND MEMO = #{model.memo}
-						</if>
-						<if test="model.pkid != null">
-							AND PKID = #{model.pkid}
-						</if>
+				<if test="model.organid != null">
+					AND ORGANID = #{model.organid}
+				</if>
+				<if test="model.name != null and model.name !=''">
+					AND NAME = #{model.name}
+				</if>
+				<if test="model.idno != null and model.idno !=''">
+					AND IDNO = #{model.idno}
+				</if>
+				<if test="model.phoneno != null and model.phoneno !=''">
+					AND PHONENO = #{model.phoneno}
+				</if>
+				<if test="model.email != null and model.email !=''">
+					AND EMAIL = #{model.email}
+				</if>
+				<if test="model.dateentry != null and model.dateentry !=''">
+					AND DATEENTRY = #{model.dateentry}
+				</if>
+				<if test="model.dateleave != null and model.dateleave !=''">
+					AND DATELEAVE = #{model.dateleave}
+				</if>
+				<if test="model.traincontent != null and model.traincontent !=''">
+					AND TRAINCONTENT = #{model.traincontent}
+				</if>
+				<if test="model.certificate != null and model.certificate !=''">
+					AND CERTIFICATE = #{model.certificate}
+				</if>
+				<if test="model.status != null and model.status != -1">
+					AND STATUS = #{model.status}
+				</if>
+				<if test="model.status != null and model.status == -1">
+					AND STATUS <![CDATA[<>]]> #{model.status}
+				</if>
+				<if test="model.trainmemo != null and model.trainmemo !=''">
+					AND TRAINMEMO = #{model.trainmemo}
+				</if>
+				<if test="model.cermemo != null and model.cermemo !=''">
+					AND CERMEMO = #{model.cermemo}
+				</if>
+				<if test="model.memo != null and model.memo !=''">
+					AND MEMO = #{model.memo}
+				</if>
+				<if test="model.pkid != null">
+					AND PKID = #{model.pkid}
+				</if>
 			</if>
 		</where>
-	</select>  
-	
-	<!-- 按条件组合搜索列表  -->
+	</select>
+
+	<!-- 按条件组合搜索列表 -->
 	<select id="findList" resultMap="RM_HsrEmployees">
 		SELECT
 		<include refid="columns" />
-		FROM  HSR_EMPLOYEES
+		FROM HSR_EMPLOYEES
 		<where>
-					<if test="organid != null">
-						AND ORGANID = #{organid}
-					</if>
-					<if test="name != null and name !=''">
-						AND NAME = #{name}
-					</if>
-					<if test="idno != null and idno !=''">
-						AND IDNO = #{idno}
-					</if>
-					<if test="phoneno != null and phoneno !=''">
-						AND PHONENO = #{phoneno}
-					</if>
-					<if test="email != null and email !=''">
-						AND EMAIL = #{email}
-					</if>
-					<if test="dateentry != null and dateentry !=''">
-						AND DATEENTRY = #{dateentry}
-					</if>
-					<if test="dateleave != null and dateleave !=''">
-						AND DATELEAVE = #{dateleave}
-					</if>
-					<if test="traincontent != null and traincontent !=''">
-						AND TRAINCONTENT = #{traincontent}
-					</if>
-					<if test="certificate != null and certificate !=''">
-						AND CERTIFICATE = #{certificate}
-					</if>
-					<if test="status != null">
-						AND STATUS = #{status}
-					</if>
-					<if test="trainmemo != null and trainmemo !=''">
-						AND TRAINMEMO = #{trainmemo}
-					</if>
-					<if test="cermemo != null and cermemo !=''">
-						AND CERMEMO = #{cermemo}
-					</if>
-					<if test="memo != null and memo !=''">
-						AND MEMO = #{memo}
-					</if>
-					<if test="pkid != null">
-						AND PKID = #{pkid}
-					</if>
+			<if test="organid != null">
+				AND ORGANID = #{organid}
+			</if>
+			<if test="name != null and name !=''">
+				AND NAME = #{name}
+			</if>
+			<if test="idno != null and idno !=''">
+				AND IDNO = #{idno}
+			</if>
+			<if test="phoneno != null and phoneno !=''">
+				AND PHONENO = #{phoneno}
+			</if>
+			<if test="email != null and email !=''">
+				AND EMAIL = #{email}
+			</if>
+			<if test="dateentry != null and dateentry !=''">
+				AND DATEENTRY = #{dateentry}
+			</if>
+			<if test="dateleave != null and dateleave !=''">
+				AND DATELEAVE = #{dateleave}
+			</if>
+			<if test="traincontent != null and traincontent !=''">
+				AND TRAINCONTENT = #{traincontent}
+			</if>
+			<if test="certificate != null and certificate !=''">
+				AND CERTIFICATE = #{certificate}
+			</if>
+			<if test="status != null">
+				AND STATUS = #{status}
+			</if>
+			<if test="trainmemo != null and trainmemo !=''">
+				AND TRAINMEMO = #{trainmemo}
+			</if>
+			<if test="cermemo != null and cermemo !=''">
+				AND CERMEMO = #{cermemo}
+			</if>
+			<if test="memo != null and memo !=''">
+				AND MEMO = #{memo}
+			</if>
+			<if test="pkid != null">
+				AND PKID = #{pkid}
+			</if>
 		</where>
 		<if test="sortColumns != null and sortColumns !=''">
 			ORDER BY #{sortColumns}
@@ -247,64 +251,77 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 
 	<!-- 分页 -->
 	<select id="findPageList" resultMap="RM_HsrEmployees">
-		SELECT <include refid="columns" />
-		FROM HSR_EMPLOYEES
+		select * from (
+		select t.*, rownum rn from(
+		SELECT
+		e.*,o.name as orgName
+		FROM HSR_EMPLOYEES e left join REG_ORGANINFO o on e.ORGANID = o.pkid 
 		<where>
 			<if test="model != null">
-						<if test="model.organid != null">
-							AND ORGANID = #{model.organid}
-						</if>
-						<if test="model.name != null and model.name !=''">
-							AND NAME = #{model.name}
-						</if>
-						<if test="model.idno != null and model.idno !=''">
-							AND IDNO = #{model.idno}
-						</if>
-						<if test="model.phoneno != null and model.phoneno !=''">
-							AND PHONENO = #{model.phoneno}
-						</if>
-						<if test="model.email != null and model.email !=''">
-							AND EMAIL = #{model.email}
-						</if>
-						<if test="model.dateentry != null and model.dateentry !=''">
-							AND DATEENTRY = #{model.dateentry}
-						</if>
-						<if test="model.dateleave != null and model.dateleave !=''">
-							AND DATELEAVE = #{model.dateleave}
-						</if>
-						<if test="model.traincontent != null and model.traincontent !=''">
-							AND TRAINCONTENT = #{model.traincontent}
-						</if>
-						<if test="model.certificate != null and model.certificate !=''">
-							AND CERTIFICATE = #{model.certificate}
-						</if>
-						<if test="model.status != null and model.status != -1">
-							AND STATUS = #{model.status}
-						</if>
-						<if test="model.status != null and model.status == -1">
-							AND STATUS <![CDATA[<>]]> #{model.status}
-						</if>
-						<if test="model.trainmemo != null and model.trainmemo !=''">
-							AND TRAINMEMO = #{model.trainmemo}
-						</if>
-						<if test="model.cermemo != null and model.cermemo !=''">
-							AND CERMEMO = #{model.cermemo}
-						</if>
-						<if test="model.memo != null and model.memo !=''">
-							AND MEMO = #{model.memo}
-						</if>
-						<if test="model.pkid != null">
-							AND PKID = #{model.pkid}
-						</if>
+				<if test="model.organid != null">
+					AND e.ORGANID = #{model.organid}
+				</if>
+				<if test="model.name != null and model.name !=''">
+					AND e.NAME = #{model.name}
+				</if>
+				<if test="model.idno != null and model.idno !=''">
+					AND e.IDNO = #{model.idno}
+				</if>
+				<if test="model.phoneno != null and model.phoneno !=''">
+					AND e.PHONENO = #{model.phoneno}
+				</if>
+				<if test="model.email != null and model.email !=''">
+					AND e.EMAIL = #{model.email}
+				</if>
+				<if test="model.dateentry != null and model.dateentry !=''">
+					AND e.DATEENTRY = #{model.dateentry}
+				</if>
+				<if test="model.dateleave != null and model.dateleave !=''">
+					AND e.DATELEAVE = #{model.dateleave}
+				</if>
+				<if test="model.traincontent != null and model.traincontent !=''">
+					AND e.TRAINCONTENT = #{model.traincontent}
+				</if>
+				<if test="model.certificate != null and model.certificate !=''">
+					AND e.CERTIFICATE = #{model.certificate}
+				</if>
+				<if test="model.status != null and model.status != -1">
+					AND e.STATUS = #{model.status}
+				</if>
+				<if test="model.status != null and model.status == -1">
+					AND e.STATUS <![CDATA[<>]]> #{model.status}
+				</if>
+				<if test="model.trainmemo != null and model.trainmemo !=''">
+					AND e.TRAINMEMO = #{model.trainmemo}
+				</if>
+				<if test="model.cermemo != null and model.cermemo !=''">
+					AND e.CERMEMO = #{model.cermemo}
+				</if>
+				<if test="model.memo != null and model.memo !=''">
+					AND e.MEMO = #{model.memo}
+				</if>
+				<if test="model.pkid != null">
+					AND e.PKID = #{model.pkid}
+				</if>
 			</if>
 		</where>
-		limit 
+		)t)
+		where rn between
 		<choose>
 			<when test="pager != null">
-				#{pager.begin},#{pager.pageSize}
+				#{pager.begin}
 			</when>
 			<otherwise>
-				0,10
+				0
+			</otherwise>
+		</choose>
+		and
+		<choose>
+			<when test="pager != null">
+				#{pager.end}
+			</when>
+			<otherwise>
+				20
 			</otherwise>
 		</choose>
 	</select>

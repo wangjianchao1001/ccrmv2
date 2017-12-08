@@ -34,7 +34,7 @@
 							<input type="text" class="form-control " id="branchName" name="branchName" placeholder="按所属机构查找" readonly value="${regOrgan.branchName }" onfocus="showBranchTree(); return false;"/>
 							<input type="hidden" class="form-control " id="branchid" name="branchid" value="${regOrgan.branchid }"/>
 						</div>
-						<div class="input-group input-group-sm" style="width:180px;display:inline-block">
+						<div class="input-group input-group-sm" style="width:150px;display:inline-block">
 							<select class="form-control selectpicker show-tick" name="valuecode01" >
 								<option value='' <c:if test="${regOrgan.valuecode01 == '' }">selected="selected"</c:if>>请选择机构分类</option>
 								<option value='8201' <c:if test="${regOrgan.valuecode01 == 8201 }">selected="selected"</c:if>>员工制企业</option>
@@ -47,7 +47,12 @@
 							</select> 
 						</div>
 						<div style="display: inline-block">
-							<div class="input-group input-group-sm"	style="width: 180px;">
+							<div class="input-group input-group-sm"	style="width: 150px;">
+								<input type="text" class="form-control input-sm" value="${regOrgan.name }" name="name" placeholder="按联系企业名称查询" />
+							</div>	
+						</div>
+						<div style="display: inline-block">
+							<div class="input-group input-group-sm"	style="width: 150px;">
 								<input type="text" class="form-control input-sm" value="${regOrgan.phoneno }" name="phoneno" placeholder="按联系电话查询" />
 								<div class="input-group-btn">
 									<button class="btn btn-sm btn-default" onclick="javascript:submitSearch();"> <i class="fa fa-search"></i> </button>

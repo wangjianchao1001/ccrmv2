@@ -1,5 +1,6 @@
 package com.ccrm.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +26,8 @@ import com.ccrm.service.HsrDispatchflowService;
 import com.ccrm.service.HsrEmployeesService;
 import com.ccrm.service.RegOrganinfoService;
 import com.ccrm.service.UmgBranchService;
+import com.ccrm.util.DateTimeUtils;
+import com.ccrm.util.PkidGenerator;
 
 @Controller
 @RequestMapping("/housekeeping/*")
@@ -99,8 +102,12 @@ public class HousekeepingController {
 	public String save(RegOrganinfo regOrgan, HttpServletRequest req, HttpServletResponse res, ModelMap model, final RedirectAttributes redirectAttributes){
 		String msg = "操作成功";
 		if(regOrgan.getPkid() == null ){
+			regOrgan.setPkid(Long.valueOf(DateTimeUtils.getDateTimeStr(new Date(), "yyyyMMddHHmmssms")));
+			regOrgan.setKindid(2l);
+			regOrgan.setDatenew(new Date());
 			regOrgService.save(regOrgan);
 		}else{
+			regOrgan.setDateedit(new Date());
 			regOrgService.update(regOrgan);
 		}
 		

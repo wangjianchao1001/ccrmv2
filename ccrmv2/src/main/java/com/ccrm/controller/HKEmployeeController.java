@@ -20,6 +20,7 @@ import com.ccrm.entity.HsrEmployees;
 import com.ccrm.entity.UmgBranch;
 import com.ccrm.entity.UmgOperator;
 import com.ccrm.service.HsrEmployeesService;
+import com.ccrm.service.RegOrganinfoService;
 import com.ccrm.service.UmgBranchService;
 
 @Controller
@@ -27,6 +28,8 @@ import com.ccrm.service.UmgBranchService;
 public class HKEmployeeController {
 	private static final Logger log = LoggerFactory.getLogger(HKEmployeeController.class);
 	
+	@Autowired
+	RegOrganinfoService organService;
 	@Autowired
 	UmgBranchService umgBranchService;
 	@Autowired
