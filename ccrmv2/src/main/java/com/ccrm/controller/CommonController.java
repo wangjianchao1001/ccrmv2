@@ -31,7 +31,7 @@ import com.ccrm.service.UmgOperatorService;
 @Controller
 @RequestMapping("/*")
 public class CommonController {
-    
+       
 	@Autowired
 	private UmgOperatorService userService;
 	
