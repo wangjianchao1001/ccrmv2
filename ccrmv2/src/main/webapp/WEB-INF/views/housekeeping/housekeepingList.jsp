@@ -31,7 +31,7 @@
 				<div class="box-tools pull-right" var="agentUser" items="${agentUser}">
 					<form class="form-horizontal" role="form" id="searchForm" action="<%=request.getContextPath()%>/housekeeping/housekeepingList.html">
 						<div class="input-group input-group-sm" style="width:220px;display:inline-block">
-							<input type="text" class="form-control " id="branchName" name="branchName" placeholder="按所属机构查找" readonly value="${regOrgan.branchName }" onfocus="showBranchTree(); return false;"/>
+							<input type="text" class="form-control " id="branchName" name="branchName" placeholder="按所属机构查找" readonly value="${regOrgan.branchName }" onfocus="showBranchTree('#branchName'); return false;"/>
 							<input type="hidden" class="form-control " id="branchid" name="branchid" value="${regOrgan.branchid }"/>
 						</div>
 						<div class="input-group input-group-sm" style="width:150px;display:inline-block">
@@ -94,7 +94,9 @@
 									<input type="hidden" value="${organ.pkid}" id="pkid" name="pkid" />${organ.pkid}
 								</td>
 								<td><input type="hidden" value="${organ.branchid}" name="branchid" />${organ.branchName}</td>
-								<td><a href="#" onclick="addorUpdate(this,'view')">${organ.name}</a></td>
+								<td>
+									<input type="hidden" value="${organ.name}" name="orgName" />
+									<a href="#" onclick="addorUpdate(this,'view')">${organ.name}</a></td>
 								<td>
 									<c:if test="${organ.valuecode01 == 8201 }">员工制企业</c:if>
 									<c:if test="${organ.valuecode01 == 8202 }">综合类企业</c:if>
@@ -239,7 +241,8 @@
 		
 		function getEmployee(nowTr){
 			var pkid = $(nowTr).parent().parent().find("input[name=pkid]").val();
-			var tabUrl = path + "/employee/employeeList.html?organid="+pkid;
+			var orgName = $(nowTr).parent().parent().find("input[name=orgName]").val();
+			var tabUrl = path + "/employee/employeeList.html?organid="+pkid+"&orgName="+orgName;
 			window.parent.parent.openTab('1018','员工管理',tabUrl);
 
 		};

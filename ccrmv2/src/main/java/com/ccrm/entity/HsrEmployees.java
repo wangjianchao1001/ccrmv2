@@ -101,6 +101,11 @@ public class HsrEmployees extends BaseEntity {
      * @字段:PKID NUMBER(20)  
      */	
 	private Long pkid;
+	
+	private String orgName;
+	private java.lang.String dateentry1;
+	private java.lang.String dateentry2;
+
 	public HsrEmployees(){
 	}
 
@@ -222,4 +227,29 @@ public class HsrEmployees extends BaseEntity {
 	public Long getPkid() {
 		return this.pkid;
 	}
+
+	public String getOrgName() {
+		return orgName;
+	}
+
+	public void setOrgName(String orgName) {
+		this.orgName = orgName;
+	}
+
+	public java.lang.String getDateentry1() {
+		return dateentry1;
+	}
+
+	public void setDateentry1(java.lang.String dateentry1) {
+		this.dateentry1 = dateentry1;
+	}
+
+	public java.lang.String getDateentry2() {
+		return dateentry2;
+	}
+
+	public void setDateentry2(java.lang.String dateentry2) {
+		this.dateentry2 = dateentry2;
+	}
+	
 }

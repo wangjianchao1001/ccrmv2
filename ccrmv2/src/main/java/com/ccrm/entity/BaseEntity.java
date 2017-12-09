@@ -11,6 +11,9 @@ public class BaseEntity implements Serializable {
 
 	/** 排序字段 */
 	private String sortColumns;
+	
+	/** 打开页面是新增还是修改 */
+	private String openType;
 
 	public String getSortColumns() {
 		return sortColumns;
@@ -18,6 +21,14 @@ public class BaseEntity implements Serializable {
 
 	public void setSortColumns(String sortColumns) {
 		this.sortColumns = sortColumns;
+	}
+
+	public String getOpenType() {
+		return openType;
+	}
+
+	public void setOpenType(String openType) {
+		this.openType = openType;
 	}
 
 }

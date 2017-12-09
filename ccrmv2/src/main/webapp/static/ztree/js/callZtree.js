@@ -13,9 +13,9 @@ function onclick(){
 	cityObj.attr("value", v);
 }
 
-function showBranchTree(){
-	var cityObj = $("#branchName");
-	var cityOffset = $("#branchName").offset();
+function showBranchTree(id){
+	var cityObj = $(id);
+	var cityOffset = $(id).offset();
 	$("#menuContent").css({left:cityOffset.left + "px", top:cityOffset.top + cityObj.outerHeight() + "px"}).slideDown("fast");
 	
 	$("body").bind("mousedown", onBodyDown);

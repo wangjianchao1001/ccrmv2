@@ -1,5 +1,6 @@
 package com.ccrm.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,7 @@ import com.ccrm.entity.UmgOperator;
 import com.ccrm.service.HsrEmployeesService;
 import com.ccrm.service.RegOrganinfoService;
 import com.ccrm.service.UmgBranchService;
+import com.ccrm.util.DateTimeUtils;
 
 @Controller
 @RequestMapping("/employee/*")
@@ -36,17 +38,29 @@ public class HKEmployeeController {
 	HsrEmployeesService employeeService;
 	
 	@RequestMapping("employeeList.html") 
-	public String famCopList(HsrEmployees em, HttpServletRequest req, HttpServletResponse res, ModelMap model,Pager page){
+	public String famCopList(HsrEmployees em, String branchId, String dateentry1, String dateentry2, HttpServletRequest req, HttpServletResponse res, ModelMap model,Pager page){
 		
 		//从session 取用户
 		UmgOperator user = (UmgOperator) req.getSession().getAttribute("umgOperator");
-		if(em.getOrganid() == 0){
+		if(StringUtils.isBlank(branchId)){
+			branchId = user.getBranchid() == 100l ? "398" : String.valueOf(user.getBranchid());
+		}
+		if(em == null) em = new HsrEmployees();
+		if(em.getOrganid() == null){
 			em.setOrganid(user.getOrganid());
 		}
+		if(StringUtils.isNotBlank(dateentry1)){
+			em.setDateentry1(dateentry1);
+		}
+		if(StringUtils.isNotBlank(dateentry2)){
+			em.setDateentry2(dateentry2);
+		}
 		em.setStatus(-1L);
-		
 		Pager pager = employeeService.findPageList(em, page.getPageNumber(), page.getPageSize());
+		List<UmgBranch> branchList = umgBranchService.getBranchTree("2200",branchId); 
+		String branchTree = umgBranchService.umgBranchTree(branchList);  
 		
+		model.put("branchTree", branchTree);
 		model.put("pager", pager);
 		model.put("employee",em);
 		return "employee/employeeList";
@@ -57,7 +71,7 @@ public class HKEmployeeController {
 	 * 跳转新增页面
 	 */
 	@RequestMapping("edit.html")
-	public String update(String id, HttpServletRequest req, HttpServletResponse res, ModelMap model){
+	public String update(String id, String openType, HttpServletRequest req, HttpServletResponse res, ModelMap model){
 		log.info("跳转页面，参数 studentId ："+id);
 		
 		UmgOperator user = (UmgOperator) req.getSession().getAttribute("umgOperator");
@@ -65,10 +79,11 @@ public class HKEmployeeController {
 		
 		if(StringUtils.isNotBlank(id)){
 			HsrEmployees em  = employeeService.getById(Long.valueOf(id));
-			model.put("employee", em);
+			model.put("employ", em);
 		}
 		
 		model.put("branchList", branchList);
+		model.put("openType", openType);
 		
 		return "employee/employeeEdit";
 	}
@@ -81,11 +96,18 @@ public class HKEmployeeController {
 	public String save(HsrEmployees em, HttpServletRequest req, HttpServletResponse res, ModelMap model, final RedirectAttributes redirectAttributes){
 		String msg = "操作成功";
 		if(em.getPkid() == null ){
+			em.setPkid(Long.valueOf(DateTimeUtils.getDateTimeStr(new Date(), "yyyyMMddHHmmssms")));
 			employeeService.save(em);
 		}else{
 			employeeService.update(em);
 		}
 		
+		redirectAttributes.addAttribute("orgName", em.getOrgName());
+		redirectAttributes.addAttribute("organid", em.getOrganid());
+		redirectAttributes.addAttribute("name", em.getName());
+		redirectAttributes.addAttribute("idno", em.getIdno());
+		redirectAttributes.addAttribute("dateentry1", em.getDateentry1());
+		redirectAttributes.addAttribute("dateentry2", em.getDateentry2());
 		redirectAttributes.addFlashAttribute("message", msg);
 		return "redirect:/employee/employeeList.html";
 	}

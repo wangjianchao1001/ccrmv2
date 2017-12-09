@@ -57,7 +57,7 @@ public class HKTirStudentController {
 		
 		Pager pager = studentSevice.findPageList(student, page.getPageNumber(), page.getPageSize());
 		
-		List<UmgBranch> branchList = umgBranchService.getBranchTree("2200",String.valueOf(user.getBranchid())); 
+		List<UmgBranch> branchList = umgBranchService.getBranchTree("2200",String.valueOf(user.getBranchid()+"")); 
 		String branchTree = umgBranchService.umgBranchTree(branchList); 
 		
 		model.put("pager", pager);

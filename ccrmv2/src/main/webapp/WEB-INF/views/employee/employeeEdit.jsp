@@ -36,9 +36,9 @@
 		<div class="box box-solid box-default">
 			<div class="box-header">学员列表</div>
 			<div class="box-body">
-				<form class="form-horizontal" role="form" id="mgtuserForm" method="post" action="<%=path%>/employee/save"}">
-						<input id="hid_pkid" name="pkid" type="hidden"/>
-					    <input id="hid_organid" name="organid" type="hidden"/>
+				<form class="form-horizontal" role="form" id="mgtuserForm" method="post" action="<%=request.getContextPath()%>/employee/save">
+						<input id="hid_pkid" name="pkid" type="hidden" value="${employ.pkid }"/>
+					    <input id="hid_organid" name="organid" type="hidden" value="${employ.organid }"/>
 				
 					<div class="form-group">
 						<label for="loginName" class="col-sm-2 control-label"><font color="red">*</font>所属家庭服务业企业</label>
@@ -74,9 +74,8 @@
 						<label for="status" class="col-sm-2 control-label">状态</label>
 						<div class="input-group col-sm-5">
 							<select class="form-control selectpicker show-tick" name="status" >
-								<option value='' <c:if test="${employ.status == '' }">selected="selected"</c:if>>请选择状态</option>
-								<option value='0' <c:if test="${employ.status == 0 }">selected="selected"</c:if>>离职</option>
 								<option value='1' <c:if test="${employ.status == 1 }">selected="selected"</c:if>>在职</option>
+								<option value='0' <c:if test="${employ.status == 0 }">selected="selected"</c:if>>离职</option>
 							</select> 
 						</div>
 					</div>
@@ -84,14 +83,14 @@
 						<label for="dateentry" class="col-sm-2 control-label"><font color="red">*</font>入职时间</label>
 						<div class="input-group col-sm-5">
 							<input type="text" class="form-control" id="dateentry" name="dateentry" placeholder="请输选择入职日期" readonly 
-										onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-{%d-1}'})" value="${regOrgan.dateentry}">
+										onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-{%d-1}'})" value="${employ.dateentry}">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="dateleave" class="col-sm-2 control-label"><font color="red">*</font>离职时间</label>
 						<div class="input-group col-sm-5">
 							<input type="text" class="form-control" id="dateleave" name="dateleave" placeholder="请输选择离职日期" readonly 
-										onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-{%d-1}'})" value="${regOrgan.dateleave}">
+										onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-{%d-1}'})" value="${employ.dateleave}">
 						</div>
 					</div>
 					<div class="form-group">
@@ -102,7 +101,9 @@
 					</div>
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
-							<button type="submit" class="btn btn-primary">提交</button>
+							<c:if test="${openType != 'view' }">
+								<button type="submit" class="btn btn-primary">提交</button>
+							</c:if>
 							<input type="button" class="btn btn-default" id="back" name="back" onclick="javascript:window.history.go(-1);" value="返回" />
 						</div>
 					</div>

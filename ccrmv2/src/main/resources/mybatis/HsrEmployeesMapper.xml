@@ -276,6 +276,12 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 				<if test="model.dateentry != null and model.dateentry !=''">
 					AND e.DATEENTRY = #{model.dateentry}
 				</if>
+				<if test="model.dateentry1 != null and model.dateentry1 !=''">
+					AND e.DATEENTRY <![CDATA[>=]]> #{model.dateentry1}
+				</if>
+				<if test="model.dateentry2 != null and model.dateentry2 !=''">
+					AND e.DATEENTRY <![CDATA[<=]]> #{model.dateentry2}
+				</if>
 				<if test="model.dateleave != null and model.dateleave !=''">
 					AND e.DATELEAVE = #{model.dateleave}
 				</if>

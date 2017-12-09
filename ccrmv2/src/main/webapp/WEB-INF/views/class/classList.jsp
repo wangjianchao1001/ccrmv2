@@ -37,7 +37,7 @@
 				<div class="box-tools pull-right">
 				<form class="form-horizontal" role="form" method="post" id="searchForm" action="<%=request.getContextPath()%>/tirClass/tirClassList.html">
 					<div class="input-group input-group-sm" style="width:180px;display:inline-block">
-						<input type="text" class="form-control " id="branchName" name="branchName" placeholder="按所属机构查找" readonly value="${branchName }" onfocus="showBranchTree(); return false;"/>
+						<input type="text" class="form-control " id="branchName" name="branchName" placeholder="按所属机构查找" readonly value="${branchName }" onfocus="showBranchTree('#branchName'); return false;"/>
 						<input type="hidden" class="form-cont
 						rol " id="branchid" name="branchid" value="${branchid }"/>
 					</div>

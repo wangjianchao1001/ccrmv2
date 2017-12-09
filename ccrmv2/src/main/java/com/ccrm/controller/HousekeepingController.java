@@ -58,7 +58,7 @@ public class HousekeepingController {
 		
 		Pager pager = regOrgService.findPageList(regOrgan, page.getPageNumber(), page.getPageSize());
 		
-		List<UmgBranch> branchList = umgBranchService.getBranchTree("2200",String.valueOf(branchId)); 
+		List<UmgBranch> branchList = umgBranchService.getBranchTree("2200",String.valueOf(user.getBranchid())); 
 		String branchTree = umgBranchService.umgBranchTree(branchList);  
 		
 		model.put("pager", pager);
@@ -79,7 +79,7 @@ public class HousekeepingController {
 		UmgOperator user = (UmgOperator) req.getSession().getAttribute("umgOperator");
 		Long branchId = user.getBranchid() == 100l ? 398l : user.getBranchid(); 
 		
-		List<UmgBranch> branchList = umgBranchService.getBranchTree("2200",String.valueOf(branchId)); 
+		List<UmgBranch> branchList = umgBranchService.getBranchTree("2200",String.valueOf(user.getBranchid())); 
 		String branchTree = umgBranchService.umgBranchTree(branchList);  
 		
 		if(StringUtils.isNotBlank(id)){
@@ -102,8 +102,10 @@ public class HousekeepingController {
 	public String save(RegOrganinfo regOrgan, HttpServletRequest req, HttpServletResponse res, ModelMap model, final RedirectAttributes redirectAttributes){
 		String msg = "操作成功";
 		if(regOrgan.getPkid() == null ){
+			UmgOperator user = (UmgOperator) req.getSession().getAttribute("umgOperator");
 			regOrgan.setPkid(Long.valueOf(DateTimeUtils.getDateTimeStr(new Date(), "yyyyMMddHHmmssms")));
 			regOrgan.setKindid(2l);
+			regOrgan.setCroperid(user.getPkid());
 			regOrgan.setDatenew(new Date());
 			regOrgService.save(regOrgan);
 		}else{

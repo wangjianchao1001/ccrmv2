@@ -43,7 +43,7 @@
 							<c:if test="${type == 'add' }">
 								<input type="text" class="form-control" id="branchName" required="required"
 												name="branchName" placeholder="请选择所属机构" readonly 
-												value="${branch.name}" onfocus="showBranchTree(); return false;"> 
+												value="${branch.name}" onfocus="showBranchTree('#branchName'); return false;"> 
 							</c:if>
 							<c:if test="${type != 'add' }">
 								<c:if test="${not empty branchTree }">
@@ -51,7 +51,7 @@
 										<c:if test="${regOrgan.branchid eq branch.pkid }">
 											<input type="text" class="form-control" id="branchName" required="required"
 												name="branchName" placeholder="请选择所属机构" readonly 
-												value="${branch.name}" onfocus="showBranchTree(); return false;"> 
+												value="${branch.name}" onfocus="showBranchTree('#branchName'); return false;"> 
 										</c:if> 
 									</c:forEach>
 								</c:if>

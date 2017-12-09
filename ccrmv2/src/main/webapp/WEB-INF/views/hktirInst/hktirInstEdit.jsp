@@ -70,7 +70,7 @@
 						<div class="input-group col-sm-5">
 							<input type="text" class="form-control" id="name"  required="required"
 								name="name" placeholder="请输入所属家庭服务业企业"
-								value="${}">
+								value="">
 						</div>
 					</div>
 					<div class="form-group">
