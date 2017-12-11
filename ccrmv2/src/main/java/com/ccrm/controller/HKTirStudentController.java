@@ -31,6 +31,7 @@ import com.ccrm.entity.UmgOperator;
 import com.ccrm.service.HsrTrinsStudentService;
 import com.ccrm.service.RegOrganinfoService;
 import com.ccrm.service.UmgBranchService;
+import com.ccrm.util.DateTimeUtils;
 import com.ccrm.util.ImportExcelUtil;
 import com.ccrm.util.excelExport.ExcelUtil;
 
@@ -129,13 +130,12 @@ public class HKTirStudentController {
 	@RequestMapping(value="downloadTemplate")
 	public void downloadTemplate(HttpServletRequest req, HttpServletResponse res, ModelMap model){
 		res.setContentType("application/vnd.ms-excel");
-		String name = "培训学员导入模版";
-		
+		String name = "学员花名册导入模版";
 		try {
-			res.setHeader("Content-Disposition","attachment;filename = "+new String(name.getBytes("GBK"),"ISO8859-1")+".xlsx");
-			ExcelUtil.getInstance().exportObj2ExcelByTemplate(new HashMap<String, String>(), "/template/培训学员导入模版.xls", res.getOutputStream(), new ArrayList<TirStudent>(), TirStudent.class, true);
+			res.setHeader("Content-Disposition","attachment;filename = "+new String(name.getBytes("GBK"),"ISO8859-1")+".xls");
+			ExcelUtil.getInstance().exportObj2ExcelByTemplate(new HashMap<String, String>(), "/template/学员花名册导入模版.xls", res.getOutputStream(), new ArrayList<HsrTrinsStudent>(), HsrTrinsStudent.class, true);
 		} catch (IOException e) {
-			log.error("下载培训学员导入模版错误");
+			log.error("下载学员花名册导入模版错误");
 			e.printStackTrace();
 		}
 	}
@@ -154,103 +154,52 @@ public class HKTirStudentController {
 				throw new Exception("文件不存在！");
 			}
 			in = file.getInputStream();
-			listob = new ImportExcelUtil().getBankListByExcel(in,
-					file.getOriginalFilename());
+			listob = new ImportExcelUtil().getBankListByExcel(in, file.getOriginalFilename());
 			in.close();
 
 			// 该处可调用service相应方法进行数据保存到数据库中，现只对数据输出
 			for (int i = 0; i < listob.size(); i++) {
 				List<Object> lo = listob.get(i);
-				TirStudent student = new TirStudent();
-				student.setName(lo.get(0).toString());
-				student.setIdno(lo.get(1).toString());
-				// 民族
-				if (lo.get(2) != null && lo.get(2).toString().indexOf("汉") != -1) {
-					student.setNationid(7001L);
-				} else if (lo.get(2) != null && lo.get(2).toString().indexOf("蒙") != -1) {
-					student.setNationid(7002L);
-				} else if (lo.get(2) != null && lo.get(2).toString().indexOf("回") != -1) {
-					student.setNationid(7003L);
-				} else if (lo.get(2) != null && lo.get(2).toString().indexOf("满") != -1) {
-					student.setNationid(7011L);
-				} else if (lo.get(2) != null && lo.get(2).toString().indexOf("朝") != -1) {
-					student.setNationid(7010L);
-				} else {
-					student.setNationid(7004L);
+				HsrTrinsStudent student = new HsrTrinsStudent();
+				student.setPkid(Long.valueOf(DateTimeUtils.getDateTimeStr(new Date(), "yyyyMMddHHmmssms")));
+				student.setName(lo.get(1).toString());
+				if("男".equals(lo.get(2).toString())){
+					student.setSexual("2");
+				}else{
+					student.setSexual("1");
 				}
-				// 户口
-				if (lo.get(3) != null && lo.get(3).toString().equals("非农业户口")) {
-					student.setHouseholdid(7101L);
-				} else if (lo.get(3) != null && lo.get(3).toString().equals("农业户口")) {
-					student.setHouseholdid(7104L);
-				} else if (lo.get(3) != null && lo.get(3).toString().equals("本市城镇")) {
-					student.setHouseholdid(7102L);
-				} else if (lo.get(3) != null && lo.get(3).toString().equals("外省城镇")) {
-					student.setHouseholdid(7103L);
-				} else if (lo.get(3) != null && lo.get(3).toString().equals("本市农村")) {
-					student.setHouseholdid(7105L);
-				} else if (lo.get(3) != null && lo.get(3).toString().equals("外省农村")) {
-					student.setHouseholdid(7106L);
-				} else if (lo.get(3) != null && lo.get(3).toString().equals("港澳台人员")) {
-					student.setHouseholdid(7107L);
-				} else {
-					student.setHouseholdid(7101L);
+				student.setAge(lo.get(3) == null ? null : (Integer)lo.get(3));
+				student.setIdnumber(lo.get(4).toString());
+				student.setTriainyear(lo.get(5).toString());
+				student.setTraintime(DateTimeUtils.convertDate(lo.get(6).toString()));
+				if("家政服务".equals(lo.get(7).toString())){
+					student.setTrainprof("1");
+				}else if("养老护理".equals(lo.get(7).toString())){
+					student.setTrainprof("2");
+				}else if("病患陪护".equals(lo.get(7).toString())){
+					student.setTrainprof("3");
+				}else if("社区照料".equals(lo.get(7).toString())){
+					student.setTrainprof("4");
+				}else{
+					student.setTrainprof("5");
 				}
-				// 文化程度
-				if (lo.get(4) != null && lo.get(4).toString().equals("初中")) {
-					student.setCultureid(7209L);
-				} else if (lo.get(4) != null && lo.get(4).toString().equals("高中")) {
-					student.setCultureid(7207L);
-				} else if (lo.get(4) != null && lo.get(4).toString().equals("职高")) {
-					student.setCultureid(7208L);
-				} else if (lo.get(4) != null && lo.get(4).toString().equals("技校")) {
-					student.setCultureid(7206L);
-				} else if (lo.get(4) != null && lo.get(4).toString().equals("中专中技")) {
-					student.setCultureid(7205L);
-				} else if (lo.get(4) != null && lo.get(4).toString().equals("大专")) {
-					student.setCultureid(7204L);
-				} else if (lo.get(4) != null && lo.get(4).toString().equals("大学")) {
-					student.setCultureid(7203L);
-				} else {
-					student.setCultureid(7210L);
+				student.setTrainperiod(lo.get(8).toString());
+				student.setProflevel(lo.get(9).toString());
+				student.setFamaddress(lo.get(10).toString());
+				student.setPhone(lo.get(11).toString());
+				if("否".equals(lo.get(12).toString())){
+					student.setIspassidentify(0);
+				}else{
+					student.setIspassidentify(1);
 				}
-				// 证书类型
-				student.setCertificatetype(4001L);
-				// 人员类别
-				student.setStructid(7307L);
+				if("否".equals(lo.get(13).toString())){
+					student.setIstrainqualify(0);
+				}else{
+					student.setIstrainqualify(1);
+				}
 				student.setMemo("系统导入");
-				student.setIdxid(idxId);
-				student.setDatenew(new Date());
-				if (lo.get(5) != null && lo.get(5).toString().indexOf(".") != -1) {
-					student.setPhoneno(lo.get(5).toString());
-				} else if (lo.get(5) != null) {
-					student.setPhoneno(lo.get(5).toString());
-				}
-				if (lo.get(6) != null) {
-					student.setAdress(lo.get(6).toString());
-				}
-				if (lo.get(7) != null && lo.get(7).equals("是")) {
-					student.setIspasser(7600L);
-				} else {
-					student.setIspasser(7601L);
-				}
-				if (lo.get(8) != null && lo.get(8).equals("是")) {
-					student.setIsemploy(7700L);
-				} else {
-					student.setIspasser(7701L);
-				}
-				if (lo.get(9) != null && lo.get(9).toString().equals("中级职业资格")) {
-					student.setIdentlevel(8102L);
-				} else if (lo.get(9) != null && lo.get(9).toString().equals("高级职业资格")) {
-					student.setIdentlevel(8103L);
-				} else if (lo.get(9) != null && lo.get(9).toString().equals("技师职业资格")) {
-					student.setIdentlevel(8104L);
-				} else if (lo.get(9) != null && lo.get(9).toString().equals("高级技师资格")) {
-					student.setIdentlevel(8105L);
-				} else {
-					student.setIdentlevel(8101L);
-				}
-//				studentService.save(student);
+				
+				studentSevice.save(student);
 			}
 		} catch (Exception e) {
 			message = "导入失败";
@@ -264,14 +213,11 @@ public class HKTirStudentController {
 	 * 导出excel
 	 */
 	@RequestMapping("exportExcel")
-	public @ResponseBody String exportExcel(String className, TirStudent student, HttpServletRequest req, HttpServletResponse res, ModelMap model, final RedirectAttributes redirectAttributes){
+	public @ResponseBody String exportExcel(String orgName, HsrTrinsStudent student, HttpServletRequest req, HttpServletResponse res, ModelMap model, final RedirectAttributes redirectAttributes){
 		String msg = "操作成功";
 		
-		if(student.getStatus() == null ){
-			student.setStatus(-1l);
-		}
 		List<TirStudent> list = new ArrayList<TirStudent>();
-		String title = "培训学员管理("+className+")";
+		String title = "培训学员管理("+orgName+")";
 		Map<String, String> map = new HashMap<String, String>(); 
 		map.put("title",title);
 		
@@ -279,7 +225,7 @@ public class HKTirStudentController {
 		String name = "培训学员";
 		
 		try {
-			res.setHeader("Content-Disposition","attachment;filename = "+new String(name.getBytes("GBK"),"ISO8859-1")+"_"+new String(className.getBytes("GBK"),"ISO8859-1")+".xlsx");
+			res.setHeader("Content-Disposition","attachment;filename = "+new String(name.getBytes("GBK"),"ISO8859-1")+"_"+new String(orgName.getBytes("GBK"),"ISO8859-1")+".xlsx");
 			ExcelUtil.getInstance().exportObj2ExcelByTemplate(map, "/template/培训学员管理导出模版.xlsx", res.getOutputStream(), list, TirStudent.class, true);
 			return null;
 		} catch (IOException e) {
