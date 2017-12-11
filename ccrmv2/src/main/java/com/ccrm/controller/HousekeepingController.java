@@ -163,21 +163,5 @@ public class HousekeepingController {
 		}
 		return msg+"";
 	}
-	/**
-	 * 根据机构id 获取企业
-	 */
-	@RequestMapping("getByBranchId")
-	public @ResponseBody Map<String, Object> getByBranchId(String branchId, HttpServletRequest req, HttpServletResponse res, ModelMap model){
-		Map<String , Object> map = new HashMap<String, Object>();
-		if(StringUtils.isNotBlank(branchId)){
-			RegOrganinfo regOrgan =new RegOrganinfo();  
-			regOrgan.setStatus(-1);
-			regOrgan.setType("HK");
-			regOrgan.setBranchid(Long.valueOf(branchId));
-			List<RegOrganinfo> oList = regOrgService.findList(regOrgan);
-			map.put("organList", oList);
-		}
-		return map;
-	}
 	
 }

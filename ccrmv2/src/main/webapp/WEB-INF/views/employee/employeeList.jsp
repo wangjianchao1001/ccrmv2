@@ -7,6 +7,9 @@
 <html lang="en">
 <head>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/static/plugins/datepicker/skin/WdatePicker.css">
+
+<link type="text/javascript" src="<%=request.getContextPath()%>/static/plugins/jquery/editable-select/js/jquery.editable-select.js">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/static/plugins/jquery/editable-select/css/jquery.editable-select.css">
 <meta name="decorator" content="mainframe" />
 <title>家政企业员工管理</title>
 </head>
@@ -29,8 +32,12 @@
 				<div class="box-tools pull-right" var="agentUser" items="${agentUser}">
 					<form class="form-horizontal" role="form" id="searchForm" action="<%=request.getContextPath()%>/employee/employeeList.html">
 						<div class="input-group input-group-sm" style="width:220px;display:inline-block">
-							<input type="text" class="form-control " id="branchName" name="branchName" placeholder="按所属机构查找" readonly value="${employee.orgName}"/>
-							<input type="hidden" class="form-control " id="branchid" name="branchid" value="${employee.organid}"/>
+							<select class="Winstar-input120" id="select_valuecode01" >
+								<c:forEach var="organ" items="${organList }">
+									<option value='${organ.pkid }' <c:if test="${organ.pkid eq employee.organid }">selected="selected"</c:if>>${organ.name }</option>
+								</c:forEach>
+							</select>
+							<input type="hidden" class="form-control " id="valuecode01" name="valuecode01" value="${employee.organid}"/>
 						</div>
 						<div style="display: inline-block">
 							<div class="input-group input-group-sm"	style="width: 140px;">
@@ -154,9 +161,6 @@
 			};
 		$(document).ready(function() {
 			
-			//机构数
-			$.fn.zTree.init($("#treeDemo"), setting, branchTree);
-			
 			$("#add").bind('click',function(){
 				window.location.href =path + "/employee/edit.html?openType=add";
 			});
@@ -170,6 +174,19 @@
 				$("#pageNumber").val(pageclickednumber);
 				$("#searchForm").submit();
 			}, {});
+			
+			$('#select_valuecode01').editableSelect({
+		       bg_iframe: true,
+		       onSelect: function(list_item) {
+		         // 'this' is a reference to the instance of EditableSelect
+		         // object, so you have full access to everything there
+		         $('#ddd').val(this.text.val());
+		       },
+		       case_sensitive: false, // If set to true, the user has to type in an exact
+		                              // match for the item to get highlighted
+		       items_then_scroll: 10 ,// If there are more than 10 items, display a scrollbar
+		       isFilter:false //If set to true, the item will be filtered according to the matching criteria.
+		     });
 		});
 		
 		function submitSearch(){

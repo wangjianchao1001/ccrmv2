@@ -135,9 +135,9 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	<!-- getById -->
 	<select id="getById" resultMap="RM_HsrEmployees">
 		SELECT
-		<include refid="columns" />
-		FROM HSR_EMPLOYEES
-		WHERE PKID = #{pkid}
+		e.*,o.name as orgName
+		FROM HSR_EMPLOYEES e left join REG_ORGANINFO o on e.ORGANID = o.pkid 
+		WHERE e.PKID = #{pkid}
 	</select>
 
 	<!-- 获取总数 -->

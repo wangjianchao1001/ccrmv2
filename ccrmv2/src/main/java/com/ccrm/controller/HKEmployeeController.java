@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ccrm.dto.Pager;
 import com.ccrm.entity.HsrEmployees;
+import com.ccrm.entity.RegOrganinfo;
 import com.ccrm.entity.UmgBranch;
 import com.ccrm.entity.UmgOperator;
 import com.ccrm.service.HsrEmployeesService;
@@ -36,6 +37,8 @@ public class HKEmployeeController {
 	UmgBranchService umgBranchService;
 	@Autowired
 	HsrEmployeesService employeeService;
+	@Autowired
+	RegOrganinfoService regOrgService;
 	
 	@RequestMapping("employeeList.html") 
 	public String famCopList(HsrEmployees em, String branchId, String dateentry1, String dateentry2, HttpServletRequest req, HttpServletResponse res, ModelMap model,Pager page){
@@ -60,6 +63,13 @@ public class HKEmployeeController {
 		List<UmgBranch> branchList = umgBranchService.getBranchTree("2200",branchId); 
 		String branchTree = umgBranchService.umgBranchTree(branchList);  
 		
+		RegOrganinfo regOrgan =new RegOrganinfo();  
+		regOrgan.setStatus(-1);
+		regOrgan.setType("HK");
+		regOrgan.setBranchid(Long.valueOf(branchId));
+		List<RegOrganinfo> oList = regOrgService.findList(regOrgan);
+
+		model.put("organList", oList);
 		model.put("branchTree", branchTree);
 		model.put("pager", pager);
 		model.put("employee",em);
@@ -76,10 +86,23 @@ public class HKEmployeeController {
 		
 		UmgOperator user = (UmgOperator) req.getSession().getAttribute("umgOperator");
 		List<UmgBranch> branchList = umgBranchService.getBranchTree("2200",String.valueOf(user.getBranchid())); 
+		Long branchId = user.getBranchid();
 		
 		if(StringUtils.isNotBlank(id)){
 			HsrEmployees em  = employeeService.getById(Long.valueOf(id));
 			model.put("employ", em);
+		}
+		
+		if(!"view".equals(openType)){
+			if(branchId != null && branchId != 0){
+				RegOrganinfo regOrgan =new RegOrganinfo();  
+				regOrgan.setStatus(-1);
+				regOrgan.setType("HK");
+				regOrgan.setBranchid(branchId);
+				List<RegOrganinfo> oList = regOrgService.findList(regOrgan);
+
+				model.put("organList", oList);
+			}	
 		}
 		
 		model.put("branchList", branchList);

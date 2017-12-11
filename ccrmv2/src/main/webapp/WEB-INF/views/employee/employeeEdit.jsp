@@ -43,7 +43,7 @@
 					<div class="form-group">
 						<label for="loginName" class="col-sm-2 control-label"><font color="red">*</font>所属家庭服务业企业</label>
 						<div class="input-group col-sm-5">
-							<input type="text" class="form-control" id="organid" name="organid" placeholder="请选择家庭服务企业" value="">
+							<input type="text" class="form-control" id="organid" name="organid" placeholder="请输入家庭服务企业名称" value="${employ.orgName }">
 						</div>
 					</div>
 					<div class="form-group">
