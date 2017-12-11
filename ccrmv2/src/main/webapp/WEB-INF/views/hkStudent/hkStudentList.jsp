@@ -62,7 +62,7 @@
 					
 						<tr>
 							<th hidden="true">序号</th>
-							<th>管理机构名称</th>
+							<th>企业名称</th>
 							<th>姓名</th>
 							<th>性别</th>
 							<th>年龄</th>
@@ -83,29 +83,24 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="organ" items="${pager.datas }" varStatus="status"> 
+						<c:forEach var="student" items="${pager.datas }" varStatus="status"> 
 							<tr>
-								<td hidden="true">
-									<input type="hidden" value="${organ.pkid}" id="pkid" name="pkid" />${organ.pkid}
-								</td>
-								<td><input type="hidden" value="${organ.branchid}" name="branchid" />${organ.branchName}</td>
-								<td><a href="#" onclick="getTirClass(this)">${organ.name}</a>
-									<input type="hidden" value="${organ.name}" name="branchname" />
-								</td>
-								<td>${organ.name}</td>
-								<td>${organ.sexual}</td>
-								<td>${organ.age}</td>
-								<td>${organ.idnumber}</td>
-								<td>${organ.triainyear}</td>
+								<td hidden="true"><input type="hidden" value="${student.pkid}" id="pkid" name="pkid" />${student.pkid}</td>
+								<td><input type="hidden" value="${student.branchid}" name="branchid" />${student.orgName}</td>
+								<td>${student.name}</td>
+								<td>${student.sexual}</td>
+								<td>${student.age}</td>
+								<td>${student.idnumber}</td>
+								<td>${student.triainyear}</td>
 								
-								<td>${organ.traintime}</td>
-								<td>${organ.trainprof }</td>
-								<td>${organ.trainperiod }</td>
-								<td>${organ.proflevel }</td>
-								<td>${organ.phone }</td>
-								<td>${organ.ispassidentify }</td>
-								<td>${organ.istrainqualify }</td>
-								<td>${organ.memo }</td>
+								<td>${student.traintime}</td>
+								<td>${student.trainprof }</td>
+								<td>${student.trainperiod }</td>
+								<td>${student.proflevel }</td>
+								<td>${student.phone }</td>
+								<td>${student.ispassidentify }</td>
+								<td>${student.istrainqualify }</td>
+								<td>${student.memo }</td>
 								<td>
 									<shiro:hasPermission name="10010600">
 										<a href="#"onclick="addorUpdate(this)">修改</a>&nbsp;&nbsp;

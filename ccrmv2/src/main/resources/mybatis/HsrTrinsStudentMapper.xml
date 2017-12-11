@@ -277,70 +277,82 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 
 	<!-- 分页 -->
 	<select id="findPageList" resultMap="RM_HsrTrinsstudent">
-		SELECT <include refid="columns" />
-		FROM HSR_TRINSSTUDENT
+		select * from (
+		select t.*, rownum rn from(
+		SELECT s.* , t.name as orgName
+		FROM HSR_TRINSSTUDENT s LEFT JOIN HSR_TRIINSTITUTION t on s.branchid = t.pkid  
 		<where>
 			<if test="model != null">
 						<if test="model.pkid != null">
-							AND PKID = #{model.pkid}
+							AND s.PKID = #{model.pkid}
 						</if>
 						<if test="model.name != null and model.name !=''">
-							AND NAME = #{model.name}
+							AND s.NAME = #{model.name}
 						</if>
 						<if test="model.sexual != null and model.sexual !=''">
-							AND SEXUAL = #{model.sexual}
+							AND s.SEXUAL = #{model.sexual}
 						</if>
 						<if test="model.age != null">
-							AND AGE = #{model.age}
+							AND s.AGE = #{model.age}
 						</if>
 						<if test="model.idnumber != null and model.idnumber !=''">
-							AND IDNUMBER = #{model.idnumber}
+							AND s.IDNUMBER = #{model.idnumber}
 						</if>
 						<if test="model.triainyear != null and model.triainyear !=''">
-							AND TRIAINYEAR = #{model.triainyear}
+							AND s.TRIAINYEAR = #{model.triainyear}
 						</if>
 						<if test="model.traintime != null">
-							AND TRAINTIME = #{model.traintime}
+							AND s.TRAINTIME = #{model.traintime}
 						</if>
 						<if test="model.trainprof != null and model.trainprof !=''">
-							AND TRAINPROF = #{model.trainprof}
+							AND s.TRAINPROF = #{model.trainprof}
 						</if>
 						<if test="model.trainperiod != null and model.trainperiod !=''">
-							AND TRAINPERIOD = #{model.trainperiod}
+							AND s.TRAINPERIOD = #{model.trainperiod}
 						</if>
 						<if test="model.proflevel != null and model.proflevel !=''">
-							AND PROFLEVEL = #{model.proflevel}
+							AND s.PROFLEVEL = #{model.proflevel}
 						</if>
 						<if test="model.famaddress != null and model.famaddress !=''">
-							AND FAMADDRESS = #{model.famaddress}
+							AND s.FAMADDRESS = #{model.famaddress}
 						</if>
 						<if test="model.phone != null and model.phone !=''">
-							AND PHONE = #{model.phone}
+							AND s.PHONE = #{model.phone}
 						</if>
 						<if test="model.ispassidentify != null">
-							AND ISPASSIDENTIFY = #{model.ispassidentify}
+							AND s.ISPASSIDENTIFY = #{model.ispassidentify}
 						</if>
 						<if test="model.istrainqualify != null">
-							AND ISTRAINQUALIFY = #{model.istrainqualify}
+							AND s.ISTRAINQUALIFY = #{model.istrainqualify}
 						</if>
 						<if test="model.memo != null and model.memo !=''">
-							AND MEMO = #{model.memo}
+							AND s.MEMO = #{model.memo}
 						</if>
 						<if test="model.instpkid != null">
-							AND INSTPKID = #{model.instpkid}
+							AND s.INSTPKID = #{model.instpkid}
 						</if>
 						<if test="model.branchid != null and model.branchid !=''">
-							AND BRANCHID = #{model.branchid}
+							AND s.BRANCHID = #{model.branchid}
 						</if>
 			</if>
 		</where>
-		limit 
+		)t)
+		where rn between
 		<choose>
 			<when test="pager != null">
-				#{pager.begin},#{pager.pageSize}
+				#{pager.begin}
 			</when>
 			<otherwise>
-				0,10
+				0
+			</otherwise>
+		</choose>
+		and
+		<choose>
+			<when test="pager != null">
+				#{pager.end}
+			</when>
+			<otherwise>
+				20
 			</otherwise>
 		</choose>
 	</select>

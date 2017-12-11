@@ -107,6 +107,7 @@ public class HsrTrinsStudent extends BaseEntity {
      * @字段:BRANCHID VARCHAR2(100)  
      */	
 	private java.lang.String branchid;
+	private java.lang.String orgName;
 	public HsrTrinsStudent(){
 	}
 
@@ -236,4 +237,13 @@ public class HsrTrinsStudent extends BaseEntity {
 	public java.lang.String getBranchid() {
 		return this.branchid;
 	}
+
+	public java.lang.String getOrgName() {
+		return orgName;
+	}
+
+	public void setOrgName(java.lang.String orgName) {
+		this.orgName = orgName;
+	}
+	
 }

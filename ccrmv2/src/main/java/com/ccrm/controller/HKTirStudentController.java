@@ -52,17 +52,13 @@ public class HKTirStudentController {
 		
 		//从session 取用户
 		UmgOperator user = (UmgOperator) req.getSession().getAttribute("umgOperator");
-		if(user != null){
+		if(StringUtils.isBlank(student.getBranchid())){
 			student.setBranchid(user.getBranchid()+"");
 		}
 		
 		Pager pager = studentSevice.findPageList(student, page.getPageNumber(), page.getPageSize());
 		
-		List<UmgBranch> branchList = umgBranchService.getBranchTree("2200",String.valueOf(user.getBranchid()+"")); 
-		String branchTree = umgBranchService.umgBranchTree(branchList); 
-		
 		model.put("pager", pager);
-		model.put("branchTree", branchTree);
 		model.put("student",student);
 		
 		return "hkStudent/hkStudentList";
@@ -77,7 +73,7 @@ public class HKTirStudentController {
 		log.info("跳转页面，参数 studentId ："+id);
 		
 		UmgOperator user = (UmgOperator) req.getSession().getAttribute("umgOperator");
-		List<UmgBranch> branchList = umgBranchService.getBranchTree("1200",String.valueOf(user.getBranchid())); 
+		List<UmgBranch> branchList = umgBranchService.getBranchTree("2200",String.valueOf(user.getBranchid())); 
 		String branchTree = umgBranchService.umgBranchTree(branchList); 
 		
 		if(StringUtils.isNotBlank(id)){
