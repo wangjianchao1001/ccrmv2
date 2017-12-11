@@ -574,6 +574,9 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		<include refid="columns" />
 		FROM REG_ORGANINFO
 		<where>
+			<if test="type == 'HK'">
+					AND PKID <![CDATA[>]]> 10000
+				</if>
 			<if test="ppkid != null">
 				AND PPKID = #{ppkid}
 			</if>
@@ -581,8 +584,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 				AND STATUS = #{status}
 			</if>
 			<if test="status != null and status == -1">
-				AND STATUS <![CDATA[<>]]>
-				-1
+				AND STATUS <![CDATA[<>]]> -1
 			</if>
 			<if test="branchid != null">
 				AND (branchid in (
@@ -764,8 +766,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		<where>
 			<if test="model != null">
 				<if test="model.type == 'HK'">
-					AND o.PKID <![CDATA[>]]>
-					10000
+					AND o.PKID <![CDATA[>]]> 10000
 				</if>
 				<if test="model.status != null and model.status != -1">
 					AND o.STATUS = #{model.status}

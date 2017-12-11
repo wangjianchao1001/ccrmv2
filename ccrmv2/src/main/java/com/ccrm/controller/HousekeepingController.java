@@ -1,7 +1,9 @@
 package com.ccrm.controller;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,7 +29,6 @@ import com.ccrm.service.HsrEmployeesService;
 import com.ccrm.service.RegOrganinfoService;
 import com.ccrm.service.UmgBranchService;
 import com.ccrm.util.DateTimeUtils;
-import com.ccrm.util.PkidGenerator;
 
 @Controller
 @RequestMapping("/housekeeping/*")
@@ -58,7 +59,7 @@ public class HousekeepingController {
 		
 		Pager pager = regOrgService.findPageList(regOrgan, page.getPageNumber(), page.getPageSize());
 		
-		List<UmgBranch> branchList = umgBranchService.getBranchTree("2200",String.valueOf(user.getBranchid())); 
+		List<UmgBranch> branchList = umgBranchService.getBranchTree("2200",String.valueOf(regOrgan.getBranchid())); 
 		String branchTree = umgBranchService.umgBranchTree(branchList);  
 		
 		model.put("pager", pager);
@@ -161,6 +162,22 @@ public class HousekeepingController {
 			}
 		}
 		return msg+"";
+	}
+	/**
+	 * 根据机构id 获取企业
+	 */
+	@RequestMapping("getByBranchId")
+	public @ResponseBody Map<String, Object> getByBranchId(String branchId, HttpServletRequest req, HttpServletResponse res, ModelMap model){
+		Map<String , Object> map = new HashMap<String, Object>();
+		if(StringUtils.isNotBlank(branchId)){
+			RegOrganinfo regOrgan =new RegOrganinfo();  
+			regOrgan.setStatus(-1);
+			regOrgan.setType("HK");
+			regOrgan.setBranchid(Long.valueOf(branchId));
+			List<RegOrganinfo> oList = regOrgService.findList(regOrgan);
+			map.put("organList", oList);
+		}
+		return map;
 	}
 	
 }

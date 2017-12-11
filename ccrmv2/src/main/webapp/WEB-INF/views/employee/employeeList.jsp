@@ -7,10 +7,6 @@
 <html lang="en">
 <head>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/static/plugins/datepicker/skin/WdatePicker.css">
-<script type="text/javascript" src="<%=request.getContextPath()%>/static/ztree/js/jquery.ztree.core-3.5.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/static/ztree/js/callZtree.js"></script>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/static/ztree/css/demo.css" />	
-<link rel="stylesheet" href="<%=request.getContextPath()%>/static/ztree/css/zTreeStyle/zTreeStyle.css" />	
 <meta name="decorator" content="mainframe" />
 <title>家政企业员工管理</title>
 </head>
@@ -33,7 +29,7 @@
 				<div class="box-tools pull-right" var="agentUser" items="${agentUser}">
 					<form class="form-horizontal" role="form" id="searchForm" action="<%=request.getContextPath()%>/employee/employeeList.html">
 						<div class="input-group input-group-sm" style="width:220px;display:inline-block">
-							<input type="text" class="form-control " id="branchName" name="branchName" placeholder="按所属机构查找" readonly value="${employee.orgName}" onfocus="showBranchTree('#branchName'); return false;"/>
+							<input type="text" class="form-control " id="branchName" name="branchName" placeholder="按所属机构查找" readonly value="${employee.orgName}"/>
 							<input type="hidden" class="form-control " id="branchid" name="branchid" value="${employee.organid}"/>
 						</div>
 						<div style="display: inline-block">
