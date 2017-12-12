@@ -41,7 +41,7 @@ public class HKEmployeeController {
 	RegOrganinfoService regOrgService;
 	
 	@RequestMapping("employeeList.html") 
-	public String famCopList(HsrEmployees em, String branchId, String dateentry1, String dateentry2, HttpServletRequest req, HttpServletResponse res, ModelMap model,Pager page){
+	public String famCopList(HsrEmployees em, String branchId, HttpServletRequest req, HttpServletResponse res, ModelMap model,Pager page){
 		
 		//从session 取用户
 		UmgOperator user = (UmgOperator) req.getSession().getAttribute("umgOperator");
@@ -52,16 +52,8 @@ public class HKEmployeeController {
 		if(em.getOrganid() == null){
 			em.setOrganid(user.getOrganid());
 		}
-		if(StringUtils.isNotBlank(dateentry1)){
-			em.setDateentry1(dateentry1);
-		}
-		if(StringUtils.isNotBlank(dateentry2)){
-			em.setDateentry2(dateentry2);
-		}
 		em.setStatus(-1L);
 		Pager pager = employeeService.findPageList(em, page.getPageNumber(), page.getPageSize());
-		List<UmgBranch> branchList = umgBranchService.getBranchTree("2200",branchId); 
-		String branchTree = umgBranchService.umgBranchTree(branchList);  
 		
 		RegOrganinfo regOrgan =new RegOrganinfo();  
 		regOrgan.setStatus(-1);
@@ -70,7 +62,6 @@ public class HKEmployeeController {
 		List<RegOrganinfo> oList = regOrgService.findList(regOrgan);
 
 		model.put("organList", oList);
-		model.put("branchTree", branchTree);
 		model.put("pager", pager);
 		model.put("employee",em);
 		return "employee/employeeList";
@@ -85,7 +76,6 @@ public class HKEmployeeController {
 		log.info("跳转页面，参数 studentId ："+id);
 		
 		UmgOperator user = (UmgOperator) req.getSession().getAttribute("umgOperator");
-		List<UmgBranch> branchList = umgBranchService.getBranchTree("2200",String.valueOf(user.getBranchid())); 
 		Long branchId = user.getBranchid();
 		
 		if(StringUtils.isNotBlank(id)){
@@ -93,19 +83,16 @@ public class HKEmployeeController {
 			model.put("employ", em);
 		}
 		
-		if(!"view".equals(openType)){
-			if(branchId != null && branchId != 0){
-				RegOrganinfo regOrgan =new RegOrganinfo();  
-				regOrgan.setStatus(-1);
-				regOrgan.setType("HK");
-				regOrgan.setBranchid(branchId);
-				List<RegOrganinfo> oList = regOrgService.findList(regOrgan);
+		if(!"view".equals(openType) && (branchId != null && branchId != 0)){
+			RegOrganinfo regOrgan =new RegOrganinfo();  
+			regOrgan.setStatus(-1);
+			regOrgan.setType("HK");
+			regOrgan.setBranchid(branchId);
+			List<RegOrganinfo> oList = regOrgService.findList(regOrgan);
 
-				model.put("organList", oList);
-			}	
+			model.put("organList", oList);
 		}
 		
-		model.put("branchList", branchList);
 		model.put("openType", openType);
 		
 		return "employee/employeeEdit";
