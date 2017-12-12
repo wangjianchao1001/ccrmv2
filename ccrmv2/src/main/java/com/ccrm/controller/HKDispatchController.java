@@ -1,5 +1,6 @@
 package com.ccrm.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,14 +18,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ccrm.dto.Pager;
 import com.ccrm.entity.HsrDispatchflow;
+import com.ccrm.entity.HsrEmployees;
 import com.ccrm.entity.RegOrganinfo;
-import com.ccrm.entity.TirClass;
-import com.ccrm.entity.UmgBranch;
 import com.ccrm.entity.UmgOperator;
 import com.ccrm.service.HsrDispatchflowService;
 import com.ccrm.service.RegOrganinfoService;
-import com.ccrm.service.TirStudentService;
 import com.ccrm.service.UmgBranchService;
+import com.ccrm.util.DateTimeUtils;
 
 @Controller
 @RequestMapping("/dispatch/*")
@@ -32,28 +32,39 @@ public class HKDispatchController {
 	private static final Logger log = LoggerFactory.getLogger(HKDispatchController.class);
 	
 	@Autowired
-	RegOrganinfoService regOrgService;
+	RegOrganinfoService organService;
 	@Autowired
 	UmgBranchService umgBranchService;
 	@Autowired
 	HsrDispatchflowService dispatchService;
+	@Autowired
+	RegOrganinfoService regOrgService;
 	
-	@RequestMapping("dispatchList.html")
-	public String famCopList(HsrDispatchflow dispatch, HttpServletRequest req, HttpServletResponse res, ModelMap model,Pager page){
+	@RequestMapping("dispatchList.html") 
+	public String famCopList(HsrDispatchflow em, String branchId, HttpServletRequest req, HttpServletResponse res, ModelMap model,Pager page){
 		
 		//从session 取用户
 		UmgOperator user = (UmgOperator) req.getSession().getAttribute("umgOperator");
-		Long branchId = dispatch.getOrganid();
-		dispatch.setStatus(-1l);
+		if(StringUtils.isBlank(branchId)){
+			branchId = user.getBranchid() == 100l ? "398" : String.valueOf(user.getBranchid());
+		}
+		if(em == null) em = new HsrDispatchflow();
+		if(em.getOrganid() == null){
+			em.setOrganid(user.getOrganid());
+		}
+		em.setStatus(-1L);
+		Pager pager = dispatchService.findPageList(em, page.getPageNumber(), page.getPageSize());
 		
-		Pager pager = dispatchService.findPageList(dispatch, page.getPageNumber(), page.getPageSize());
-		
-		List<UmgBranch> branchList = umgBranchService.getBranchTree("2200",String.valueOf(user.getBranchid())); 
-		
-		model.put("branchList", branchList);
+		RegOrganinfo regOrgan =new RegOrganinfo();  
+		regOrgan.setStatus(-1);
+		regOrgan.setType("HK");
+		regOrgan.setBranchid(Long.valueOf(branchId));
+		List<RegOrganinfo> oList = regOrgService.findList(regOrgan);
+
+		model.put("organList", oList);
 		model.put("pager", pager);
-		model.put("dispatch",dispatch);
-		return "dispatch/dispatchList";
+		model.put("employee",em);
+		return "employee/employeeList";
 	}
 	
 	
@@ -61,20 +72,30 @@ public class HKDispatchController {
 	 * 跳转新增页面
 	 */
 	@RequestMapping("edit.html")
-	public String update(String id, HttpServletRequest req, HttpServletResponse res, ModelMap model){
-		log.info("跳转页面，参数 Id ："+id);
+	public String update(String id, String openType, HttpServletRequest req, HttpServletResponse res, ModelMap model){
+		log.info("跳转页面，参数 studentId ："+id);
 		
 		UmgOperator user = (UmgOperator) req.getSession().getAttribute("umgOperator");
-		List<UmgBranch> branchList = umgBranchService.getBranchTree("2200",String.valueOf(user.getBranchid())); 
+		Long branchId = user.getBranchid();
 		
 		if(StringUtils.isNotBlank(id)){
-			HsrDispatchflow dispatch = dispatchService.getById(Long.valueOf(id));
-			model.put("dispatch", dispatch);
+			HsrDispatchflow em  = dispatchService.getById(Long.valueOf(id));
+			model.put("employ", em);
 		}
 		
-		model.put("branchList", branchList);
+		if(!"view".equals(openType) && (branchId != null && branchId != 0)){
+			RegOrganinfo regOrgan =new RegOrganinfo();  
+			regOrgan.setStatus(-1);
+			regOrgan.setType("HK");
+			regOrgan.setBranchid(branchId);
+			List<RegOrganinfo> oList = regOrgService.findList(regOrgan);
+
+			model.put("organList", oList);
+		}
 		
-		return "dispatch/dispatchEdit";
+		model.put("openType", openType);
+		
+		return "employee/employeeEdit";
 	}
 	
 	
@@ -82,16 +103,20 @@ public class HKDispatchController {
 	 * 保存
 	 */
 	@RequestMapping("save")
-	public String save(HsrDispatchflow dispatch, HttpServletRequest req, HttpServletResponse res, ModelMap model, final RedirectAttributes redirectAttributes){
+	public String save(HsrDispatchflow em, HttpServletRequest req, HttpServletResponse res, ModelMap model, final RedirectAttributes redirectAttributes){
 		String msg = "操作成功";
-		if(dispatch.getPkid() == null ){
-			dispatchService.save(dispatch);
+		if(em.getPkid() == null ){
+			em.setPkid(Long.valueOf(DateTimeUtils.getDateTimeStr(new Date(), "yyyyMMddHHmmssms")));
+			dispatchService.save(em);
 		}else{
-			dispatchService.update(dispatch);
+			dispatchService.update(em);
 		}
 		
+		redirectAttributes.addAttribute("organid", em.getOrganid());
+		redirectAttributes.addAttribute("name", em.getName());
+		redirectAttributes.addAttribute("idno", em.getIdno());
 		redirectAttributes.addFlashAttribute("message", msg);
-		return "redirect:/dispatch/dispatchList.html";
+		return "redirect:/employee/employeeList.html";
 	}
 	
 	
@@ -102,10 +127,9 @@ public class HKDispatchController {
 	public @ResponseBody String delete(String id, HttpServletRequest req, HttpServletResponse res, ModelMap model){
 		int msg = 0;
 		if(StringUtils.isNotBlank(id)){
-			HsrDispatchflow dispatch = dispatchService.getById(Long.valueOf(id));
-			dispatch.setStatus(-1l);
-			msg = dispatchService.update(dispatch);
-			
+			HsrDispatchflow em = dispatchService.getById(Long.valueOf(id));
+			em.setStatus(-1L);
+			msg = dispatchService.update(em);
 		}
 		return msg+"";
 	}
