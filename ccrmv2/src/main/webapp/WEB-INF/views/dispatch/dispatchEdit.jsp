@@ -40,9 +40,13 @@
 						<input id="hid_pkid" name="pkid" type="hidden"/>
 				
 					<div class="form-group">
-						<label for="organid" class="col-sm-2 control-label"><font color="red">*</font>所属家庭服务业企业</label>
+						<label for="loginName" class="col-sm-2 control-label"><font color="red">*</font>所属家庭服务业企业</label>
 						<div class="input-group col-sm-5">
-							<input type="text" class="form-control" id="organid" name="organid" placeholder="请输入所属家庭服务业企业" value="${dispatch.organid}">
+							<select class="form-control select2" name="organid" placeholder="请选择家庭服务企业名称" >
+								<c:forEach items="${organList }" var="organ">
+									<option value='${organ.pkid }' <c:if test="${dispatch.organid eq organ.pkid }">selected="selected"</c:if>>${organ.name }</option>
+								</c:forEach>
+							</select> 
 						</div>
 					</div>
 					<div class="form-group">
@@ -72,7 +76,8 @@
 					<div class="form-group">
 						<label for="svritemid" class="col-sm-2 control-label">家庭服务行业项目分类</label>
 						<div class="input-group col-sm-5">
-							<input type="text" class="form-control" id="svritemid" name="svritemid" placeholder="请输入家庭服务行业项目分类" value="${dispatch.svritemid}">
+							<input type="text" class="form-control" id="branchName" placeholder="请选择家庭服务行业项目分类" value="${dispatch.svritemName}" onfocus="showBranchTree('#branchName'); return false;">
+							<input type="hidden" class="form-control" id="branchid" name="svritemid" value="${dispatch.svritemid}">
 						</div>
 					</div>
 					<div class="form-group">

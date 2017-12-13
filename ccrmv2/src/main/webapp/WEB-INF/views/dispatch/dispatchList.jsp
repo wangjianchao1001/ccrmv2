@@ -31,19 +31,33 @@
 				<div class="box-tools pull-right" var="agentUser" items="${agentUser}">
 					<form class="form-horizontal" role="form" id="searchForm" action="<%=request.getContextPath()%>/dispatch/dispatchList.html">
 						<div class="input-group input-group-sm" style="width:220px;display:inline-block">
-							<input type="text" class="form-control " id="branchName" name="branchName" placeholder="按所属机构查找" readonly value="${regOrgan.branchName }" onfocus="showBranchTree('#branchName'); return false;"/>
-							<input type="hidden" class="form-control " id="branchid" name="branchid" value="${regOrgan.branchid }"/>
-						</div>
-						<div class="input-group input-group-sm" style="width:180px;display:inline-block">
-							<select class="form-control selectpicker show-tick" name="valuecode01" >
-								<option value='' <c:if test="${regOrgan.valuecode01 == '' }">selected="selected"</c:if>>按机构分类查询</option>
-								<option value='2' <c:if test="${regOrgan.valuecode01 == 2 }">selected="selected"</c:if>>民办</option>
-								<option value='1' <c:if test="${regOrgan.valuecode01 == 1 }">selected="selected"</c:if>>公办</option>
+							<select class="form-control select2" name="organid" >
+								<c:forEach items="${organList }" var="organ">
+									<option value='${organ.pkid }' <c:if test="${dispatch.organid eq organ.pkid }">selected="selected"</c:if>>${organ.name }</option>
+								</c:forEach>
 							</select> 
 						</div>
 						<div style="display: inline-block">
-							<div class="input-group input-group-sm"	style="width: 180px;">
-								<input type="text" class="form-control input-sm" value="${regOrgan.phoneno }" name="phoneno" placeholder="按联系电话查询" />
+							<div class="input-group input-group-sm"	style="width: 140px;">
+								<input type="text" class="form-control input-sm" value="${dispatch.name }" name="name" placeholder="按姓名查询" />
+							</div>	
+						</div>
+						<div style="display: inline-block">
+							<div class="input-group input-group-sm"	style="width: 140px;">
+								<input type="text" class="form-control input-sm" value="${dispatch.phoneno }" name="phoneno" placeholder="按联系电话查询" />
+							</div>	
+						</div>
+						<div style="display: inline-block">
+							<div class="input-group input-group-sm"	style="width: 120px;">
+								<input type="text" class="form-control" id="dateentry1" name="dateentry1" placeholder="按入职时间查询" readonly 
+										onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-{%d-1}'})" value="${dateentry1}">
+							</div>	
+						</div>
+						至
+						<div style="display: inline-block">
+							<div class="input-group input-group-sm"	style="width: 120px;">
+								<input type="text" class="form-control" id="dateentry2" name="dateentry2" placeholder="按入职时间查询" readonly 
+										onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-{%d-1}'})" value="${dateentry2}">		
 								<div class="input-group-btn">
 									<button class="btn btn-sm btn-default" onclick="javascript:submitSearch();"> <i class="fa fa-search"></i> </button>
 								</div>

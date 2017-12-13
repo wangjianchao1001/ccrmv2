@@ -18,11 +18,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ccrm.dto.Pager;
 import com.ccrm.entity.HsrDispatchflow;
-import com.ccrm.entity.HsrEmployees;
 import com.ccrm.entity.RegOrganinfo;
+import com.ccrm.entity.SysDictionary;
 import com.ccrm.entity.UmgOperator;
 import com.ccrm.service.HsrDispatchflowService;
 import com.ccrm.service.RegOrganinfoService;
+import com.ccrm.service.SysDictionaryService;
 import com.ccrm.service.UmgBranchService;
 import com.ccrm.util.DateTimeUtils;
 
@@ -39,21 +40,24 @@ public class HKDispatchController {
 	HsrDispatchflowService dispatchService;
 	@Autowired
 	RegOrganinfoService regOrgService;
+	@Autowired
+	SysDictionaryService sysService;
+	
 	
 	@RequestMapping("dispatchList.html") 
-	public String famCopList(HsrDispatchflow em, String branchId, HttpServletRequest req, HttpServletResponse res, ModelMap model,Pager page){
+	public String famCopList(HsrDispatchflow dis, String branchId, HttpServletRequest req, HttpServletResponse res, ModelMap model,Pager page){
 		
 		//从session 取用户
 		UmgOperator user = (UmgOperator) req.getSession().getAttribute("umgOperator");
 		if(StringUtils.isBlank(branchId)){
 			branchId = user.getBranchid() == 100l ? "398" : String.valueOf(user.getBranchid());
 		}
-		if(em == null) em = new HsrDispatchflow();
-		if(em.getOrganid() == null){
-			em.setOrganid(user.getOrganid());
+		if(dis == null) dis = new HsrDispatchflow();
+		if(dis.getOrganid() == null){
+			dis.setOrganid(user.getOrganid());
 		}
-		em.setStatus(-1L);
-		Pager pager = dispatchService.findPageList(em, page.getPageNumber(), page.getPageSize());
+		dis.setStatus(-1L);
+		Pager pager = dispatchService.findPageList(dis, page.getPageNumber(), page.getPageSize());
 		
 		RegOrganinfo regOrgan =new RegOrganinfo();  
 		regOrgan.setStatus(-1);
@@ -63,8 +67,8 @@ public class HKDispatchController {
 
 		model.put("organList", oList);
 		model.put("pager", pager);
-		model.put("employee",em);
-		return "employee/employeeList";
+		model.put("dispatch",dis);
+		return "dispatch/dispatchList";
 	}
 	
 	
@@ -79,8 +83,12 @@ public class HKDispatchController {
 		Long branchId = user.getBranchid();
 		
 		if(StringUtils.isNotBlank(id)){
-			HsrDispatchflow em  = dispatchService.getById(Long.valueOf(id));
-			model.put("employ", em);
+			HsrDispatchflow dis  = dispatchService.getById(Long.valueOf(id));
+			
+			SysDictionary sys = sysService.getById(dis.getSvritemid());
+			dis.setSvritemName(sys.getName());
+			
+			model.put("employ", dis);
 		}
 		
 		if(!"view".equals(openType) && (branchId != null && branchId != 0)){
@@ -92,10 +100,15 @@ public class HKDispatchController {
 
 			model.put("organList", oList);
 		}
+		SysDictionary sys = new SysDictionary();
+		sys.setIdxid(80l);
+		List<SysDictionary> sysList = sysService.findList(sys);
+		String hkTypeTree = sysService.hkTypeTree(sysList);
 		
+		model.put("hktypeTree", hkTypeTree);
 		model.put("openType", openType);
 		
-		return "employee/employeeEdit";
+		return "dispatch/dispatchEdit";
 	}
 	
 	
@@ -103,20 +116,20 @@ public class HKDispatchController {
 	 * 保存
 	 */
 	@RequestMapping("save")
-	public String save(HsrDispatchflow em, HttpServletRequest req, HttpServletResponse res, ModelMap model, final RedirectAttributes redirectAttributes){
+	public String save(HsrDispatchflow dis, HttpServletRequest req, HttpServletResponse res, ModelMap model, final RedirectAttributes redirectAttributes){
 		String msg = "操作成功";
-		if(em.getPkid() == null ){
-			em.setPkid(Long.valueOf(DateTimeUtils.getDateTimeStr(new Date(), "yyyyMMddHHmmssms")));
-			dispatchService.save(em);
+		if(dis.getPkid() == null ){
+			dis.setPkid(Long.valueOf(DateTimeUtils.getDateTimeStr(new Date(), "yyyyMMddHHmmssms")));
+			dispatchService.save(dis);
 		}else{
-			dispatchService.update(em);
+			dispatchService.update(dis);
 		}
 		
-		redirectAttributes.addAttribute("organid", em.getOrganid());
-		redirectAttributes.addAttribute("name", em.getName());
-		redirectAttributes.addAttribute("idno", em.getIdno());
+		redirectAttributes.addAttribute("organid", dis.getOrganid());
+		redirectAttributes.addAttribute("name", dis.getName());
+		redirectAttributes.addAttribute("idno", dis.getIdno());
 		redirectAttributes.addFlashAttribute("message", msg);
-		return "redirect:/employee/employeeList.html";
+		return "redirect:/dispatch/dispatchList.html";
 	}
 	
 	
@@ -127,9 +140,9 @@ public class HKDispatchController {
 	public @ResponseBody String delete(String id, HttpServletRequest req, HttpServletResponse res, ModelMap model){
 		int msg = 0;
 		if(StringUtils.isNotBlank(id)){
-			HsrDispatchflow em = dispatchService.getById(Long.valueOf(id));
-			em.setStatus(-1L);
-			msg = dispatchService.update(em);
+			HsrDispatchflow dis = dispatchService.getById(Long.valueOf(id));
+			dis.setStatus(-1L);
+			msg = dispatchService.update(dis);
 		}
 		return msg+"";
 	}

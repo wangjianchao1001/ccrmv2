@@ -10,5 +10,8 @@ import com.ccrm.entity.SysDictionary;
 public interface SysDictionaryService extends BaseService<SysDictionary, Long> {
 
 	List<SysDictionary> getDicListByIdxids(String idxids);
+	
+	String hkTypeTree(List<SysDictionary> list);
+	
 
 }

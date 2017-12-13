@@ -137,6 +137,8 @@ public class HsrDispatchflow extends BaseEntity {
      * @字段:PKID NUMBER(20)  
      */	
 	private Long pkid;
+	
+	private String svritemName;
 	public HsrDispatchflow(){
 	}
 
@@ -300,4 +302,14 @@ public class HsrDispatchflow extends BaseEntity {
 	public Long getPkid() {
 		return this.pkid;
 	}
+
+	public String getSvritemName() {
+		return svritemName;
+	}
+
+	public void setSvritemName(String svritemName) {
+		this.svritemName = svritemName;
+	}
+	
+	
 }

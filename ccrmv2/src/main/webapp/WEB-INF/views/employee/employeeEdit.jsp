@@ -49,9 +49,6 @@
 								</c:forEach>
 							</select> 
 						</div>
-						<div class="input-group-btn">
-							<button class="btn btn-sm btn-default" onclick="javascript:search();"> <i class="fa fa-search"></i> </button>
-						</div>
 					</div>
 					<div class="form-group">
 						<label for="name" class="col-sm-2 control-label">员工姓名</label>

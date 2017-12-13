@@ -17,8 +17,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ccrm.dto.Pager;
 import com.ccrm.entity.HsrGeneralsurvey;
-import com.ccrm.entity.RegOrganinfo;
-import com.ccrm.entity.TirClass;
 import com.ccrm.entity.UmgBranch;
 import com.ccrm.entity.UmgOperator;
 import com.ccrm.service.HsrGeneralsurveyService;
