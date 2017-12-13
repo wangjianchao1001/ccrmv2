@@ -76,23 +76,20 @@ public class HKEmployeeController {
 		log.info("跳转页面，参数 studentId ："+id);
 		
 		UmgOperator user = (UmgOperator) req.getSession().getAttribute("umgOperator");
-		Long branchId = user.getBranchid();
+		Long branchId = user.getBranchid() == 100l ? 398l : user.getBranchid();
 		
 		if(StringUtils.isNotBlank(id)){
 			HsrEmployees em  = employeeService.getById(Long.valueOf(id));
 			model.put("employ", em);
 		}
 		
-		if(!"view".equals(openType) && (branchId != null && branchId != 0)){
-			RegOrganinfo regOrgan =new RegOrganinfo();  
-			regOrgan.setStatus(-1);
-			regOrgan.setType("HK");
-			regOrgan.setBranchid(branchId);
-			List<RegOrganinfo> oList = regOrgService.findList(regOrgan);
+		RegOrganinfo regOrgan =new RegOrganinfo();  
+		regOrgan.setStatus(-1);
+		regOrgan.setType("HK");
+		regOrgan.setBranchid(branchId);
+		List<RegOrganinfo> oList = regOrgService.findList(regOrgan);
 
-			model.put("organList", oList);
-		}
-		
+		model.put("organList", oList);
 		model.put("openType", openType);
 		
 		return "employee/employeeEdit";

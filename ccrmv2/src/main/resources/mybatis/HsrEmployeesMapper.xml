@@ -161,11 +161,17 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 				<if test="model.email != null and model.email !=''">
 					AND EMAIL = #{model.email}
 				</if>
+				<if test="model.dateentry1 != null and model.dateentry1 !=''">
+					AND to_date(DATEENTRY,'yyyy-MM-dd') <![CDATA[>=]]> to_date(#{model.dateentry1},'yyyy-MM-dd')
+				</if>
+				<if test="model.dateentry2 != null and model.dateentry2 !=''">
+					AND to_date(DATEENTRY,'yyyy-MM-dd') <![CDATA[<=]]> to_date(#{model.dateentry2},'yyyy-MM-dd')
+				</if>
 				<if test="model.dateentry != null and model.dateentry !=''">
-					AND DATEENTRY = #{model.dateentry}
+					AND to_date(DATEENTRY,'yyyy-MM-dd') = to_date(#{model.dateentry},'yyyy-MM-dd')
 				</if>
 				<if test="model.dateleave != null and model.dateleave !=''">
-					AND DATELEAVE = #{model.dateleave}
+					AND to_date(DATELEAVE,'yyyy-MM-dd') = to_date(#{model.dateleave},'yyyy-MM-dd')
 				</if>
 				<if test="model.traincontent != null and model.traincontent !=''">
 					AND TRAINCONTENT = #{model.traincontent}
@@ -198,50 +204,59 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	<!-- 按条件组合搜索列表 -->
 	<select id="findList" resultMap="RM_HsrEmployees">
 		SELECT
-		<include refid="columns" />
-		FROM HSR_EMPLOYEES
+		e.*,o.name as orgName
+		FROM HSR_EMPLOYEES e left join REG_ORGANINFO o on e.ORGANID = o.pkid 
 		<where>
 			<if test="organid != null">
-				AND ORGANID = #{organid}
+				AND e.ORGANID = #{organid}
 			</if>
 			<if test="name != null and name !=''">
-				AND NAME = #{name}
+				AND e.NAME = #{name}
 			</if>
 			<if test="idno != null and idno !=''">
-				AND IDNO = #{idno}
+				AND e.IDNO = #{idno}
 			</if>
 			<if test="phoneno != null and phoneno !=''">
-				AND PHONENO = #{phoneno}
+				AND e.PHONENO = #{phoneno}
 			</if>
 			<if test="email != null and email !=''">
-				AND EMAIL = #{email}
+				AND e.EMAIL = #{email}
 			</if>
 			<if test="dateentry != null and dateentry !=''">
-				AND DATEENTRY = #{dateentry}
+				AND to_date(e.DATEENTRY,'yyyy-MM-dd') = to_date(#{dateentry},'yyyy-MM-dd')
+			</if>
+			<if test="dateentry1 != null and dateentry1 !=''">
+				AND to_date(e.DATEENTRY,'yyyy-MM-dd') <![CDATA[>=]]> to_date(#{dateentry1},'yyyy-MM-dd')
+			</if>
+			<if test="dateentry2 != null and dateentry2 !=''">
+				AND to_date(e.DATEENTRY,'yyyy-MM-dd') <![CDATA[<=]]> to_date(#{dateentry2},'yyyy-MM-dd')
 			</if>
 			<if test="dateleave != null and dateleave !=''">
-				AND DATELEAVE = #{dateleave}
+				AND to_date(e.DATELEAVE = to_date(#{dateleave},'yyyy-MM-dd')
 			</if>
 			<if test="traincontent != null and traincontent !=''">
-				AND TRAINCONTENT = #{traincontent}
+				AND e.TRAINCONTENT = #{traincontent}
 			</if>
 			<if test="certificate != null and certificate !=''">
-				AND CERTIFICATE = #{certificate}
+				AND e.CERTIFICATE = #{certificate}
 			</if>
-			<if test="status != null">
-				AND STATUS = #{status}
+			<if test="status != null and status != -1">
+				AND e.STATUS = #{status}
+			</if>
+			<if test="status != null and status == -1">
+				AND e.STATUS <![CDATA[<>]]> #{status}
 			</if>
 			<if test="trainmemo != null and trainmemo !=''">
-				AND TRAINMEMO = #{trainmemo}
+				AND e.TRAINMEMO = #{trainmemo}
 			</if>
 			<if test="cermemo != null and cermemo !=''">
-				AND CERMEMO = #{cermemo}
+				AND e.CERMEMO = #{cermemo}
 			</if>
 			<if test="memo != null and memo !=''">
-				AND MEMO = #{memo}
+				AND e.MEMO = #{memo}
 			</if>
 			<if test="pkid != null">
-				AND PKID = #{pkid}
+				AND e.PKID = #{pkid}
 			</if>
 		</where>
 		<if test="sortColumns != null and sortColumns !=''">
@@ -274,16 +289,16 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 					AND e.EMAIL = #{model.email}
 				</if>
 				<if test="model.dateentry != null and model.dateentry !=''">
-					AND e.DATEENTRY = #{model.dateentry}
+					AND to_date(e.DATEENTRY,'yyyy-MM-dd') = to_date(#{model.dateentry},'yyyy-MM-dd')
 				</if>
 				<if test="model.dateentry1 != null and model.dateentry1 !=''">
-					AND e.DATEENTRY <![CDATA[>=]]> #{model.dateentry1}
+					AND to_date(e.DATEENTRY,'yyyy-MM-dd') <![CDATA[>=]]> to_date(#{model.dateentry1},'yyyy-MM-dd')
 				</if>
 				<if test="model.dateentry2 != null and model.dateentry2 !=''">
-					AND e.DATEENTRY <![CDATA[<=]]> #{model.dateentry2}
+					AND to_date(e.DATEENTRY,'yyyy-MM-dd') <![CDATA[<=]]> to_date(#{model.dateentry2},'yyyy-MM-dd')
 				</if>
 				<if test="model.dateleave != null and model.dateleave !=''">
-					AND e.DATELEAVE = #{model.dateleave}
+					AND to_date(e.DATELEAVE = to_date(#{model.dateleave},'yyyy-MM-dd')
 				</if>
 				<if test="model.traincontent != null and model.traincontent !=''">
 					AND e.TRAINCONTENT = #{model.traincontent}

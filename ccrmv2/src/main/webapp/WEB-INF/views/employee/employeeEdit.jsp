@@ -15,6 +15,7 @@
 <title></title>
 <meta name="decorator" content="mainframe" />
 <link rel="stylesheet" href="<%=request.getContextPath()%>/static/plugins/datepicker/skin/WdatePicker.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/static/plugins/bootstrap-select/select2/select2.min.css">
 <!--[if lt IE 9]>
 		<script src="js/html5.js"></script>	
 	<![endif]-->
@@ -42,12 +43,14 @@
 				
 					<div class="form-group">
 						<label for="loginName" class="col-sm-2 control-label"><font color="red">*</font>所属家庭服务业企业</label>
-						<div class="input-group col-sm-5">
-							<select class="form-control select2" name="organid" placeholder="请选择家庭服务企业名称" >
-								<c:forEach items="${organList }" var="organ">
-									<option value='${organ.pkid }' <c:if test="${employee.organid eq organ.pkid }">selected="selected"</c:if>>${organ.name }</option>
-								</c:forEach>
-							</select> 
+						<div style="display: inline-block">
+							<div style="width:530px;display:inline-block;position:relative;display:table;border-collapse:separate">
+								<select class="form-control select2" name="organid" style="width: 100%;" tabindex="-1" aria-hidden="true" >
+									<c:forEach items="${organList }" var="organ">
+										<option value='${organ.pkid }' <c:if test="${employ.organid eq organ.pkid }">selected="selected"</c:if>>${organ.name }</option>
+									</c:forEach>
+								</select> 
+							</div>
 						</div>
 					</div>
 					<div class="form-group">
@@ -116,10 +119,13 @@
 		</div>
 	</section>
 
-	<script type="text/javascript"
-		src="<%=request.getContextPath()%>/static/plugins/datepicker/WdatePicker.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/static/plugins/datepicker/WdatePicker.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/static/plugins/bootstrap-select/select2/select2.full.min.js"></script>
 	<script>
 		$(function(){
+			
+			$(".select2").select2();
+			
 			var validateRules = {
 			};
 			validateRules.loginName={

@@ -7,6 +7,7 @@
 <html lang="en">
 <head>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/static/plugins/datepicker/skin/WdatePicker.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/static/plugins/bootstrap-select/select2/select2.min.css">
 <meta name="decorator" content="mainframe" />
 <title>家政企业员工管理</title>
 </head>
@@ -28,12 +29,14 @@
 				</shiro:hasPermission>
 				<div class="box-tools pull-right" var="agentUser" items="${agentUser}">
 					<form class="form-horizontal" role="form" id="searchForm" action="<%=request.getContextPath()%>/employee/employeeList.html">
-						<div class="input-group input-group-sm" style="width:220px;display:inline-block">
-							<select class="form-control select2" name="organid" >
-								<c:forEach items="${organList }" var="organ">
-									<option value='${organ.pkid }' <c:if test="${employee.organid eq organ.pkid }">selected="selected"</c:if>>${organ.name }</option>
-								</c:forEach>
-							</select> 
+						<div style="display: inline-block">
+							<div style="width:220px;display:inline-block;position:relative;display:table;border-collapse:separate">
+								<select class="form-control select2" name="organid" style="width: 100%;" tabindex="-1" aria-hidden="true" >
+									<c:forEach items="${organList }" var="organ">
+										<option value='${organ.pkid }' <c:if test="${employee.organid eq organ.pkid }">selected="selected"</c:if>>${organ.name }</option>
+									</c:forEach>
+								</select> 
+							</div>
 						</div>
 						<div style="display: inline-block">
 							<div class="input-group input-group-sm"	style="width: 140px;">
@@ -48,14 +51,14 @@
 						<div style="display: inline-block">
 							<div class="input-group input-group-sm"	style="width: 120px;">
 								<input type="text" class="form-control" id="dateentry1" name="dateentry1" placeholder="按入职时间查询" readonly 
-										onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-{%d-1}'})" value="${dateentry1}">
+										onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-{%d-1}'})" value="${employee.dateentry1}">
 							</div>	
 						</div>
 						至
 						<div style="display: inline-block">
 							<div class="input-group input-group-sm"	style="width: 120px;">
 								<input type="text" class="form-control" id="dateentry2" name="dateentry2" placeholder="按入职时间查询" readonly 
-										onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-{%d-1}'})" value="${dateentry2}">		
+										onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-{%d-1}'})" value="${employee.dateentry2}">		
 								<div class="input-group-btn">
 									<button class="btn btn-sm btn-default" onclick="javascript:submitSearch();"> <i class="fa fa-search"></i> </button>
 								</div>
@@ -137,7 +140,7 @@
 	<script type="text/javascript" src="<%=request.getContextPath()%>/static/plugins/jquery/pager/jquery.pager.bootstrap.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/static/plugins/jquery/pager/pager.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/static/plugins/datepicker/WdatePicker.js"></script>
-	
+	<script type="text/javascript" src="<%=request.getContextPath()%>/static/plugins/bootstrap-select/select2/select2.full.min.js"></script>
 	<script>
 		var path = "<%=request.getContextPath()%>";
 		var totalPages = ${pager.totalPages};	
@@ -155,6 +158,8 @@
 				}
 			};
 		$(document).ready(function() {
+			
+			$(".select2").select2();
 			
 			$("#add").bind('click',function(){
 				window.location.href =path + "/employee/edit.html?openType=add";
