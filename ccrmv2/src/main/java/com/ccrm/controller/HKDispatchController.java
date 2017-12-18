@@ -80,7 +80,7 @@ public class HKDispatchController {
 		log.info("跳转页面，参数 studentId ："+id);
 		
 		UmgOperator user = (UmgOperator) req.getSession().getAttribute("umgOperator");
-		Long branchId = user.getBranchid();
+		Long branchId = user.getBranchid() == 100l ? 398l : user.getBranchid();
 		
 		if(StringUtils.isNotBlank(id)){
 			HsrDispatchflow dis  = dispatchService.getById(Long.valueOf(id));
@@ -88,7 +88,7 @@ public class HKDispatchController {
 			SysDictionary sys = sysService.getById(dis.getSvritemid());
 			dis.setSvritemName(sys.getName());
 			
-			model.put("employ", dis);
+			model.put("dispatch", dis);
 		}
 		
 		if(!"view".equals(openType) && (branchId != null && branchId != 0)){

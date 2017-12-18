@@ -241,101 +241,107 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	<!-- 获取总数 -->
 	<select id="getTotalCount" resultType="int">
 		SELECT COUNT(1)
-		FROM HSR_TRIINSTITUTION
+		FROM HSR_TRIINSTITUTION o
 		<where>
 			<if test="model != null">
 						<if test="model.pkid != null">
-							AND PKID = #{model.pkid}
+							AND o.PKID = #{model.pkid}
 						</if>
 						<if test="model.type != null and model.type !=''">
-							AND TYPE = #{model.type}
+							AND o.TYPE = #{model.type}
 						</if>
 						<if test="model.organid != null and model.organid !=''">
-							AND ORGANID = #{model.organid}
+							AND o.ORGANID = #{model.organid}
 						</if>
 						<if test="model.branchid != null and model.branchid !=''">
-							AND BRANCHID = #{model.branchid}
+							AND (o.branchid in (
+							SELECT pkid FROM umg_branch u
+							WHERE u.status = 1
+							START WITH pkid=#{model.branchid}
+							CONNECT BY PRIOR u.pkid = u.ppkid
+							) or o.pkid = #{model.branchid}
+							)
 						</if>
 						<if test="model.corpperson != null and model.corpperson !=''">
-							AND CORPPERSON = #{model.corpperson}
+							AND o.CORPPERSON = #{model.corpperson}
 						</if>
 						<if test="model.corpcode != null and model.corpcode !=''">
-							AND CORPCODE = #{model.corpcode}
+							AND o.CORPCODE = #{model.corpcode}
 						</if>
 						<if test="model.corpphone != null and model.corpphone !=''">
-							AND CORPPHONE = #{model.corpphone}
+							AND o.CORPPHONE = #{model.corpphone}
 						</if>
 						<if test="model.contactname != null and model.contactname !=''">
-							AND CONTACTNAME = #{model.contactname}
+							AND o.CONTACTNAME = #{model.contactname}
 						</if>
 						<if test="model.contactphone != null and model.contactphone !=''">
-							AND CONTACTPHONE = #{model.contactphone}
+							AND o.CONTACTPHONE = #{model.contactphone}
 						</if>
 						<if test="model.established != null">
-							AND ESTABLISHED = #{model.established}
-						</if> 
+							AND o.ESTABLISHED = #{model.established}
+						</if>
 						<if test="model.professioname != null and model.professioname !=''">
-							AND PROFESSIONAME = #{model.professioname}
+							AND o.PROFESSIONAME = #{model.professioname}
 						</if>
 						<if test="model.relationshipenterprise != null and model.relationshipenterprise !=''">
-							AND RELATIONSHIPENTERPRISE = #{model.relationshipenterprise}
+							AND o.RELATIONSHIPENTERPRISE = #{model.relationshipenterprise}
 						</if>
 						<if test="model.relationshipdomenterpris != null and model.relationshipdomenterpris !=''">
-							AND RELATIONSHIPDOMENTERPRIS = #{model.relationshipdomenterpris}
+							AND o.RELATIONSHIPDOMENTERPRIS = #{model.relationshipdomenterpris}
 						</if>
 						<if test="model.teacher != null">
-							AND TEACHER = #{model.teacher}
+							AND o.TEACHER = #{model.teacher}
 						</if>
 						<if test="model.fulltimeteacher != null">
-							AND FULLTIMETEACHER = #{model.fulltimeteacher}
+							AND o.FULLTIMETEACHER = #{model.fulltimeteacher}
 						</if>
 						<if test="model.parttimeteacher != null">
-							AND PARTTIMETEACHER = #{model.parttimeteacher}
+							AND o.PARTTIMETEACHER = #{model.parttimeteacher}
 						</if>
 						<if test="model.seniortitleteacher != null">
-							AND SENIORTITLETEACHER = #{model.seniortitleteacher}
+							AND o.SENIORTITLETEACHER = #{model.seniortitleteacher}
 						</if>
 						<if test="model.graduate != null">
-							AND GRADUATE = #{model.graduate}
+							AND o.GRADUATE = #{model.graduate}
 						</if>
 						<if test="model.thridentify != null">
-							AND THRIDENTIFY = #{model.thridentify}
+							AND o.THRIDENTIFY = #{model.thridentify}
 						</if>
 						<if test="model.yearemployment != null">
-							AND YEAREMPLOYMENT = #{model.yearemployment}
+							AND o.YEAREMPLOYMENT = #{model.yearemployment}
 						</if>
 						<if test="model.passtraining != null">
-							AND PASSTRAINING = #{model.passtraining}
+							AND o.PASSTRAINING = #{model.passtraining}
 						</if>
 						<if test="model.trainingplace != null and model.trainingplace !=''">
-							AND TRAININGPLACE = #{model.trainingplace}
+							AND o.TRAININGPLACE = #{model.trainingplace}
 						</if>
 						<if test="model.employeetraining != null">
-							AND EMPLOYEETRAINING = #{model.employeetraining}
+							AND o.EMPLOYEETRAINING = #{model.employeetraining}
 						</if>
 						<if test="model.memo != null and model.memo !=''">
-							AND MEMO = #{model.memo}
+							AND o.MEMO = #{model.memo}
 						</if>
 						<if test="model.addtime != null">
-							AND ADDTIME = #{model.addtime}
-						</if> 
+							AND o.ADDTIME = #{model.addtime}
+						</if>
 						<if test="model.updatetime != null">
-							AND UPDATETIME = #{model.updatetime}
-						</if> 
+							AND o.UPDATETIME = #{model.updatetime}
+						</if>
 						<if test="model.ylhlTeacher != null">
-							AND YLHL_TEACHER = #{model.ylhlTeacher}
+							AND o.YLHL_TEACHER = #{model.ylhlTeacher}
 						</if>
 						<if test="model.bhphTeacher != null">
-							AND BHPH_TEACHER = #{model.bhphTeacher}
+							AND o.BHPH_TEACHER = #{model.bhphTeacher}
 						</if>
 						<if test="model.sqzlTeacher != null">
-							AND SQZL_TEACHER = #{model.sqzlTeacher}
+							AND o.SQZL_TEACHER = #{model.sqzlTeacher}
 						</if>
 						<if test="model.qtytTeacher != null">
-							AND QTYT_TEACHER = #{model.qtytTeacher}
+							AND o.QTYT_TEACHER = #{model.qtytTeacher}
 						</if>
 						<if test="model.jzfwTeacher != null">
-							AND JZFW_TEACHER = #{model.jzfwTeacher}
+							AND o.JZFW_TEACHER = #{model.jzfwTeacher}
 						</if>
 			</if>
 		</where>
@@ -448,112 +454,130 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 
 	<!-- 分页 -->
 	<select id="findPageList" resultMap="RM_HsrTriinstitution">
-		SELECT <include refid="columns" />
-		FROM HSR_TRIINSTITUTION
+		select * from (
+		select t.*, rownum rn from(
+		SELECT b.name as branchName , o.*
+		FROM HSR_TRIINSTITUTION o left join umg_branch b on o.BRANCHID = b.pkid
 		<where>
 			<if test="model != null">
 						<if test="model.pkid != null">
-							AND PKID = #{model.pkid}
+							AND o.PKID = #{model.pkid}
 						</if>
 						<if test="model.type != null and model.type !=''">
-							AND TYPE = #{model.type}
+							AND o.TYPE = #{model.type}
 						</if>
 						<if test="model.organid != null and model.organid !=''">
-							AND ORGANID = #{model.organid}
+							AND o.ORGANID = #{model.organid}
 						</if>
 						<if test="model.branchid != null and model.branchid !=''">
-							AND BRANCHID = #{model.branchid}
+							AND (o.branchid in (
+							SELECT pkid FROM umg_branch u
+							WHERE u.status = 1
+							START WITH pkid=#{model.branchid}
+							CONNECT BY PRIOR u.pkid = u.ppkid
+							) or o.pkid = #{model.branchid}
+							)
 						</if>
 						<if test="model.corpperson != null and model.corpperson !=''">
-							AND CORPPERSON = #{model.corpperson}
+							AND o.CORPPERSON = #{model.corpperson}
 						</if>
 						<if test="model.corpcode != null and model.corpcode !=''">
-							AND CORPCODE = #{model.corpcode}
+							AND o.CORPCODE = #{model.corpcode}
 						</if>
 						<if test="model.corpphone != null and model.corpphone !=''">
-							AND CORPPHONE = #{model.corpphone}
+							AND o.CORPPHONE = #{model.corpphone}
 						</if>
 						<if test="model.contactname != null and model.contactname !=''">
-							AND CONTACTNAME = #{model.contactname}
+							AND o.CONTACTNAME = #{model.contactname}
 						</if>
 						<if test="model.contactphone != null and model.contactphone !=''">
-							AND CONTACTPHONE = #{model.contactphone}
+							AND o.CONTACTPHONE = #{model.contactphone}
 						</if>
 						<if test="model.established != null">
-							AND ESTABLISHED = #{model.established}
+							AND o.ESTABLISHED = #{model.established}
 						</if>
 						<if test="model.professioname != null and model.professioname !=''">
-							AND PROFESSIONAME = #{model.professioname}
+							AND o.PROFESSIONAME = #{model.professioname}
 						</if>
 						<if test="model.relationshipenterprise != null and model.relationshipenterprise !=''">
-							AND RELATIONSHIPENTERPRISE = #{model.relationshipenterprise}
+							AND o.RELATIONSHIPENTERPRISE = #{model.relationshipenterprise}
 						</if>
 						<if test="model.relationshipdomenterpris != null and model.relationshipdomenterpris !=''">
-							AND RELATIONSHIPDOMENTERPRIS = #{model.relationshipdomenterpris}
+							AND o.RELATIONSHIPDOMENTERPRIS = #{model.relationshipdomenterpris}
 						</if>
 						<if test="model.teacher != null">
-							AND TEACHER = #{model.teacher}
+							AND o.TEACHER = #{model.teacher}
 						</if>
 						<if test="model.fulltimeteacher != null">
-							AND FULLTIMETEACHER = #{model.fulltimeteacher}
+							AND o.FULLTIMETEACHER = #{model.fulltimeteacher}
 						</if>
 						<if test="model.parttimeteacher != null">
-							AND PARTTIMETEACHER = #{model.parttimeteacher}
+							AND o.PARTTIMETEACHER = #{model.parttimeteacher}
 						</if>
 						<if test="model.seniortitleteacher != null">
-							AND SENIORTITLETEACHER = #{model.seniortitleteacher}
+							AND o.SENIORTITLETEACHER = #{model.seniortitleteacher}
 						</if>
 						<if test="model.graduate != null">
-							AND GRADUATE = #{model.graduate}
+							AND o.GRADUATE = #{model.graduate}
 						</if>
 						<if test="model.thridentify != null">
-							AND THRIDENTIFY = #{model.thridentify}
+							AND o.THRIDENTIFY = #{model.thridentify}
 						</if>
 						<if test="model.yearemployment != null">
-							AND YEAREMPLOYMENT = #{model.yearemployment}
+							AND o.YEAREMPLOYMENT = #{model.yearemployment}
 						</if>
 						<if test="model.passtraining != null">
-							AND PASSTRAINING = #{model.passtraining}
+							AND o.PASSTRAINING = #{model.passtraining}
 						</if>
 						<if test="model.trainingplace != null and model.trainingplace !=''">
-							AND TRAININGPLACE = #{model.trainingplace}
+							AND o.TRAININGPLACE = #{model.trainingplace}
 						</if>
 						<if test="model.employeetraining != null">
-							AND EMPLOYEETRAINING = #{model.employeetraining}
+							AND o.EMPLOYEETRAINING = #{model.employeetraining}
 						</if>
 						<if test="model.memo != null and model.memo !=''">
-							AND MEMO = #{model.memo}
+							AND o.MEMO = #{model.memo}
 						</if>
 						<if test="model.addtime != null">
-							AND ADDTIME = #{model.addtime}
+							AND o.ADDTIME = #{model.addtime}
 						</if>
 						<if test="model.updatetime != null">
-							AND UPDATETIME = #{model.updatetime}
+							AND o.UPDATETIME = #{model.updatetime}
 						</if>
 						<if test="model.ylhlTeacher != null">
-							AND YLHL_TEACHER = #{model.ylhlTeacher}
+							AND o.YLHL_TEACHER = #{model.ylhlTeacher}
 						</if>
 						<if test="model.bhphTeacher != null">
-							AND BHPH_TEACHER = #{model.bhphTeacher}
+							AND o.BHPH_TEACHER = #{model.bhphTeacher}
 						</if>
 						<if test="model.sqzlTeacher != null">
-							AND SQZL_TEACHER = #{model.sqzlTeacher}
+							AND o.SQZL_TEACHER = #{model.sqzlTeacher}
 						</if>
 						<if test="model.qtytTeacher != null">
-							AND QTYT_TEACHER = #{model.qtytTeacher}
+							AND o.QTYT_TEACHER = #{model.qtytTeacher}
 						</if>
 						<if test="model.jzfwTeacher != null">
-							AND JZFW_TEACHER = #{model.jzfwTeacher}
+							AND o.JZFW_TEACHER = #{model.jzfwTeacher}
 						</if>
 			</if>
 		</where>
-		limit 
+		)t)
+		where rn between
 		<choose>
 			<when test="pager != null">
-				#{pager.begin},#{pager.pageSize}
+				#{pager.begin}
 			</when>
 			<otherwise>
-				0,10
+				0
+			</otherwise>
+		</choose>
+		and
+		<choose>
+			<when test="pager != null">
+				#{pager.end}
+			</when>
+			<otherwise>
+				20
 			</otherwise>
 		</choose>
 	</select>

@@ -44,14 +44,15 @@ public class HKTirInstController {
 		
 		//从session 取用户
 		UmgOperator user = (UmgOperator) req.getSession().getAttribute("umgOperator");
+		String branchId = 100l ==user.getBranchid() ? "398" : String.valueOf(user.getBranchid());
 		if(StringUtils.isBlank(hkTirInst.getBranchid())){
-			hkTirInst.setBranchid(user.getBranchid()+"");
+			hkTirInst.setBranchid(branchId);
 		}
 		
 		Pager pager = hkTriService.findPageList(hkTirInst, page.getPageNumber(), page.getPageSize());
 		
-		List<UmgBranch> branchList = umgBranchService.getBranchTree("2200",String.valueOf(user.getBranchid())); 
-		String branchTree = umgBranchService.umgBranchTree(branchList); 
+		List<UmgBranch> branchList = umgBranchService.getBranchTree("2200",branchId); 
+		String branchTree = umgBranchService.umgBranchTree(branchList);  
 		
 		model.put("pager", pager);
 		model.put("branchTree", branchTree);

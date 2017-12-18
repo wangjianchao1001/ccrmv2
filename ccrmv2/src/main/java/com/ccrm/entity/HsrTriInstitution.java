@@ -192,6 +192,7 @@ public class HsrTriInstitution extends BaseEntity {
      */	
 	private java.lang.Long jzfwTeacher;
 
+	private String branchName;
 	public HsrTriInstitution(
 	){
 	}
@@ -416,4 +417,13 @@ public class HsrTriInstitution extends BaseEntity {
 	public java.lang.Long getJzfwTeacher() {
 		return this.jzfwTeacher;
 	}
+
+	public String getBranchName() {
+		return branchName;
+	}
+
+	public void setBranchName(String branchName) {
+		this.branchName = branchName;
+	}
+	
 }

@@ -141,6 +141,8 @@
 									</shiro:hasPermission>
 									<br />
 									<a href="#" onclick="getEmployee(this)">查看员工</a>&nbsp;&nbsp;
+									<br />
+									<a href="#" onclick="getDispatch(this)">查看派遣</a>&nbsp;&nbsp;
 								</td>
 							</tr>
 						</c:forEach>
@@ -244,6 +246,14 @@
 			var orgName = $(nowTr).parent().parent().find("input[name=orgName]").val();
 			var tabUrl = path + "/employee/employeeList.html?organid="+pkid+"&orgName="+orgName;
 			window.parent.parent.openTab('1018','员工管理',tabUrl);
+
+		};
+		
+		function getDispatch(nowTr){
+			var pkid = $(nowTr).parent().parent().find("input[name=pkid]").val();
+			var orgName = $(nowTr).parent().parent().find("input[name=orgName]").val();
+			var tabUrl = path + "/dispatch/dispatchList.html?organid="+pkid+"&orgName="+orgName;
+			window.parent.parent.openTab('1019','派遣管理',tabUrl);
 
 		};
 		

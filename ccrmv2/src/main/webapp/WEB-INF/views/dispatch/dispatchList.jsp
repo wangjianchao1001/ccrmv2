@@ -5,10 +5,7 @@
 <html lang="en">
 <head>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/static/plugins/datepicker/skin/WdatePicker.css">
-<script type="text/javascript" src="<%=request.getContextPath()%>/static/ztree/js/jquery.ztree.core-3.5.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/static/ztree/js/callZtree.js"></script>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/static/ztree/css/demo.css" />	
-<link rel="stylesheet" href="<%=request.getContextPath()%>/static/ztree/css/zTreeStyle/zTreeStyle.css" />	
+<link rel="stylesheet" href="<%=request.getContextPath()%>/static/plugins/bootstrap-select/select2/select2.min.css">
 <meta name="decorator" content="mainframe" />
 <title>家政企业派遣管理</title>
 </head>
@@ -30,34 +27,46 @@
 				</shiro:hasPermission>
 				<div class="box-tools pull-right" var="agentUser" items="${agentUser}">
 					<form class="form-horizontal" role="form" id="searchForm" action="<%=request.getContextPath()%>/dispatch/dispatchList.html">
-						<div class="input-group input-group-sm" style="width:220px;display:inline-block">
-							<select class="form-control select2" name="organid" >
-								<c:forEach items="${organList }" var="organ">
-									<option value='${organ.pkid }' <c:if test="${dispatch.organid eq organ.pkid }">selected="selected"</c:if>>${organ.name }</option>
-								</c:forEach>
-							</select> 
+						<div style="display: inline-block">
+							<div style="width:200px;display:inline-block;position:relative;display:table;border-collapse:separate">
+								<select class="form-control select2" name="organid" style="width: 100%;" tabindex="-1" aria-hidden="true" >
+									<c:forEach items="${organList }" var="organ">
+										<option value='${organ.pkid }' <c:if test="${dispatch.organid eq organ.pkid }">selected="selected"</c:if>>${organ.name }</option>
+									</c:forEach>
+								</select> 
+							</div>
 						</div>
 						<div style="display: inline-block">
-							<div class="input-group input-group-sm"	style="width: 140px;">
-								<input type="text" class="form-control input-sm" value="${dispatch.name }" name="name" placeholder="按姓名查询" />
+							<div class="input-group input-group-sm"	style="width: 85px;">
+								<input type="text" class="form-control input-sm" value="${employee.name }" name="name" placeholder="按姓名查询" />
 							</div>	
 						</div>
 						<div style="display: inline-block">
-							<div class="input-group input-group-sm"	style="width: 140px;">
-								<input type="text" class="form-control input-sm" value="${dispatch.phoneno }" name="phoneno" placeholder="按联系电话查询" />
+							<div class="input-group input-group-sm"	style="width: 92px;">
+								<input type="text" class="form-control input-sm" value="${employee.phoneno }" name="phoneno" placeholder="按联系电话查询" />
 							</div>	
 						</div>
 						<div style="display: inline-block">
-							<div class="input-group input-group-sm"	style="width: 120px;">
-								<input type="text" class="form-control" id="dateentry1" name="dateentry1" placeholder="按入职时间查询" readonly 
-										onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-{%d-1}'})" value="${dateentry1}">
+							<div class="input-group input-group-sm"	style="width: 92px;">
+								<input type="text" class="form-control input-sm" value="${employee.name }" name="name" placeholder="按雇主姓名查询" />
+							</div>	
+						</div>
+						<div style="display: inline-block">
+							<div class="input-group input-group-sm"	style="width: 92px;">
+								<input type="text" class="form-control input-sm" value="${employee.phoneno }" name="phoneno" placeholder="按雇主联系电话查询" />
+							</div>	
+						</div>
+						<div style="display: inline-block">
+							<div class="input-group input-group-sm"	style="width: 110px;">
+								<input type="text" class="form-control" id="dateentry1" name="dateentry1" placeholder="按推荐时间查询" readonly 
+										onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-{%d-1}'})" value="${employee.dateentry1}">
 							</div>	
 						</div>
 						至
 						<div style="display: inline-block">
-							<div class="input-group input-group-sm"	style="width: 120px;">
-								<input type="text" class="form-control" id="dateentry2" name="dateentry2" placeholder="按入职时间查询" readonly 
-										onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-{%d-1}'})" value="${dateentry2}">		
+							<div class="input-group input-group-sm"	style="width: 140px;">
+								<input type="text" class="form-control" id="dateentry2" name="dateentry2" placeholder="按推荐时间查询" readonly 
+										onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'%y-%M-{%d-1}'})" value="${employee.dateentry2}">		
 								<div class="input-group-btn">
 									<button class="btn btn-sm btn-default" onclick="javascript:submitSearch();"> <i class="fa fa-search"></i> </button>
 								</div>
@@ -124,6 +133,9 @@
 									<shiro:hasPermission name="10010600">
 										<a href="#"onclick="addorUpdate(this)">修改</a>&nbsp;&nbsp;
 									</shiro:hasPermission>
+									<shiro:hasPermission name="10010600">
+										<a href="#"onclick="addorUpdate(this,'view')">查看</a>&nbsp;&nbsp;
+									</shiro:hasPermission>
 									<shiro:hasPermission name="10010200">
 										<a href="#" onclick="delteTirOrg(this)">删除</a>&nbsp;&nbsp;
 									</shiro:hasPermission>
@@ -142,20 +154,17 @@
 					</div>
 			</div>
 		</div>
-		<div id="menuContent" class="menuContent" style="display:none; position: absolute;">
-			<ul id="treeDemo" class="ztree" style="margin-top:0; width:220px;"></ul>
-		</div>
 	</section>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/static/plugins/jquery/pager/jquery.pager.bootstrap.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/static/plugins/jquery/pager/pager.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/static/plugins/datepicker/WdatePicker.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/static/plugins/bootstrap-select/select2/select2.full.min.js"></script>
 	
 	<script>
 		var path = "<%=request.getContextPath()%>";
 		var totalPages = ${pager.totalPages};	
 		var pageNumber = ${pager.pageNumber};	
 		var pageSize = ${pager.pageSize};
-		var branchTree = ${branchTree };
 		var setting = {
 				view: {
 					dblClickExpand: false
@@ -169,8 +178,7 @@
 			};
 		$(document).ready(function() {
 			
-			//机构数
-			$.fn.zTree.init($("#treeDemo"), setting, branchTree);
+			$(".select2").select2();			
 			
 			$("#add").bind('click',function(){
 				window.location.href ="<%=request.getContextPath()%>/dispatch/edit.html";
@@ -214,9 +222,9 @@
 				okText : "删除",
 			});
 		};
-		function addorUpdate(nowTr){
+		function addorUpdate(nowTr,openType){
 			var pkid = $(nowTr).parent().parent().find("input[name=pkid]").val();
-			window.location.href = path + "/dispatch/edit.html?id="+pkid;
+			window.location.href = path + "/dispatch/edit.html?id="+pkid+"&openType="+openType;
 		}; 
 		
 		

@@ -15,6 +15,11 @@
 <title></title>
 <meta name="decorator" content="mainframe" />
 <link rel="stylesheet" href="<%=request.getContextPath()%>/static/plugins/datepicker/skin/WdatePicker.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/static/plugins/bootstrap-select/select2/select2.min.css">
+<script type="text/javascript" src="<%=request.getContextPath()%>/static/ztree/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/static/ztree/js/callZtree.js"></script>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/static/ztree/css/demo.css" />	
+<link rel="stylesheet" href="<%=request.getContextPath()%>/static/ztree/css/zTreeStyle/zTreeStyle.css" />
 <!--[if lt IE 9]>
 		<script src="js/html5.js"></script>	
 	<![endif]-->
@@ -23,30 +28,32 @@
 	<!-- Content Header (Page header) -->
 	<section class="content-header">
 		<h1>
-			派遣管理 <small>派遣人员修改</small>
+			派遣管理 <small>派遣人员新增/修改</small>
 		</h1>
 		<ol class="breadcrumb">
 			<li><a href="#"><i class="fa fa-dashboard"></i>派遣人员列表</a></li>
-			<li><a href="#"><i class="fa"></i>派遣人员修改</a></li>
+			<li><a href="#"><i class="fa"></i>派遣人员新增/修改</a></li>
 			<!-- <li class="active">Here</li> -->
 		</ol>
 	</section>
 	<!-- Main content -->
 	<section class="content">
 		<div class="box box-solid box-default">
-			<div class="box-header">派遣人员列表</div>
+			<div class="box-header">派遣人员新增/修改</div>
 			<div class="box-body">
-				<form class="form-horizontal" role="form" id="mgtuserForm" method="post" action="<%=path%>/dispatch/save}">
+				<form class="form-horizontal" role="form" id="mgtuserForm" method="post" action="<%=path%>/dispatch/save">
 						<input id="hid_pkid" name="pkid" type="hidden"/>
 				
 					<div class="form-group">
 						<label for="loginName" class="col-sm-2 control-label"><font color="red">*</font>所属家庭服务业企业</label>
-						<div class="input-group col-sm-5">
-							<select class="form-control select2" name="organid" placeholder="请选择家庭服务企业名称" >
-								<c:forEach items="${organList }" var="organ">
-									<option value='${organ.pkid }' <c:if test="${dispatch.organid eq organ.pkid }">selected="selected"</c:if>>${organ.name }</option>
-								</c:forEach>
-							</select> 
+						<div style="display: inline-block">
+							<div style="width:485px;display:inline-block;position:relative;display:table;border-collapse:separate">
+								<select class="form-control select2" name="organid" style="width: 100%;" tabindex="-1" aria-hidden="true" >
+									<c:forEach items="${organList }" var="organ">
+										<option value='${organ.pkid }' <c:if test="${dispatch.organid eq organ.pkid }">selected="selected"</c:if>>${organ.name }</option>
+									</c:forEach>
+								</select> 
+							</div>
 						</div>
 					</div>
 					<div class="form-group">
@@ -76,7 +83,12 @@
 					<div class="form-group">
 						<label for="svritemid" class="col-sm-2 control-label">家庭服务行业项目分类</label>
 						<div class="input-group col-sm-5">
-							<input type="text" class="form-control" id="branchName" placeholder="请选择家庭服务行业项目分类" value="${dispatch.svritemName}" onfocus="showBranchTree('#branchName'); return false;">
+							<c:if test="${openType eq 'view' }">
+								<input type="text" class="form-control" id="" placeholder="请选择家庭服务行业项目分类" value="${dispatch.svritemName}">
+							</c:if>
+							<c:if test="${openType != 'view' }">
+								<input type="text" class="form-control" id="branchName" placeholder="请选择家庭服务行业项目分类" value="${dispatch.svritemName}" onfocus="showBranchTree('#branchName'); return false;">
+							</c:if>
 							<input type="hidden" class="form-control" id="branchid" name="svritemid" value="${dispatch.svritemid}">
 						</div>
 					</div>
@@ -138,19 +150,40 @@
 					</div>
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
-							<button type="submit" class="btn btn-primary">提交</button>
+							<c:if test="${openType != 'view' }">
+								<button type="submit" class="btn btn-primary">提交</button>
+							</c:if>
 							<input type="button" class="btn btn-default" id="back" name="back" onclick="javascript:window.history.go(-1);" value="返回" />
 						</div>
 					</div>
 				</form>
 			</div>
 		</div>
+		<div id="menuContent" class="menuContent" style="display:none; position: absolute;">
+			<ul id="treeDemo" class="ztree" style="margin-top:0; width:220px;"></ul>
+		</div>
 	</section>
 
-	<script type="text/javascript"
-		src="<%=request.getContextPath()%>/static/plugins/datepicker/WdatePicker.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/static/plugins/datepicker/WdatePicker.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/static/plugins/bootstrap-select/select2/select2.full.min.js"></script>
 	<script>
+		var hktypeTree = ${hktypeTree };
+		var setting = {
+				view: {
+					dblClickExpand: false
+				},data: {
+					simpleData: {
+						enable: true
+					}
+				},callback: {
+					onClick : onclick
+				}
+			};
+	
 		$(function(){
+			$(".select2").select2();
+			$.fn.zTree.init($("#treeDemo"), setting, hktypeTree);
+			
 			var validateRules = {
 			};
 			validateRules.loginName={

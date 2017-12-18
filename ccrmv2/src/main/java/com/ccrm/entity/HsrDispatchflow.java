@@ -138,6 +138,8 @@ public class HsrDispatchflow extends BaseEntity {
      */	
 	private Long pkid;
 	
+	private String orgName;
+	
 	private String svritemName;
 	public HsrDispatchflow(){
 	}
@@ -309,6 +311,14 @@ public class HsrDispatchflow extends BaseEntity {
 
 	public void setSvritemName(String svritemName) {
 		this.svritemName = svritemName;
+	}
+
+	public String getOrgName() {
+		return orgName;
+	}
+
+	public void setOrgName(String orgName) {
+		this.orgName = orgName;
 	}
 	
 	

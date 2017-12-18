@@ -21,7 +21,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	<!-- 用于select查询公用抽取的列 -->
 	<sql id="columns">
 	    <![CDATA[
-		IDXID,SEQNO,CODEID,NAME,SNAME,STATUS,DATENEW,DATEEDIT,MEMO,PKID
+		IDXID,SEQNO,CODEID,NAME,SNAME,STATUS,DATENEW,DATEEDIT,MEMO,PKID,PPKID
 	    ]]>
 	</sql>
 

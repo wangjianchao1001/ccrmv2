@@ -133,9 +133,6 @@
 					</div>
 			</div>
 		</div>
-		<div id="menuContent" class="menuContent" style="display:none; position: absolute;">
-			<ul id="treeDemo" class="ztree" style="margin-top:0; width:220px;"></ul>
-		</div>
 	</section>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/static/plugins/jquery/pager/jquery.pager.bootstrap.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/static/plugins/jquery/pager/pager.js"></script>

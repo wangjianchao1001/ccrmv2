@@ -37,7 +37,7 @@ public class SysDictionaryServiceImpl extends MybatisBaseServiceImpl<SysDictiona
 			tree.put("pId",sys.getPpkid());
 			tree.put("name",sys.getName());
 			if("0".equals(sys.getPpkid())){
-				tree.put("open",true);
+				tree.put("open",false);
 				tree.put("isParent",true);
 			}else{
 				tree.put("open",false);

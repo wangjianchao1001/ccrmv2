@@ -49,17 +49,17 @@ public class HousekeepingController {
 		
 		//从session 取用户
 		UmgOperator user = (UmgOperator) req.getSession().getAttribute("umgOperator");
-		Long branchId = user.getBranchid() == 100l ? 398l : user.getBranchid(); 
-		
+		Long branchId = 100l ==user.getBranchid() ? 398l : user.getBranchid();
 		if(regOrgan == null ) regOrgan = new RegOrganinfo();
-		if(regOrgan.getBranchid() == null ) regOrgan.setBranchid(branchId);
+		if(regOrgan.getBranchid() == null) regOrgan.setBranchid(branchId);
+		regOrgan.setBranchid(branchId);
 		regOrgan.setStatus(-1);
 		regOrgan.setType("HK");
 		regOrgan.setSortColumns("o.status asc");
 		
 		Pager pager = regOrgService.findPageList(regOrgan, page.getPageNumber(), page.getPageSize());
 		
-		List<UmgBranch> branchList = umgBranchService.getBranchTree("2200",String.valueOf(regOrgan.getBranchid())); 
+		List<UmgBranch> branchList = umgBranchService.getBranchTree("2200",String.valueOf(branchId)); 
 		String branchTree = umgBranchService.umgBranchTree(branchList);  
 		
 		model.put("pager", pager);

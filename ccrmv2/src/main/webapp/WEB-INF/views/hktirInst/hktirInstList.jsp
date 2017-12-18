@@ -31,19 +31,20 @@
 				<div class="box-tools pull-right" var="agentUser" items="${agentUser}">
 					<form class="form-horizontal" role="form" id="searchForm" action="<%=request.getContextPath()%>/hktirInst/hktirInstList.html">
 						<div class="input-group input-group-sm" style="width:220px;display:inline-block">
-							<input type="text" class="form-control " id="branchName" name="branchName" placeholder="按所属机构查找" readonly value="${regOrgan.branchName }" onfocus="showBranchTree('#branchName'); return false;"/>
-							<input type="hidden" class="form-control " id="branchid" name="branchid" value="${regOrgan.branchid }"/>
+							<input type="text" class="form-control " id="branchName" name="branchName" placeholder="按所属机构查找" readonly value="${hkTirInst.branchName }" onfocus="showBranchTree('#branchName'); return false;"/>
+							<input type="hidden" class="form-control " id="branchid" name="branchid" value="${hkTirInst.branchid }"/>
 						</div>
 						<div class="input-group input-group-sm" style="width:180px;display:inline-block">
-							<select class="form-control selectpicker show-tick" name="valuecode01" >
-								<option value='' <c:if test="${regOrgan.valuecode01 == '' }">selected="selected"</c:if>>按机构分类查询</option>
-								<option value='2' <c:if test="${regOrgan.valuecode01 == 2 }">selected="selected"</c:if>>民办</option>
-								<option value='1' <c:if test="${regOrgan.valuecode01 == 1 }">selected="selected"</c:if>>公办</option>
+							<select class="form-control selectpicker show-tick" name="type" >
+								<option value='' <c:if test="${hkTirInst.type == '' }">selected="selected"</c:if>>按机构分类查询</option>
+								<option value='1' <c:if test="${hkTirInst.type == 2 }">selected="selected"</c:if>>高等院校</option>
+								<option value='2' <c:if test="${hkTirInst.type == 1 }">selected="selected"</c:if>>技工技校、职业学院、培训机构</option>
+								<option value='3' <c:if test="${hkTirInst.type == 1 }">selected="selected"</c:if>>企业内设培训机构</option>
 							</select> 
 						</div>
 						<div style="display: inline-block">
 							<div class="input-group input-group-sm"	style="width: 180px;">
-								<input type="text" class="form-control input-sm" value="${regOrgan.phoneno }" name="phoneno" placeholder="按联系电话查询" />
+								<input type="text" class="form-control input-sm" value="${hkTirInst.corpphone }" name="corpphone" placeholder="按法人电话查询" />
 								<div class="input-group-btn">
 									<button class="btn btn-sm btn-default" onclick="javascript:submitSearch();"> <i class="fa fa-search"></i> </button>
 								</div>
@@ -62,19 +63,12 @@
 						<tr>
 							<th hidden="true">序号</th>
 							<th>管理机构名称</th>
-							<th>所属家庭服务业企业</th>
 							<th>法人代表</th>
-							<th>法人姓名</th>
 							<th>法人电话</th>
 							<th>法人代码</th>
-							<th>联系人姓名</th>
-							<th>联系人</th>
-							<th>联系人电话</th>
 							<th>成立时间</th>
-							<th>机构分类</th>
 							<th>开设专业名称</th>
-							<th>稳定合作关系的企业名称</th>
-							<th>稳定合作关系的家政企业名称</th>
+							
 							<th>师资总数/员工总数</th>
 							<th>全职教师数</th>
 							<th>兼职教师人数</th>
@@ -83,11 +77,10 @@
 							<th>通过职业技能鉴定人数</th>
 							<th>毕业后当年实现就业人数</th>
 							<th>培训后合格人数</th>
-							<th>共建培训实习基地名称</th>
-							<th>本企业员工<br />技能提升<br />培训人数</th>
-							<th>开办日期</th>
-							<th>开办日期</th>
-							<th>开办日期</th>
+							<th>本企业员工技能提升培训人数</th>
+							<th hidden="true">共建培训实习基地名称</th>
+							<th>稳定合作关系的企业名称</th>
+							<th>稳定合作关系的家政企业名称</th>
 							<th>备注</th>
 							<th>操作</th>
 						</tr>
@@ -95,20 +88,18 @@
 					<tbody>
 						<c:forEach var="hkTirInst" items="${pager.datas }" varStatus="status"> 
 							<tr>
-								<td>${hkTirInst.branchid}</td>
 								<td hidden="true">
 									<input type="hidden" value="${hkTirInst.pkid}" id="pkid" name="pkid" />${hkTirInst.pkid}
+									<input type="hidden" value="${hkTirInst.organid}" id="organid" name="organid" />${hkTirInst.organid}
+									<input type="hidden" value="${hkTirInst.branchid}" id="branchid" name="branchid" />${hkTirInst.branchid}
 								</td>
+								<td>${hkTirInst.branchName}</td>
 								<td>${hkTirInst.corpperson}</td>
-								<td>${hkTirInst.corpPhone}</td>
-								<td>${hkTirInst.corpCode}</td>
-								<td>${hkTirInst.contectName}</td>
-								<td>${hkTirInst.contectPhone}</td>
-								<td>${hkTirInst.established}</td>
+								<td>${hkTirInst.corpphone}</td>
+								<td>${hkTirInst.corpcode}</td>
+								<td><fmt:formatDate value='${hkTirInst.established}' pattern='yyyy-MM-dd'/></td>
 								<td>${hkTirInst.professioname}</td>
 								
-								<td>${hkTirInst.relationshipenterprise }</td>
-								<td>${hkTirInst.relationshipdomenterpris }</td>
 								<td>${hkTirInst.teacher }</td>
 								<td>${hkTirInst.fulltimeteacher }</td>
 								<td>${hkTirInst.parttimeteacher }</td>
@@ -118,9 +109,10 @@
 								<td>${hkTirInst.thridentify }</td>
 								<td>${hkTirInst.yearemployment }</td>
 								<td>${hkTirInst.passtraining }</td>
-								<td>${hkTirInst.trainingplace }</td>
-								<td>${hkTirInst.yearemployment }</td>
 								<td>${hkTirInst.employeetraining }</td>
+								<td hidden="true">${hkTirInst.trainingplace }</td>
+								<td>${hkTirInst.relationshipenterprise }</td>
+								<td>${hkTirInst.relationshipdomenterpris }</td>
 								<td>${hkTirInst.memo }</td>
 								<td>
 									<shiro:hasPermission name="10010600">
